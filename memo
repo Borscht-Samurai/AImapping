@@ -1,0 +1,39 @@
+/* CVS */
+
+93aec1,9dbdba,f8b042,ec6a52,　f3b7ad
+
+/* CVS with # */
+
+#93aec1,　#9dbdba,　#f8b042,　#ec6a52,　#f3b7ad
+
+/* Array */
+
+["93aec1", "9dbdba", "f8b042", "ec6a52", "f3b7ad"]
+
+/* Array with # */
+
+["#93aec1", "#9dbdba", "#f8b042", "#ec6a52", "#f3b7ad"]
+
+/* 基本設定 */
+:root {
+    --primary-color: #f3b7ad;
+    --secondary-color: #93aec1;
+    --accent-color-1: #9dbdba;
+    --accent-color-2: #f8b042;
+    --accent-color-3: #ec6a52;
+    --background-color: #ffffff;
+    --text-color: #2D3436;
+    --shadow-light: 9px 9px 16px rgba(147, 174, 193, 0.2), -9px -9px 16px rgba(255,255,255, 0.5);
+    --shadow-inset: inset 9px 9px 16px rgba(147, 174, 193, 0.2), inset -9px -9px 16px rgba(255,255,255, 0.5);
+}
+
+/* ベースカラー変数 */
+:root {
+    --main-bg-color: #f0f2f5;
+    --main-text-color: #1a2b3c;
+    --accent-color-1: #00e676;
+    --accent-color-2: #76ff03;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --card-bg-color: #ffffff;
+    --button-hover: #00c853;
+}
