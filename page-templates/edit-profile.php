@@ -224,7 +224,7 @@ $current_user = wp_get_current_user();
                 
                 <div class="form-actions">
                     <button type="submit" name="update_profile" class="btn btn-primary">プロフィールを更新</button>
-                    <a href="<?php echo esc_url(home_url('/profile')); ?>" class="btn btn-secondary">キャンセル</a>
+                    <a href="<?php echo esc_url(home_url('/user')); ?>" class="btn btn-secondary">キャンセル</a>
                 </div>
             </form>
             

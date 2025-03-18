@@ -281,7 +281,7 @@ function aimapping_custom_registration() {
                 wp_set_auth_cookie($user_id);
 
                 // リダイレクト
-                wp_redirect(home_url('/profile'));
+                wp_redirect(home_url('/user'));
                 exit;
             } else {
                 wp_redirect(add_query_arg('register', 'failed', home_url('/register')));

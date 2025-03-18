@@ -35,7 +35,7 @@
         <div class="header-actions">
             <?php if (is_user_logged_in()) : ?>
                 <div class="user-menu">
-                    <a href="<?php echo esc_url(home_url('/profile')); ?>" class="profile-link">プロフィール</a>
+                    <a href="<?php echo esc_url(home_url('/user')); ?>" class="profile-link">プロフィール</a>
                     <a href="<?php echo esc_url(home_url('/new-post')); ?>" class="new-post-btn">新規投稿</a>
                     <a href="<?php echo wp_logout_url(home_url()); ?>" class="logout-btn">ログアウト</a>
                 </div>
