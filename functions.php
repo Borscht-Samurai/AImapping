@@ -315,4 +315,127 @@ function aimapping_show_register_errors() {
         unset($_SESSION['register_errors']);
     }
 }
-add_action('aimapping_before_register_form', 'aimapping_show_register_errors'); 
+add_action('aimapping_before_register_form', 'aimapping_show_register_errors');
+
+// 募集投稿タイプの登録
+function register_recruitment_post_type() {
+    register_post_type('recruitment', array(
+        'labels' => array(
+            'name' => '募集',
+            'singular_name' => '募集',
+            'add_new' => '新規募集を追加',
+            'add_new_item' => '新規募集を追加',
+            'edit_item' => '募集を編集',
+            'view_item' => '募集を表示',
+            'search_items' => '募集を検索',
+            'not_found' => '募集が見つかりません',
+            'not_found_in_trash' => 'ゴミ箱に募集はありません',
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'author', 'comments'),
+        'menu_icon' => 'dashicons-groups',
+        'rewrite' => array('slug' => 'recruitment'),
+        'show_in_rest' => true,
+    ));
+
+    // 募集カテゴリーの登録
+    register_taxonomy('recruitment_category', 'recruitment', array(
+        'labels' => array(
+            'name' => '募集カテゴリー',
+            'singular_name' => '募集カテゴリー',
+            'search_items' => 'カテゴリーを検索',
+            'all_items' => 'すべてのカテゴリー',
+            'edit_item' => 'カテゴリーを編集',
+            'update_item' => 'カテゴリーを更新',
+            'add_new_item' => '新規カテゴリーを追加',
+            'new_item_name' => '新規カテゴリー名',
+            'menu_name' => 'カテゴリー'
+        ),
+        'hierarchical' => true,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'query_var' => true,
+        'rewrite' => array('slug' => 'recruitment-category'),
+        'show_in_rest' => true,
+    ));
+}
+add_action('init', 'register_recruitment_post_type');
+
+// 募集投稿用のカスタムフィールドを追加
+function add_recruitment_meta_boxes() {
+    add_meta_box(
+        'recruitment_details',
+        '募集詳細',
+        'render_recruitment_meta_box',
+        'recruitment',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'add_recruitment_meta_boxes');
+
+// 募集詳細メタボックスのレンダリング
+function render_recruitment_meta_box($post) {
+    wp_nonce_field('recruitment_meta_box', 'recruitment_meta_box_nonce');
+
+    $deadline = get_post_meta($post->ID, 'recruitment_deadline', true);
+    $event_date = get_post_meta($post->ID, 'recruitment_event_date', true);
+    $location_type = get_post_meta($post->ID, 'recruitment_location_type', true);
+    $location = get_post_meta($post->ID, 'recruitment_location', true);
+    ?>
+    <p>
+        <label for="recruitment_deadline">募集期限：</label>
+        <input type="date" id="recruitment_deadline" name="recruitment_deadline" value="<?php echo esc_attr($deadline); ?>">
+    </p>
+    <p>
+        <label for="recruitment_event_date">開催日時：</label>
+        <input type="datetime-local" id="recruitment_event_date" name="recruitment_event_date" value="<?php echo esc_attr($event_date); ?>">
+    </p>
+    <p>
+        <label for="recruitment_location_type">開催形式：</label>
+        <select id="recruitment_location_type" name="recruitment_location_type">
+            <option value="online" <?php selected($location_type, 'online'); ?>>オンライン</option>
+            <option value="offline" <?php selected($location_type, 'offline'); ?>>オフライン</option>
+            <option value="hybrid" <?php selected($location_type, 'hybrid'); ?>>ハイブリッド</option>
+        </select>
+    </p>
+    <p>
+        <label for="recruitment_location">開催場所：</label>
+        <input type="text" id="recruitment_location" name="recruitment_location" value="<?php echo esc_attr($location); ?>" placeholder="オンラインの場合はURLを入力">
+    </p>
+    <?php
+}
+
+// メタボックスの保存
+function save_recruitment_meta_box($post_id) {
+    if (!isset($_POST['recruitment_meta_box_nonce'])) {
+        return;
+    }
+
+    if (!wp_verify_nonce($_POST['recruitment_meta_box_nonce'], 'recruitment_meta_box')) {
+        return;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    $fields = array(
+        'recruitment_deadline',
+        'recruitment_event_date',
+        'recruitment_location_type',
+        'recruitment_location'
+    );
+
+    foreach ($fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
+        }
+    }
+}
+add_action('save_post_recruitment', 'save_recruitment_meta_box'); 
