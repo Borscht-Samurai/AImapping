@@ -52,12 +52,22 @@ function aimapping_register_post_types() {
         'labels' => array(
             'name' => 'イベント',
             'singular_name' => 'イベント',
+            'add_new' => '新規イベントを追加',
+            'add_new_item' => '新規イベントを追加',
+            'edit_item' => 'イベントを編集',
+            'view_item' => 'イベントを表示',
+            'search_items' => 'イベントを検索',
+            'not_found' => 'イベントが見つかりません',
+            'not_found_in_trash' => 'ゴミ箱にイベントはありません',
         ),
         'public' => true,
         'has_archive' => true,
-        'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'author', 'comments'),
         'menu_icon' => 'dashicons-calendar-alt',
         'rewrite' => array('slug' => 'events'),
+        'show_in_rest' => true,
+        'capability_type' => 'post',
+        'map_meta_cap' => true,
     ));
 }
 add_action('init', 'aimapping_register_post_types');
@@ -199,6 +209,67 @@ function save_event_meta_box($post_id) {
     }
 }
 add_action('save_post_event', 'save_event_meta_box');
+
+// 新規投稿フォームの処理
+function handle_new_post_submission() {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['new_post_nonce'])) {
+        return;
+    }
+
+    // nonce検証
+    if (!wp_verify_nonce($_POST['new_post_nonce'], 'new_post_action')) {
+        wp_die('不正なアクセスです。');
+    }
+
+    // ユーザーログインチェック
+    if (!is_user_logged_in()) {
+        wp_redirect(home_url('/login'));
+        exit;
+    }
+
+    // 必須項目のチェック
+    $required_fields = array('post_title', 'post_content', 'post_category', 'event_date', 'location_type');
+    foreach ($required_fields as $field) {
+        if (empty($_POST[$field])) {
+            wp_die('必須項目が入力されていません。');
+        }
+    }
+
+    // 投稿データの準備
+    $post_data = array(
+        'post_title'    => sanitize_text_field($_POST['post_title']),
+        'post_content'  => wp_kses_post($_POST['post_content']),
+        'post_status'   => 'publish',
+        'post_type'     => 'event',
+        'post_author'   => get_current_user_id()
+    );
+
+    // 投稿を作成
+    $post_id = wp_insert_post($post_data);
+
+    if (!is_wp_error($post_id)) {
+        // イベントメタ情報を保存
+        update_post_meta($post_id, 'event_date', sanitize_text_field($_POST['event_date']));
+        update_post_meta($post_id, 'event_is_online', $_POST['location_type'] === 'online' ? '1' : '0');
+        
+        if ($_POST['location_type'] === 'offline' && !empty($_POST['location_detail'])) {
+            update_post_meta($post_id, 'event_location', sanitize_text_field($_POST['location_detail']));
+        }
+
+        // カテゴリーを設定
+        $term = term_exists($_POST['post_category'], 'event_category');
+        if ($term !== 0 && $term !== null) {
+            wp_set_object_terms($post_id, intval($term['term_id']), 'event_category');
+        }
+
+        // リダイレクト
+        wp_redirect(get_permalink($post_id));
+        exit;
+    } else {
+        wp_die('投稿の作成に失敗しました。');
+    }
+}
+add_action('template_redirect', 'handle_new_post_submission');
 
 // ユーザー登録処理など（ここはそのまま）
 
