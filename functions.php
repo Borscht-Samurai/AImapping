@@ -46,26 +46,6 @@ function aimapping_register_post_types() {
         'menu_icon' => 'dashicons-groups',
         'rewrite' => array('slug' => 'recruitment'),
         'show_in_rest' => true,
-    ));
-
-    register_post_type('event', array(
-        'labels' => array(
-            'name' => 'イベント',
-            'singular_name' => 'イベント',
-            'add_new' => '新規イベントを追加',
-            'add_new_item' => '新規イベントを追加',
-            'edit_item' => 'イベントを編集',
-            'view_item' => 'イベントを表示',
-            'search_items' => 'イベントを検索',
-            'not_found' => 'イベントが見つかりません',
-            'not_found_in_trash' => 'ゴミ箱にイベントはありません',
-        ),
-        'public' => true,
-        'has_archive' => true,
-        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'author', 'comments'),
-        'menu_icon' => 'dashicons-calendar-alt',
-        'rewrite' => array('slug' => 'events'),
-        'show_in_rest' => true,
         'capability_type' => 'post',
         'map_meta_cap' => true,
     ));
@@ -74,14 +54,14 @@ add_action('init', 'aimapping_register_post_types');
 
 // カスタムタクソノミーの登録
 function aimapping_register_taxonomies() {
-    register_taxonomy('event_category', 'event', array(
+    register_taxonomy('recruitment_category', 'recruitment', array(
         'labels' => array(
-            'name' => 'イベントカテゴリー',
-            'singular_name' => 'イベントカテゴリー',
+            'name' => '募集カテゴリー',
+            'singular_name' => '募集カテゴリー',
         ),
         'hierarchical' => true,
         'show_admin_column' => true,
-        'rewrite' => array('slug' => 'event-category'),
+        'rewrite' => array('slug' => 'recruitment-category'),
     ));
 }
 add_action('init', 'aimapping_register_taxonomies');
@@ -113,10 +93,10 @@ function get_event_date() {
 function get_event_location() {
     $location = get_post_meta(get_the_ID(), 'event_location', true);
     $is_online = get_post_meta(get_the_ID(), 'event_is_online', true);
-    if ($is_online) {
+    if ($is_online === '1') {
         return 'オンライン開催';
     }
-    return $location ? esc_html($location) : '場所未定';
+    return !empty($location) ? esc_html($location) : '場所未定';
 }
 
 // カテゴリーアイコンを取得する関数
@@ -172,9 +152,9 @@ function handle_like_button() {
 add_action('wp_ajax_handle_like', 'handle_like_button');
 add_action('wp_ajax_nopriv_handle_like', 'handle_like_button');
 
-// カスタムフィールド（イベント）メタボックス
+// カスタムフィールド（募集）メタボックス
 function add_event_meta_boxes() {
-    add_meta_box('event_details', 'イベント詳細', 'render_event_meta_box', 'event', 'normal', 'high');
+    add_meta_box('recruitment_details', '募集詳細', 'render_event_meta_box', 'recruitment', 'normal', 'high');
 }
 add_action('add_meta_boxes', 'add_event_meta_boxes');
 
@@ -208,7 +188,7 @@ function save_event_meta_box($post_id) {
         }
     }
 }
-add_action('save_post_event', 'save_event_meta_box');
+add_action('save_post_recruitment', 'save_event_meta_box');
 
 // 新規投稿フォームの処理
 function handle_new_post_submission() {
@@ -240,7 +220,7 @@ function handle_new_post_submission() {
         'post_title'    => sanitize_text_field($_POST['post_title']),
         'post_content'  => wp_kses_post($_POST['post_content']),
         'post_status'   => 'publish',
-        'post_type'     => 'event',
+        'post_type'     => 'recruitment',
         'post_author'   => get_current_user_id()
     );
 
@@ -254,12 +234,23 @@ function handle_new_post_submission() {
         
         if ($_POST['location_type'] === 'offline' && !empty($_POST['location_detail'])) {
             update_post_meta($post_id, 'event_location', sanitize_text_field($_POST['location_detail']));
+        } elseif ($_POST['location_type'] === 'online') {
+            update_post_meta($post_id, 'event_location', 'オンライン開催');
         }
 
         // カテゴリーを設定
-        $term = term_exists($_POST['post_category'], 'event_category');
-        if ($term !== 0 && $term !== null) {
-            wp_set_object_terms($post_id, intval($term['term_id']), 'event_category');
+        if (!empty($_POST['post_category'])) {
+            $category_slug = sanitize_text_field($_POST['post_category']);
+            $term = get_term_by('slug', $category_slug, 'recruitment_category');
+            if ($term) {
+                wp_set_object_terms($post_id, $term->term_id, 'recruitment_category');
+            } else {
+                // カテゴリーが存在しない場合は新規作成
+                $new_term = wp_insert_term($category_slug, 'recruitment_category', array('slug' => $category_slug));
+                if (!is_wp_error($new_term)) {
+                    wp_set_object_terms($post_id, $new_term['term_id'], 'recruitment_category');
+                }
+            }
         }
 
         // リダイレクト
@@ -270,6 +261,43 @@ function handle_new_post_submission() {
     }
 }
 add_action('template_redirect', 'handle_new_post_submission');
+
+// 投稿タイプを変更する関数
+function convert_event_to_recruitment() {
+    global $wpdb;
+    
+    // 投稿タイプの変更
+    $wpdb->query(
+        $wpdb->prepare(
+            "UPDATE {$wpdb->posts} SET post_type = 'recruitment' WHERE post_type = 'event'"
+        )
+    );
+    
+    // タクソノミーの変更
+    $wpdb->query(
+        $wpdb->prepare(
+            "UPDATE {$wpdb->term_taxonomy} SET taxonomy = 'recruitment_category' WHERE taxonomy = 'event_category'"
+        )
+    );
+    
+    // パーマリンク構造を更新
+    flush_rewrite_rules();
+}
+
+// アクティベーション時に実行
+function theme_activation() {
+    convert_event_to_recruitment();
+}
+add_action('after_switch_theme', 'theme_activation');
+
+// 手動実行用のアクションフック
+add_action('init', function() {
+    if (isset($_GET['convert_posts']) && current_user_can('manage_options')) {
+        convert_event_to_recruitment();
+        wp_redirect(remove_query_arg('convert_posts'));
+        exit;
+    }
+});
 
 // ユーザー登録処理など（ここはそのまま）
 

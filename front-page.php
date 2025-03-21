@@ -8,19 +8,19 @@
             <p>全国のAIクリエイターとつながり、新しいプロジェクトを始めましょう</p>
             <div class="hero-buttons">
                 <a href="<?php echo esc_url(home_url('/register')); ?>" class="btn btn-primary">新規登録</a>
-                <a href="<?php echo esc_url(home_url('/events')); ?>" class="btn btn-secondary">イベントを見る</a>
+                <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="btn btn-secondary">募集を見る</a>
             </div>
         </div>
     </section>
 
-    <!-- 最新のイベント -->
+    <!-- 最新の募集 -->
     <section class="latest-events">
         <div class="container">
-            <h2>最新のイベント</h2>
+            <h2>最新の募集</h2>
             <div class="events-grid">
                 <?php
                 $args = array(
-                    'post_type' => 'event',
+                    'post_type' => 'recruitment',
                     'posts_per_page' => 6,
                     'orderby' => 'date',
                     'order' => 'DESC'
@@ -36,7 +36,7 @@
                 ?>
             </div>
             <div class="view-more">
-                <a href="<?php echo esc_url(home_url('/events')); ?>" class="btn btn-outline">もっと見る</a>
+                <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="btn btn-outline">もっと見る</a>
             </div>
         </div>
     </section>
@@ -48,7 +48,7 @@
             <div class="categories-grid">
                 <?php
                 $categories = get_terms(array(
-                    'taxonomy' => 'event_category',
+                    'taxonomy' => 'recruitment_category',
                     'hide_empty' => true,
                 ));
 

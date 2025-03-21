@@ -5,9 +5,9 @@
         <div class="archive-header">
             <h1 class="archive-title">
                 <?php
-                if (is_post_type_archive('event')) {
-                    echo 'イベント一覧';
-                } elseif (is_tax('event_category')) {
+                if (is_post_type_archive('recruitment')) {
+                    echo '募集一覧';
+                } elseif (is_tax('recruitment_category')) {
                     echo single_term_title('', false);
                 } else {
                     echo 'アーカイブ';
@@ -15,9 +15,9 @@
                 ?>
             </h1>
             
-            <?php if (is_post_type_archive('event')) : ?>
+            <?php if (is_post_type_archive('recruitment')) : ?>
                 <div class="archive-description">
-                    <p>AIを活用するクリエイター同士が集まるイベントを探すことができます。</p>
+                    <p>AIを活用するクリエイター同士が集まる募集を探すことができます。</p>
                 </div>
             <?php endif; ?>
         </div>
@@ -28,9 +28,9 @@
                     <label for="category">カテゴリー：</label>
                     <?php
                     wp_dropdown_categories(array(
-                        'taxonomy' => 'event_category',
+                        'taxonomy' => 'recruitment_category',
                         'name' => 'category',
-                        'selected' => get_query_var('event_category'),
+                        'selected' => get_query_var('recruitment_category'),
                         'show_option_all' => 'すべてのカテゴリー',
                         'hide_empty' => true,
                     ));
@@ -79,8 +79,8 @@
 
         <?php else : ?>
             <div class="no-events">
-                <p>該当するイベントが見つかりませんでした。</p>
-                <a href="<?php echo esc_url(home_url('/events')); ?>" class="btn btn-primary">すべてのイベントを見る</a>
+                <p>該当する募集が見つかりませんでした。</p>
+                <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="btn btn-primary">すべての募集を見る</a>
             </div>
         <?php endif; ?>
     </div>
