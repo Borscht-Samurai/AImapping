@@ -113,6 +113,18 @@ function get_category_icon($slug) {
     return isset($icons[$slug]) ? $icons[$slug] : $icons['default'];
 }
 
+// 募集カテゴリーのリストを取得する関数
+function get_recruitment_categories() {
+    return array(
+        'study' => '勉強会',
+        'online' => 'オンライン交流',
+        'project' => 'プロジェクト協力者募集',
+        'meetup' => '交流会',
+        'workshop' => 'ワークショップ',
+        'hackathon' => 'ハッカソン'
+    );
+}
+
 // 投稿の閲覧数を取得する関数
 function get_post_views($post_id) {
     $views = get_post_meta($post_id, 'post_views', true);
@@ -298,6 +310,71 @@ add_action('init', function() {
         exit;
     }
 });
+
+// 検索フィルターの処理
+function aimapping_filter_query($query) {
+    // メインクエリでなければ処理しない
+    if (!$query->is_main_query()) {
+        return;
+    }
+
+    // 募集アーカイブページの場合の処理
+    if ($query->is_post_type_archive('recruitment') || $query->is_tax('recruitment_category')) {
+        // カテゴリーフィルター
+        if (isset($_GET['category']) && !empty($_GET['category']) && $_GET['category'] != 0) {
+            $tax_query = array(
+                array(
+                    'taxonomy' => 'recruitment_category',
+                    'field'    => 'term_id',
+                    'terms'    => intval($_GET['category']),
+                ),
+            );
+            $query->set('tax_query', $tax_query);
+        }
+
+        // 開催形式フィルター（オンライン/オフライン）
+        if (isset($_GET['location']) && !empty($_GET['location'])) {
+            $meta_query = array();
+            
+            if ($_GET['location'] === 'online') {
+                $meta_query[] = array(
+                    'key'     => 'event_is_online',
+                    'value'   => '1',
+                    'compare' => '='
+                );
+            } elseif ($_GET['location'] === 'offline') {
+                $meta_query[] = array(
+                    'key'     => 'event_is_online',
+                    'value'   => '0',
+                    'compare' => '='
+                );
+            }
+            
+            $query->set('meta_query', $meta_query);
+        }
+
+        // 並び順の設定
+        if (isset($_GET['orderby']) && !empty($_GET['orderby'])) {
+            switch($_GET['orderby']) {
+                case 'date':
+                    $query->set('orderby', 'date');
+                    $query->set('order', 'DESC');
+                    break;
+                case 'views':
+                    $query->set('meta_key', 'post_views');
+                    $query->set('orderby', 'meta_value_num');
+                    $query->set('order', 'DESC');
+                    break;
+                case 'likes':
+                    $query->set('meta_key', 'post_likes');
+                    $query->set('orderby', 'meta_value_num');
+                    $query->set('order', 'DESC');
+                    break;
+            }
+        }
+    }
+}
+add_action('pre_get_posts', 'aimapping_filter_query');
 
 // ユーザー登録処理など（ここはそのまま）
 

@@ -29,9 +29,12 @@ get_header();
                     <label for="post_category">カテゴリー <span class="required">*</span></label>
                     <select id="post_category" name="post_category" required class="form-control">
                         <option value="">選択してください</option>
-                        <option value="study">勉強会</option>
-                        <option value="online">オンライン交流</option>
-                        <option value="project">プロジェクト協力者募集</option>
+                        <?php 
+                        $categories = get_recruitment_categories();
+                        foreach ($categories as $slug => $name) : 
+                        ?>
+                            <option value="<?php echo esc_attr($slug); ?>"><?php echo esc_html($name); ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
 

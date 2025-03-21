@@ -11,20 +11,26 @@
 
         <!-- 検索フィルター -->
         <div class="archive-filters mb-8">
-            <form class="filter-form bg-white rounded-lg shadow-neumorphism p-6">
+            <form class="filter-form bg-white rounded-lg shadow-neumorphism p-6" method="get" action="<?php echo esc_url(home_url('/recruitment/')); ?>">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="filter-group">
                         <label for="category" class="block text-gray-700 font-medium mb-2">カテゴリー：</label>
-                        <?php
-                        wp_dropdown_categories(array(
-                            'taxonomy' => 'recruitment_category',
-                            'name' => 'category',
-                            'selected' => get_query_var('recruitment_category'),
-                            'show_option_all' => 'すべてのカテゴリー',
-                            'hide_empty' => true,
-                            'class' => 'w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary'
-                        ));
-                        ?>
+                        <select name="category" id="category" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="0">すべてのカテゴリー</option>
+                            <?php
+                            $categories = get_recruitment_categories();
+                            $selected_category = isset($_GET['category']) ? $_GET['category'] : 0;
+                            
+                            // タームを取得
+                            foreach ($categories as $slug => $name) {
+                                $term = get_term_by('slug', $slug, 'recruitment_category');
+                                if ($term) {
+                                    $selected = selected($selected_category, $term->term_id, false);
+                                    echo '<option value="' . esc_attr($term->term_id) . '"' . $selected . '>' . esc_html($name) . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
                     </div>
 
                     <div class="filter-group">
