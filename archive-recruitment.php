@@ -59,53 +59,53 @@
             <div class="recruitment-list">
                 <?php while (have_posts()) : the_post(); ?>
                     <article class="recruitment-card shadow-neumorphism">
-                        <div class="recruitment-card__header">
-                            <div class="recruitment-date">
-                                <i class="fas fa-calendar-alt"></i>
-                                <?php
-                                $event_date = get_post_meta(get_the_ID(), 'event_date', true);
-                                echo esc_html(date_i18n('Y年n月j日', strtotime($event_date)));
-                                ?>
+                        <a href="<?php the_permalink(); ?>" class="recruitment-card__link">
+                            <div class="recruitment-card__header">
+                                <div class="recruitment-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <?php
+                                    $event_date = get_post_meta(get_the_ID(), 'event_date', true);
+                                    echo esc_html(date_i18n('Y年n月j日', strtotime($event_date)));
+                                    ?>
+                                </div>
+                                <div class="recruitment-location">
+                                    <?php
+                                    $is_online = get_post_meta(get_the_ID(), 'event_is_online', true);
+                                    $location = get_post_meta(get_the_ID(), 'event_location', true);
+                                    if ($is_online === '1') {
+                                        echo '<i class="fas fa-video"></i> オンライン';
+                                    } else {
+                                        echo '<i class="fas fa-map-marker-alt"></i> ';
+                                        echo $location ? esc_html($location) : '場所未定';
+                                    }
+                                    ?>
+                                </div>
                             </div>
-                            <div class="recruitment-location">
-                                <?php
-                                $is_online = get_post_meta(get_the_ID(), 'event_is_online', true);
-                                $location = get_post_meta(get_the_ID(), 'event_location', true);
-                                if ($is_online === '1') {
-                                    echo '<i class="fas fa-video"></i> オンライン';
-                                } else {
-                                    echo '<i class="fas fa-map-marker-alt"></i> ';
-                                    echo $location ? esc_html($location) : '場所未定';
-                                }
-                                ?>
-                            </div>
-                        </div>
-                        
-                        <h2 class="recruitment-card__title">
-                            <a href="<?php the_permalink(); ?>">
+                            
+                            <h2 class="recruitment-card__title">
                                 <?php the_title(); ?>
-                            </a>
-                        </h2>
-                        
-                        <div class="recruitment-card__content">
-                            <?php the_excerpt(); ?>
-                        </div>
-                        
-                        <div class="recruitment-card__footer">
-                            <div class="author-info">
-                                <?php
-                                $author_id = get_the_author_meta('ID');
-                                $author_avatar = get_avatar_url($author_id, ['size' => 40]);
-                                $author_name = get_the_author_meta('display_name');
-                                ?>
-                                <img src="<?php echo esc_url($author_avatar); ?>" alt="<?php echo esc_attr($author_name); ?>" class="author-avatar">
-                                <span class="author-name"><?php echo esc_html($author_name); ?></span>
+                            </h2>
+                            
+                            <div class="recruitment-card__content">
+                                <?php the_excerpt(); ?>
                             </div>
-                            <div class="post-meta">
-                                <span class="views-count"><i class="fas fa-eye"></i> <?php echo get_post_views(get_the_ID()); ?></span>
-                                <span class="likes-count"><i class="fas fa-heart"></i> <?php echo get_post_likes(get_the_ID()); ?></span>
+                            
+                            <div class="recruitment-card__footer">
+                                <div class="author-info">
+                                    <?php
+                                    $author_id = get_the_author_meta('ID');
+                                    $author_avatar = get_avatar_url($author_id, ['size' => 40]);
+                                    $author_name = get_the_author_meta('display_name');
+                                    ?>
+                                    <img src="<?php echo esc_url($author_avatar); ?>" alt="<?php echo esc_attr($author_name); ?>" class="author-avatar">
+                                    <span class="author-name"><?php echo esc_html($author_name); ?></span>
+                                </div>
+                                <div class="post-meta">
+                                    <span class="views-count"><i class="fas fa-eye"></i> <?php echo get_post_views(get_the_ID()); ?></span>
+                                    <span class="likes-count"><i class="fas fa-heart"></i> <?php echo get_post_likes(get_the_ID()); ?></span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </article>
                 <?php endwhile; ?>
             </div>
@@ -201,17 +201,28 @@ body {
 .recruitment-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 30px;
     margin-top: 30px;
 }
 
 .recruitment-card {
     width: 360px;
+    position: relative;
+}
+
+.recruitment-card__link {
+    display: block;
     padding: 25px;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    position: relative;
+}
+
+.recruitment-card:hover {
+    transform: translateY(-3px);
 }
 
 .recruitment-card__header {
@@ -239,15 +250,10 @@ body {
     font-weight: bold;
     margin-bottom: 16px;
     line-height: 1.4;
-}
-
-.recruitment-card__title a {
     color: var(--color-text);
-    text-decoration: none;
-    transition: color 0.3s ease;
 }
 
-.recruitment-card__title a:hover {
+.recruitment-card__link:hover .recruitment-card__title {
     color: var(--color-primary);
 }
 
