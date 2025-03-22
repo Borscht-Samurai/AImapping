@@ -65,15 +65,26 @@
                     <?php the_excerpt(); ?>
                 </div>
 
-                <div class="event-stats">
-                    <span class="event-views">
-                        <i class="fas fa-eye"></i>
-                        <?php echo get_post_views(get_the_ID()); ?>
-                    </span>
-                    <span class="event-likes">
-                        <i class="fas fa-heart"></i>
-                        <?php echo get_post_likes(get_the_ID()); ?>
-                    </span>
+                <div class="event-footer">
+                    <div class="event-author">
+                        <?php
+                        $author_id = get_the_author_meta('ID');
+                        $author_avatar = get_avatar_url($author_id, ['size' => 40]);
+                        $author_name = get_the_author_meta('display_name');
+                        ?>
+                        <img src="<?php echo esc_url($author_avatar); ?>" alt="<?php echo esc_attr($author_name); ?>" class="author-avatar">
+                        <span class="author-name"><?php echo esc_html($author_name); ?></span>
+                    </div>
+                    <div class="event-stats">
+                        <span class="event-views">
+                            <i class="fas fa-eye"></i>
+                            <?php echo get_post_views(get_the_ID()); ?>
+                        </span>
+                        <span class="event-likes">
+                            <i class="fas fa-heart"></i>
+                            <?php echo get_post_likes(get_the_ID()); ?>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -181,6 +192,32 @@
     color: #666;
     margin: 1rem 0;
     line-height: 1.5;
+}
+
+.event-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #EDF2F7;
+}
+
+.event-author {
+    display: flex;
+    align-items: center;
+}
+
+.author-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.author-name {
+    font-size: 14px;
+    color: #4a5568;
 }
 
 .event-stats {

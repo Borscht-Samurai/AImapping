@@ -21,10 +21,19 @@
                             $categories = get_recruitment_categories();
                             $selected_category = isset($_GET['category']) ? $_GET['category'] : 0;
                             
-                            // タームを取得
+                            // すべてのカテゴリーを表示
                             foreach ($categories as $slug => $name) {
                                 $term = get_term_by('slug', $slug, 'recruitment_category');
-                                if ($term) {
+                                
+                                // 存在しないカテゴリーの場合は新規作成
+                                if (!$term) {
+                                    $term_info = wp_insert_term($name, 'recruitment_category', array('slug' => $slug));
+                                    if (!is_wp_error($term_info)) {
+                                        $term_id = $term_info['term_id'];
+                                        $selected = selected($selected_category, $term_id, false);
+                                        echo '<option value="' . esc_attr($term_id) . '"' . $selected . '>' . esc_html($name) . '</option>';
+                                    }
+                                } else {
                                     $selected = selected($selected_category, $term->term_id, false);
                                     echo '<option value="' . esc_attr($term->term_id) . '"' . $selected . '>' . esc_html($name) . '</option>';
                                 }
@@ -62,57 +71,9 @@
 
         <!-- 募集一覧 -->
         <?php if (have_posts()) : ?>
-            <div class="recruitment-list">
+            <div class="events-grid">
                 <?php while (have_posts()) : the_post(); ?>
-                    <article class="recruitment-card shadow-neumorphism">
-                        <a href="<?php the_permalink(); ?>" class="recruitment-card__link">
-                            <div class="recruitment-card__header">
-                                <div class="recruitment-date">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    <?php
-                                    $event_date = get_post_meta(get_the_ID(), 'event_date', true);
-                                    echo esc_html(date_i18n('Y年n月j日', strtotime($event_date)));
-                                    ?>
-                                </div>
-                                <div class="recruitment-location">
-                                    <?php
-                                    $is_online = get_post_meta(get_the_ID(), 'event_is_online', true);
-                                    $location = get_post_meta(get_the_ID(), 'event_location', true);
-                                    if ($is_online === '1') {
-                                        echo '<i class="fas fa-video"></i> オンライン';
-                                    } else {
-                                        echo '<i class="fas fa-map-marker-alt"></i> ';
-                                        echo $location ? esc_html($location) : '場所未定';
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                            
-                            <h2 class="recruitment-card__title">
-                                <?php the_title(); ?>
-                            </h2>
-                            
-                            <div class="recruitment-card__content">
-                                <?php the_excerpt(); ?>
-                            </div>
-                            
-                            <div class="recruitment-card__footer">
-                                <div class="author-info">
-                                    <?php
-                                    $author_id = get_the_author_meta('ID');
-                                    $author_avatar = get_avatar_url($author_id, ['size' => 40]);
-                                    $author_name = get_the_author_meta('display_name');
-                                    ?>
-                                    <img src="<?php echo esc_url($author_avatar); ?>" alt="<?php echo esc_attr($author_name); ?>" class="author-avatar">
-                                    <span class="author-name"><?php echo esc_html($author_name); ?></span>
-                                </div>
-                                <div class="post-meta">
-                                    <span class="views-count"><i class="fas fa-eye"></i> <?php echo get_post_views(get_the_ID()); ?></span>
-                                    <span class="likes-count"><i class="fas fa-heart"></i> <?php echo get_post_likes(get_the_ID()); ?></span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
+                    <?php get_template_part('template-parts/content', 'card'); ?>
                 <?php endwhile; ?>
             </div>
 
@@ -204,110 +165,17 @@ body {
 }
 
 /* 新しい募集カードのスタイル */
-.recruitment-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
     gap: 30px;
     margin-top: 30px;
 }
 
-.recruitment-card {
-    width: 360px;
-    position: relative;
-}
-
-.recruitment-card__link {
-    display: block;
-    padding: 25px;
-    text-decoration: none;
-    color: inherit;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.recruitment-card:hover {
-    transform: translateY(-3px);
-}
-
-.recruitment-card__header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    font-size: 14px;
-    color: var(--color-text);
-}
-
-.recruitment-date,
-.recruitment-location {
-    display: flex;
-    align-items: center;
-}
-
-.recruitment-date i,
-.recruitment-location i {
-    margin-right: 6px;
-    color: var(--color-primary);
-}
-
-.recruitment-card__title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 16px;
-    line-height: 1.4;
-    color: var(--color-text);
-}
-
-.recruitment-card__link:hover .recruitment-card__title {
-    color: var(--color-primary);
-}
-
-.recruitment-card__content {
-    font-size: 14px;
-    color: #4A5568;
-    margin-bottom: 20px;
-    flex-grow: 1;
-    line-height: 1.6;
-}
-
-.recruitment-card__footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-    padding-top: 20px;
-    border-top: 1px solid #EDF2F7;
-}
-
-.author-info {
-    display: flex;
-    align-items: center;
-}
-
-.author-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.author-name {
-    font-size: 14px;
-    color: var(--color-text);
-}
-
-.post-meta {
-    display: flex;
-    gap: 12px;
-    color: #718096;
-    font-size: 14px;
-}
-
-.views-count i,
-.likes-count i {
-    color: var(--color-primary);
-    margin-right: 4px;
+@media (max-width: 768px) {
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ページネーションの改善 */
@@ -341,24 +209,6 @@ body {
         inset 6px 6px 12px var(--shadow-dark),
         inset -6px -6px 12px var(--shadow-light);
     color: var(--color-primary);
-}
-
-/* レスポンシブ調整 */
-@media (max-width: 768px) {
-    .recruitment-list {
-        justify-content: center;
-    }
-    
-    .recruitment-card {
-        width: 100%;
-        max-width: 360px;
-    }
-    
-    .shadow-neumorphism {
-        box-shadow: 
-            6px 6px 12px var(--shadow-dark),
-            -6px -6px 12px var(--shadow-light);
-    }
 }
 </style>
 
