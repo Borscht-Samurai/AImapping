@@ -60,24 +60,21 @@
             <h2>カテゴリーから探す</h2>
             <div class="categories-grid">
                 <?php
-                $categories = get_terms(array(
-                    'taxonomy' => 'recruitment_category',
-                    'hide_empty' => true,
-                ));
-
-                if (!empty($categories) && !is_wp_error($categories)) :
-                    foreach ($categories as $category) :
-                        ?>
-                        <a href="<?php echo esc_url(get_term_link($category)); ?>" class="category-card">
-                            <div class="category-icon">
-                                <i class="fas fa-<?php echo esc_attr(get_category_icon($category->slug)); ?>"></i>
-                            </div>
-                            <h3><?php echo esc_html($category->name); ?></h3>
-                            <p><?php echo esc_html($category->description); ?></p>
-                        </a>
-                        <?php
-                    endforeach;
-                endif;
+                $categories = get_recruitment_categories();
+                foreach ($categories as $slug => $name) :
+                    $term = get_term_by('slug', $slug, 'recruitment_category');
+                    if ($term) :
+                ?>
+                    <a href="<?php echo esc_url(get_term_link($term)); ?>" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-<?php echo esc_attr(get_category_icon($slug)); ?>"></i>
+                        </div>
+                        <h3><?php echo esc_html($name); ?></h3>
+                        <p><?php echo esc_html($term->description); ?></p>
+                    </a>
+                <?php
+                    endif;
+                endforeach;
                 ?>
             </div>
         </div>
