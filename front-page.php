@@ -23,7 +23,20 @@
                     'post_type' => 'recruitment',
                     'posts_per_page' => 6,
                     'orderby' => 'date',
-                    'order' => 'DESC'
+                    'order' => 'DESC',
+                    'meta_query' => array(
+                        'relation' => 'OR',
+                        array(
+                            'key' => 'event_date',
+                            'value' => current_time('mysql'),
+                            'compare' => '>=',
+                            'type' => 'DATETIME'
+                        ),
+                        array(
+                            'key' => 'event_date',
+                            'compare' => 'NOT EXISTS'
+                        )
+                    )
                 );
                 $events_query = new WP_Query($args);
 

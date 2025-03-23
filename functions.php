@@ -376,5 +376,26 @@ function aimapping_filter_query($query) {
 }
 add_action('pre_get_posts', 'aimapping_filter_query');
 
+// 募集一覧のクエリを修正して期限切れの募集を非表示にする
+function filter_expired_recruitments($query) {
+    if (!is_admin() && $query->is_main_query() && is_post_type_archive('recruitment')) {
+        $meta_query = array(
+            'relation' => 'OR',
+            array(
+                'key' => 'event_date',
+                'value' => current_time('mysql'),
+                'compare' => '>=',
+                'type' => 'DATETIME'
+            ),
+            array(
+                'key' => 'event_date',
+                'compare' => 'NOT EXISTS'
+            )
+        );
+        $query->set('meta_query', $meta_query);
+    }
+}
+add_action('pre_get_posts', 'filter_expired_recruitments');
+
 // ユーザー登録処理など（ここはそのまま）
 
