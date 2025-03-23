@@ -40,11 +40,11 @@ if (!$user) {
                 <div class="profile-stats">
                     <?php
                     // 投稿数
-                    $post_count = count_user_posts($user_id, 'event');
+                    $post_count = count_user_posts($user_id, 'recruitment');
                     ?>
                     <span class="post-count">
                         <i class="fas fa-calendar-alt"></i>
-                        <?php echo esc_html($post_count); ?> イベント
+                        <?php echo esc_html($post_count); ?> 募集
                     </span>
                     
                     <?php
@@ -88,7 +88,7 @@ if (!$user) {
                 <i class="fas fa-user-edit"></i> プロフィールを編集
             </a>
             <a href="<?php echo esc_url(home_url('/new-post')); ?>" class="btn btn-primary">
-                <i class="fas fa-plus"></i> 新規イベントを作成
+                <i class="fas fa-plus"></i> 新規募集を作成
             </a>
         </div>
     <?php elseif (isset($args['show_actions']) && $args['show_actions'] && is_user_logged_in() && get_current_user_id() !== $user_id) : ?>
@@ -131,7 +131,7 @@ if (!$user) {
     // 最近のイベントを表示（オプション）
     if (isset($args['show_recent_events']) && $args['show_recent_events']) :
         $recent_events_args = array(
-            'post_type' => 'event',
+            'post_type' => 'recruitment',
             'posts_per_page' => 3,
             'author' => $user_id,
             'orderby' => 'date',
@@ -142,7 +142,7 @@ if (!$user) {
         
         if ($recent_events->have_posts()) : ?>
             <div class="recent-events">
-                <h3><?php echo esc_html($user->display_name); ?>さんの最近のイベント</h3>
+                <h3><?php echo esc_html($user->display_name); ?>さんの最近の募集</h3>
                 <div class="events-grid">
                     <?php while ($recent_events->have_posts()) : $recent_events->the_post(); ?>
                         <?php get_template_part('template-parts/content', 'card'); ?>
@@ -151,7 +151,7 @@ if (!$user) {
                 
                 <div class="view-all">
                     <a href="<?php echo esc_url(get_author_posts_url($user_id)); ?>" class="btn btn-outline">
-                        すべてのイベントを見る
+                        すべての募集を見る
                     </a>
                 </div>
             </div>

@@ -30,13 +30,13 @@ get_header();
             
             <div class="profile-tabs">
                 <div class="tab-buttons">
-                    <button class="tab-btn active" data-tab="upcoming-events">参加予定のイベント</button>
-                    <button class="tab-btn" data-tab="past-events">過去の参加イベント</button>
-                    <button class="tab-btn" data-tab="my-events">主催イベント</button>
+                    <button class="tab-btn active" data-tab="upcoming-events">参加予定の募集</button>
+                    <button class="tab-btn" data-tab="past-events">過去の参加募集</button>
+                    <button class="tab-btn" data-tab="my-events">主催募集</button>
                 </div>
                 
                 <div class="tab-content active" id="upcoming-events">
-                    <h2>参加予定のイベント</h2>
+                    <h2>参加予定の募集</h2>
                     
                     <?php
                     // 参加予定のイベントを取得
@@ -46,7 +46,7 @@ get_header();
                         $attended_events_array = explode(',', $attended_events);
                         
                         $args = array(
-                            'post_type' => 'event',
+                            'post_type' => 'recruitment',
                             'posts_per_page' => 10,
                             'post__in' => $attended_events_array,
                             'meta_query' => array(
@@ -75,20 +75,20 @@ get_header();
                             wp_reset_postdata();
                         else : ?>
                             <div class="no-events">
-                                <p>参加予定のイベントはありません。</p>
-                                <a href="<?php echo esc_url(home_url('/events')); ?>" class="btn btn-primary">イベントを探す</a>
+                                <p>参加予定の募集はありません。</p>
+                                <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="btn btn-primary">募集を探す</a>
                             </div>
                         <?php endif;
                     } else { ?>
                         <div class="no-events">
-                            <p>参加予定のイベントはありません。</p>
-                            <a href="<?php echo esc_url(home_url('/events')); ?>" class="btn btn-primary">イベントを探す</a>
+                            <p>参加予定の募集はありません。</p>
+                            <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="btn btn-primary">募集を探す</a>
                         </div>
                     <?php } ?>
                 </div>
                 
                 <div class="tab-content" id="past-events">
-                    <h2>過去の参加イベント</h2>
+                    <h2>過去の参加募集</h2>
                     
                     <?php
                     // 過去の参加イベントを取得
@@ -98,7 +98,7 @@ get_header();
                         $attended_events_array = explode(',', $attended_events);
                         
                         $args = array(
-                            'post_type' => 'event',
+                            'post_type' => 'recruitment',
                             'posts_per_page' => 10,
                             'post__in' => $attended_events_array,
                             'meta_query' => array(
@@ -127,23 +127,23 @@ get_header();
                             wp_reset_postdata();
                         else : ?>
                             <div class="no-events">
-                                <p>過去に参加したイベントはありません。</p>
+                                <p>過去に参加した募集はありません。</p>
                             </div>
                         <?php endif;
                     } else { ?>
                         <div class="no-events">
-                            <p>過去に参加したイベントはありません。</p>
+                            <p>過去に参加した募集はありません。</p>
                         </div>
                     <?php } ?>
                 </div>
                 
                 <div class="tab-content" id="my-events">
-                    <h2>主催イベント一覧</h2>
+                    <h2>主催募集一覧</h2>
                     
                     <?php
                     // ユーザーが投稿したイベントを取得
                     $args = array(
-                        'post_type' => 'event',
+                        'post_type' => 'recruitment',
                         'posts_per_page' => 10,
                         'author' => $current_user->ID,
                         'orderby' => 'date',
@@ -163,8 +163,8 @@ get_header();
                         wp_reset_postdata();
                     else : ?>
                         <div class="no-events">
-                            <p>投稿したイベントはありません。</p>
-                            <a href="<?php echo esc_url(home_url('/new-post')); ?>" class="btn btn-primary">イベントを投稿する</a>
+                            <p>投稿した募集はありません。</p>
+                            <a href="<?php echo esc_url(home_url('/new-post')); ?>" class="btn btn-primary">募集を投稿する</a>
                         </div>
                     <?php endif; ?>
                 </div>
