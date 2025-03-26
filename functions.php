@@ -22,7 +22,13 @@ add_action('after_setup_theme', 'aimapping_setup');
 function aimapping_scripts() {
     wp_enqueue_style('aimapping-style', get_stylesheet_uri(), array(), '1.0.0');
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
-    wp_enqueue_script('aimapping-script', get_template_directory_uri() . '/js/main.js', array('jquery'), '1.0.0', true);
+    wp_enqueue_script('aimapping-script', get_template_directory_uri() . '/js/script.js', array('jquery'), '1.0.0', true);
+    
+    // AJAX URLとnonceをJavaScriptに渡す
+    wp_localize_script('aimapping-script', 'aimapping_ajax', array(
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('aimapping_like_nonce')
+    ));
 }
 add_action('wp_enqueue_scripts', 'aimapping_scripts');
 
@@ -148,8 +154,26 @@ function increment_post_views() {
 }
 add_action('wp_head', 'increment_post_views');
 
+// AJAX URLとnonceをJavaScriptに渡す
+function add_ajax_url() {
+    ?>
+    <script>
+        var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+        var aimapping_ajax = {
+            nonce: '<?php echo wp_create_nonce('aimapping_like_nonce'); ?>'
+        };
+    </script>
+    <?php
+}
+add_action('wp_head', 'add_ajax_url');
+
 // いいねボタンのAJAX処理
 function handle_like_button() {
+    // nonceの検証
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'aimapping_like_nonce')) {
+        wp_send_json_error('セキュリティチェックに失敗しました。');
+    }
+
     if (!isset($_POST['post_id'])) {
         wp_send_json_error('投稿IDが指定されていません。');
     }

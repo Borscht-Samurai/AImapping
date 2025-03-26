@@ -891,3 +891,50 @@ body {
     color: #666;
     margin-top: 0.5rem;
 }
+
+/* いいねボタンのスタイル */
+.like-button-container {
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.like-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.like-button:hover {
+    color: #ff4757;
+}
+
+.like-button.active {
+    color: #ff4757;
+}
+
+.like-button.active i {
+    animation: heartBeat 0.3s ease;
+}
+
+.like-count {
+    font-size: 0.9em;
+}
+
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

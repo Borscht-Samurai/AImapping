@@ -41,6 +41,14 @@
                         <?php
                     endif;
                     ?>
+
+                    <!-- いいねボタン -->
+                    <div class="like-button-container">
+                        <button class="like-button" data-post-id="<?php echo get_the_ID(); ?>">
+                            <i class="far fa-heart"></i>
+                            <span class="like-count"><?php echo get_post_likes(get_the_ID()); ?></span>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="event-details">
