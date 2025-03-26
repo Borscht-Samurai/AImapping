@@ -57,15 +57,6 @@ while (have_posts()) :
                     <?php the_content(); ?>
                 </div>
             </div>
-
-            <!-- コメントセクション -->
-            <div class="bg-white rounded-lg shadow-neumorphism p-6">
-                <?php
-                if (comments_open() || get_comments_number()) :
-                    comments_template();
-                endif;
-                ?>
-            </div>
         </div>
 
         <!-- 右カラム：イベント詳細 -->
@@ -113,6 +104,15 @@ while (have_posts()) :
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- コメントセクション -->
+    <div class="mt-8 bg-white rounded-lg shadow-neumorphism p-6">
+        <?php
+        if (comments_open() || get_comments_number()) :
+            comments_template();
+        endif;
+        ?>
     </div>
 </article>
 
