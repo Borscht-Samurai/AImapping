@@ -11,11 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const likeCount = this.querySelector('.like-count');
             const heartIcon = this.querySelector('i');
             
-            // いいねの状態を切り替え
-            this.classList.toggle('active');
-            heartIcon.classList.toggle('far');
-            heartIcon.classList.toggle('fas');
-            
             // AJAXでいいねを送信
             jQuery.ajax({
                 url: aimapping_ajax.ajaxurl,
@@ -27,20 +22,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 success: function(response) {
                     if (response.success) {
+                        // いいねの状態を更新
+                        button.classList.toggle('active', response.data.is_liked);
+                        heartIcon.classList.toggle('far', !response.data.is_liked);
+                        heartIcon.classList.toggle('fas', response.data.is_liked);
                         likeCount.textContent = response.data.likes;
                     } else {
-                        // エラー時は元の状態に戻す
-                        button.classList.toggle('active');
-                        heartIcon.classList.toggle('far');
-                        heartIcon.classList.toggle('fas');
+                        console.error('いいねの処理に失敗しました。');
                     }
                 },
                 error: function() {
                     console.error('Error:', error);
-                    // エラー時は元の状態に戻す
-                    button.classList.toggle('active');
-                    heartIcon.classList.toggle('far');
-                    heartIcon.classList.toggle('fas');
                 }
             });
         });

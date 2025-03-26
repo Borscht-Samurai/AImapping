@@ -177,12 +177,41 @@ function handle_like_button() {
     if (!isset($_POST['post_id'])) {
         wp_send_json_error('投稿IDが指定されていません。');
     }
+
     $post_id = intval($_POST['post_id']);
+    $user_id = get_current_user_id();
+    
+    // ユーザーごとのいいね状態を保存するメタキー
+    $liked_posts = get_user_meta($user_id, 'liked_posts', true);
+    if (!is_array($liked_posts)) {
+        $liked_posts = array();
+    }
+
+    // いいねの状態を確認
+    $is_liked = in_array($post_id, $liked_posts);
+    
+    // いいね数を取得
     $likes = get_post_meta($post_id, 'post_likes', true);
-    $likes = $likes ? $likes + 1 : 1;
+    $likes = $likes ? intval($likes) : 0;
+
+    if ($is_liked) {
+        // いいねを取り消す
+        $likes = max(0, $likes - 1);
+        $liked_posts = array_diff($liked_posts, array($post_id));
+    } else {
+        // いいねを追加
+        $likes++;
+        $liked_posts[] = $post_id;
+    }
+
+    // いいね数を更新
     update_post_meta($post_id, 'post_likes', $likes);
+    // ユーザーのいいね状態を更新
+    update_user_meta($user_id, 'liked_posts', $liked_posts);
+
     wp_send_json_success(array(
-        'likes' => number_format($likes)
+        'likes' => number_format($likes),
+        'is_liked' => !$is_liked
     ));
 }
 add_action('wp_ajax_handle_like', 'handle_like_button');

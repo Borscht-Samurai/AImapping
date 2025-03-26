@@ -44,8 +44,14 @@
 
                     <!-- いいねボタン -->
                     <div class="like-button-container">
-                        <button class="like-button" data-post-id="<?php echo get_the_ID(); ?>">
-                            <i class="far fa-heart"></i>
+                        <?php
+                        $user_id = get_current_user_id();
+                        $liked_posts = get_user_meta($user_id, 'liked_posts', true);
+                        $liked_posts = is_array($liked_posts) ? $liked_posts : array();
+                        $is_liked = in_array(get_the_ID(), $liked_posts);
+                        ?>
+                        <button class="like-button <?php echo $is_liked ? 'active' : ''; ?>" data-post-id="<?php echo get_the_ID(); ?>">
+                            <i class="<?php echo $is_liked ? 'fas' : 'far'; ?> fa-heart"></i>
                             <span class="like-count"><?php echo get_post_likes(get_the_ID()); ?></span>
                         </button>
                     </div>
