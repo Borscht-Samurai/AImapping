@@ -191,19 +191,10 @@ $current_user = wp_get_current_user();
                     </div>
                     
                     <div class="form-group">
-                        <label for="facebook">Facebook</label>
-                        <input type="url" id="facebook" name="facebook" class="form-control" value="<?php echo esc_url(get_user_meta($current_user->ID, 'facebook', true)); ?>" placeholder="https://facebook.com/yourusername">
-                    </div>
-                    
-                    <div class="form-group">
                         <label for="instagram">Instagram</label>
                         <input type="url" id="instagram" name="instagram" class="form-control" value="<?php echo esc_url(get_user_meta($current_user->ID, 'instagram', true)); ?>" placeholder="https://instagram.com/yourusername">
                     </div>
                     
-                    <div class="form-group">
-                        <label for="github">GitHub</label>
-                        <input type="url" id="github" name="github" class="form-control" value="<?php echo esc_url(get_user_meta($current_user->ID, 'github', true)); ?>" placeholder="https://github.com/yourusername">
-                    </div>
                 </div>
                 
                 <div class="form-section">
