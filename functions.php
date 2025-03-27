@@ -450,5 +450,75 @@ function filter_expired_recruitments($query) {
 }
 add_action('pre_get_posts', 'filter_expired_recruitments');
 
+// コメント編集用のAJAXハンドラー
+function handle_update_comment() {
+    // セキュリティチェック
+    if (!check_ajax_referer('update_comment_nonce', 'nonce', false)) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+
+    $comment_id = intval($_POST['comment_id']);
+    $content = wp_kses_post($_POST['content']);
+    $comment = get_comment($comment_id);
+
+    // 権限チェック
+    if (!$comment || $comment->user_id != get_current_user_id()) {
+        wp_send_json_error('Permission denied');
+        return;
+    }
+
+    // コメントを更新
+    $updated = wp_update_comment(array(
+        'comment_ID' => $comment_id,
+        'comment_content' => $content
+    ));
+
+    if ($updated) {
+        wp_send_json_success(array(
+            'content' => apply_filters('comment_text', $content)
+        ));
+    } else {
+        wp_send_json_error('Update failed');
+    }
+}
+add_action('wp_ajax_update_comment', 'handle_update_comment');
+
+// コメント削除用のAJAXハンドラー
+function handle_delete_comment() {
+    // セキュリティチェック
+    if (!check_ajax_referer('delete_comment_nonce', 'nonce', false)) {
+        wp_send_json_error('Invalid nonce');
+        return;
+    }
+
+    $comment_id = intval($_POST['comment_id']);
+    $comment = get_comment($comment_id);
+
+    // 権限チェック
+    if (!$comment || $comment->user_id != get_current_user_id()) {
+        wp_send_json_error('Permission denied');
+        return;
+    }
+
+    // コメントを削除
+    $deleted = wp_delete_comment($comment_id, true);
+
+    if ($deleted) {
+        wp_send_json_success();
+    } else {
+        wp_send_json_error('Delete failed');
+    }
+}
+add_action('wp_ajax_delete_comment', 'handle_delete_comment');
+
+// コメント投稿をログインユーザーのみに制限
+function restrict_comment_posting() {
+    if (!is_user_logged_in()) {
+        wp_die('コメントを投稿するにはログインが必要です。', 'ログインが必要です', array('response' => 403));
+    }
+}
+add_action('pre_comment_on_post', 'restrict_comment_posting');
+
 // ユーザー登録処理など（ここはそのまま）
 
