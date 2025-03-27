@@ -522,3 +522,90 @@ add_action('pre_comment_on_post', 'restrict_comment_posting');
 
 // ユーザー登録処理など（ここはそのまま）
 
+
+// --- 募集管理画面カスタマイズ ここから ---
+
+// 募集の管理画面一覧に開催日のカラムを追加
+function add_recruitment_columns($columns) {
+    $new_columns = array();
+    $date_column = null;
+
+    // 'date' カラム（公開日時）を一時的に保持し、元の配列から削除
+    if (isset($columns['date'])) {
+        $date_column = $columns['date'];
+        unset($columns['date']);
+    }
+
+    foreach ($columns as $key => $title) {
+        $new_columns[$key] = $title;
+        // 'title' カラムの直後に 'event_date' カラムを挿入
+        if ($key === 'title') {
+            $new_columns['event_date'] = '開催日時';
+        }
+    }
+
+    // 保持していた 'date' カラムを配列の末尾に追加（公開日時を最後に表示）
+    if ($date_column !== null) {
+        $new_columns['date'] = $date_column;
+    }
+
+    return $new_columns;
+}
+add_filter('manage_recruitment_posts_columns', 'add_recruitment_columns');
+
+// 開催日のカラムに内容を表示
+function custom_recruitment_column($column, $post_id) {
+    // 追加した 'event_date' カラムの場合のみ処理
+    if ($column === 'event_date') {
+        // 'event_date' メタデータを取得
+        $event_date = get_post_meta($post_id, 'event_date', true);
+        if (!empty($event_date)) {
+            // datetime-local形式 ('YYYY-MM-DDTHH:MM') の値をパースしてフォーマット
+            try {
+                // DateTime オブジェクトを作成
+                $datetime = new DateTime($event_date);
+                // WordPress の日付・時刻フォーマット設定に従って表示
+                echo esc_html($datetime->format(get_option('date_format') . ' ' . get_option('time_format')));
+            } catch (Exception $e) {
+                // 日付文字列のパースに失敗した場合（予期せぬ形式など）は、元の値をそのまま表示
+                echo esc_html($event_date);
+            }
+        } else {
+            // メタデータが未設定の場合はハイフンを表示
+            echo '—';
+        }
+    }
+}
+// 'manage_{post_type}_posts_custom_column' アクションフックを使用
+add_action('manage_recruitment_posts_custom_column', 'custom_recruitment_column', 10, 2);
+
+// 開催日でソート可能にする
+function recruitment_sortable_columns($columns) {
+    // 'event_date' カラムをソート可能として登録
+    $columns['event_date'] = 'event_date';
+    return $columns;
+}
+// 'manage_edit-{post_type}_sortable_columns' フィルターフックを使用
+add_filter('manage_edit-recruitment_sortable_columns', 'recruitment_sortable_columns');
+
+// 開催日でのソート処理
+function recruitment_custom_orderby($query) {
+    // 管理画面のメインクエリ、かつ recruitment 投稿タイプの場合のみ処理
+    if (!is_admin() || !$query->is_main_query() || $query->get('post_type') !== 'recruitment') {
+        return;
+    }
+
+    // クエリの 'orderby' パラメータが 'event_date' の場合
+    if ($query->get('orderby') === 'event_date') {
+        // ソートの基準となるメタキーを 'event_date' に設定
+        $query->set('meta_key', 'event_date');
+        // メタデータの値を日時 (DATETIME) として比較するように設定
+        // 'YYYY-MM-DDTHH:MM' 形式は DATETIME として扱えるため、正確なソートが可能
+        $query->set('orderby', 'meta_value_datetime');
+    }
+}
+// 'pre_get_posts' アクションフックでクエリを変更
+add_action('pre_get_posts', 'recruitment_custom_orderby');
+
+// --- 募集管理画面カスタマイズ ここまで ---
+
