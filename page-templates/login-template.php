@@ -57,7 +57,7 @@ get_header();
                 </div>
 
                 <div class="auth-footer">
-                    <p>アカウントをお持ちでない方は<a href="<?php echo esc_url(home_url('/register')); ?>">新規登録</a>へ</p>
+                    <p>アカウントをお持ちでない方は<a href="<?php echo esc_url(home_url('/register1')); ?>">新規登録</a>へ</p>
                 </div>
             </div>
         </div>

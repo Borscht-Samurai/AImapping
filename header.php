@@ -43,7 +43,7 @@
             <?php else : ?>
                 <div class="auth-buttons">
                     <a href="<?php echo esc_url(home_url('/login')); ?>" class="login-btn">ログイン</a>
-                    <a href="<?php echo esc_url(home_url('/register')); ?>" class="register-btn">新規登録</a>
+                    <a href="<?php echo esc_url(home_url('/register1')); ?>" class="register-btn">新規登録</a>
                 </div>
             <?php endif; ?>
         </div>
