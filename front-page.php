@@ -1,6 +1,13 @@
 <?php get_header(); ?>
 
 <main class="site-main">
+    <!-- 白い四角セクション -->
+    <section class="white-box-section">
+        <div class="white-box">
+            <div class="white-box-content">AI Mapping</div>
+        </div>
+    </section>
+
     <!-- ヒーローセクション -->
     <section class="hero-section">
         <div class="hero-content">
