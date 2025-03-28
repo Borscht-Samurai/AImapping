@@ -13,18 +13,6 @@
         <div class="gradient-box"></div>
     </section>
 
-    <!-- ヒーローセクション -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1>AIを活用するクリエイターのための<br>コミュニティプラットフォーム</h1>
-            <p>全国のAIクリエイターとつながり、新しいプロジェクトを始めましょう</p>
-            <div class="hero-buttons">
-                <a href="<?php echo esc_url(home_url('/register')); ?>" class="btn btn-primary">新規登録</a>
-                <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="btn btn-secondary">募集を見る</a>
-            </div>
-        </div>
-    </section>
-
     <!-- 最新の募集 -->
     <section class="latest-events">
         <div class="container">
