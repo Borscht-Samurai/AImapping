@@ -8,6 +8,11 @@
         </div>
     </section>
 
+    <!-- グラデーションセクション -->
+    <section class="gradient-box-section">
+        <div class="gradient-box"></div>
+    </section>
+
     <!-- ヒーローセクション -->
     <section class="hero-section">
         <div class="hero-content">

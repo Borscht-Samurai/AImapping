@@ -1,6 +1,11 @@
 ---
 description: 
 globs: 
+alwaysApply: false
+---
+---
+description: 
+globs: 
 alwaysApply: true
 ---
 ---
@@ -70,3 +75,6 @@ alwaysApply: true
 - WordPressのテーマは完全に自作で開発する。
 - ローカル環境の構築はLocalWPを使用する。
 - 開発支援にはCursor（AIサービス）を利用する。
+
+
+
