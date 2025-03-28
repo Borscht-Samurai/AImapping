@@ -13,10 +13,10 @@
         <div class="gradient-box"></div>
     </section>
 
-    <!-- 最新の募集 -->
-    <section class="latest-events">
+    <!-- Events -->
+    <section class="latest-events" style="margin: 0 10px;">
         <div class="container">
-            <h2>最新の募集</h2>
+            <h2>Events</h2>
             <div class="events-grid">
                 <?php
                 $args = array(

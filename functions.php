@@ -22,6 +22,7 @@ add_action('after_setup_theme', 'aimapping_setup');
 function aimapping_scripts() {
     wp_enqueue_style('aimapping-style', get_stylesheet_uri(), array(), '1.0.0');
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+    wp_enqueue_style('google-fonts-noto-sans-jp', 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap', array(), null);
     wp_enqueue_script('aimapping-script', get_template_directory_uri() . '/js/script.js', array('jquery'), '1.0.0', true);
     
     // AJAX URLとnonceをJavaScriptに渡す

@@ -76,5 +76,13 @@ alwaysApply: true
 - ローカル環境の構築はLocalWPを使用する。
 - 開発支援にはCursor（AIサービス）を利用する。
 
+テーマカラーは以下の通りです。
+FF966C
+A5FDF7
+
+front-page.phpのAI Mappingだけはフォントがpoppinsです。
+
+
+
 
 
