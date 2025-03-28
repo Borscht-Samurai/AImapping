@@ -15,14 +15,14 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-com
 :root {
     --primary-color: #6C63FF;
     --secondary-color: #4CAF50;
-    --background-color: #E0E5EC;
+    --background-color: #ffffff;
     --text-color: #2D3436;
     --shadow-light: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
     --shadow-inset: inset 9px 9px 16px rgb(163,177,198,0.6), inset -9px -9px 16px rgba(255,255,255, 0.5);
 }
 
 body {
-    background-color: var(--background-color);
+    background-color: #ffffff;
     color: var(--text-color);
     font-family: 'Noto Sans JP', sans-serif;
     line-height: 1.6;
@@ -322,7 +322,7 @@ body {
 .hero-section {
     padding: 4rem 0;
     text-align: center;
-    background-color: var(--background-color);
+    background-color: #ffffff;
 }
 
 .hero-content {
@@ -351,7 +351,7 @@ body {
 /* カテゴリー一覧 */
 .categories {
     padding: 4rem 0;
-    background-color: var(--background-color);
+    background-color: #ffffff;
 }
 
 .categories-grid {
@@ -364,7 +364,7 @@ body {
 }
 
 .category-card {
-    background-color: var(--background-color);
+    background-color: #ffffff;
     border-radius: 15px;
     padding: 2rem;
     text-align: center;
@@ -396,7 +396,7 @@ body {
 
 /* フッター */
 .site-footer {
-    background-color: var(--background-color);
+    background-color: #ffffff;
     padding: 4rem 0 2rem;
     margin-top: 4rem;
 }
@@ -471,7 +471,7 @@ body {
 
 /* イベント詳細ページ */
 .event-single {
-    background-color: var(--background-color);
+    background-color: #ffffff;
     border-radius: 15px;
     box-shadow: var(--shadow-light);
     padding: 2rem;
@@ -611,7 +611,7 @@ body {
 }
 
 .archive-filters {
-    background-color: var(--background-color);
+    background-color: #ffffff;
     border-radius: 15px;
     padding: 1.5rem;
     margin-bottom: 2rem;
@@ -641,7 +641,7 @@ body {
     padding: 0.5rem;
     border: none;
     border-radius: 8px;
-    background-color: var(--background-color);
+    background-color: #ffffff;
     box-shadow: var(--shadow-inset);
 }
 
@@ -655,7 +655,7 @@ body {
 .no-events {
     text-align: center;
     padding: 3rem;
-    background-color: var(--background-color);
+    background-color: #ffffff;
     border-radius: 15px;
     box-shadow: var(--shadow-light);
 }
@@ -793,7 +793,7 @@ body {
 }
 
 .auth-box {
-    background-color: var(--background-color);
+    background-color: #ffffff;
     border-radius: 15px;
     padding: 2rem;
     width: 100%;
@@ -832,7 +832,7 @@ body {
     padding: 0.8rem;
     border: none;
     border-radius: 8px;
-    background-color: var(--background-color);
+    background-color: #ffffff;
     box-shadow: var(--shadow-inset);
     font-size: 1rem;
 }
@@ -899,7 +899,7 @@ body {
 }
 
 .auth-separator span {
-    background-color: var(--background-color);
+    background-color: #ffffff;
     padding: 0 1rem;
     color: #666;
     font-size: 0.9rem;
