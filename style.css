@@ -1135,15 +1135,16 @@ body {
 
 .white-box-content {
     position: absolute;
-    left: 30px;
+    left: 0px;
     top: 65%;
     transform: translateY(-50%);
     font-size: clamp(50px, 15vw, 250px);
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    color: #333;
+    color: #000000;
     white-space: nowrap;
     z-index: 2;
+    letter-spacing: -0.08em;
 }
 
 /* グラデーションセクション */
