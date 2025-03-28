@@ -167,7 +167,7 @@ body {
 /* 新しい募集カードのスタイル */
 .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(345px, 1fr));
     gap: 30px;
     margin-top: 30px;
 }
