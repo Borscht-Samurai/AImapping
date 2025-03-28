@@ -11,14 +11,15 @@
 <header class="site-header">
     <div class="header-container">
         <div class="site-branding">
-            <?php
-            if (has_custom_logo()) {
-                the_custom_logo();
-            } else {
-                echo '<h1 class="site-title"><a href="' . esc_url(home_url('/')) . '">' . get_bloginfo('name') . '</a></h1>';
-                echo '<p class="site-description">' . get_bloginfo('description') . '</p>';
-            }
-            ?>
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="custom-logo-link">
+                <?php
+                if (has_custom_logo()) {
+                    the_custom_logo();
+                } else {
+                    echo '<span class="site-title">AI Mapping</span>';
+                }
+                ?>
+            </a>
         </div>
 
         <nav class="main-navigation">
@@ -28,6 +29,8 @@
                 'menu_class' => 'nav-menu',
                 'container' => false,
                 'fallback_cb' => false,
+                'items_wrap' => '<ul class="%2$s">%3$s</ul>',
+                'depth' => 1,
             ));
             ?>
         </nav>
@@ -36,14 +39,14 @@
             <?php if (is_user_logged_in()) : ?>
                 <div class="user-menu">
                     <a href="<?php echo esc_url(home_url('/user')); ?>" class="profile-link">プロフィール</a>
-                    <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="posts-link">募集一覧</a>
-                    <a href="<?php echo esc_url(home_url('/new-post')); ?>" class="new-post-btn">新規投稿</a>
+                    <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="posts-link">募集をみる</a>
+                    <a href="<?php echo esc_url(home_url('/new-post')); ?>" class="new-post-btn">投稿する</a>
                     <a href="<?php echo wp_logout_url(home_url()); ?>" class="logout-btn">ログアウト</a>
                 </div>
             <?php else : ?>
                 <div class="auth-buttons">
                     <a href="<?php echo esc_url(home_url('/login')); ?>" class="login-btn">ログイン</a>
-                    <a href="<?php echo esc_url(home_url('/register1')); ?>" class="register-btn">新規登録</a>
+                    <a href="<?php echo esc_url(home_url('/register1')); ?>" class="register-btn">新規登録をする</a>
                 </div>
             <?php endif; ?>
         </div>

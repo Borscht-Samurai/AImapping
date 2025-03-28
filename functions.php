@@ -6,8 +6,8 @@ function aimapping_setup() {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
     add_theme_support('custom-logo', array(
-        'height'      => 100,
-        'width'       => 400,
+        'height'      => 60,
+        'width'       => 300,
         'flex-height' => true,
         'flex-width'  => true,
     ));
