@@ -14,7 +14,7 @@
     </section>
 
     <!-- Events -->
-    <section class="latest-events" style="margin: 0 50px;">
+    <section class="latest-events" style="margin: 0 30px;">
         <div class="container">
             <h2>Events</h2>
             <div class="events-grid">
