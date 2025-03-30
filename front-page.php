@@ -48,8 +48,8 @@
                 endif;
                 ?>
             </div>
-            <div class="view-more">
-                <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="btn btn-outline">もっと見る</a>
+            <div class="view-more" style="text-align: center; margin-top: 40px;">
+                <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="btn btn-outline" style="background-color: white; border: 2px solid black; padding: 10px 30px; border-radius: 25px; color: black; text-decoration: none; display: inline-block;font-size: 18px;">もっと見る</a>
             </div>
         </div>
     </section>
