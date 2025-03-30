@@ -14,9 +14,9 @@
     </section>
 
     <!-- Events -->
-    <section class="latest-events" style="margin: 0 30px;">
+    <section class="latest-events" style="margin: 0 50px;">
         <div class="container">
-            <h2>Events</h2>
+            <h2 style="font-size: 40px;">Events</h2>
             <div class="events-grid">
                 <?php
                 $args = array(
