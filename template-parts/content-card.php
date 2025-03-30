@@ -85,7 +85,10 @@
 }
 
 .event-box {
-    background-color: #A5FDF7;
+    background-image: url('<?php echo get_template_directory_uri(); ?>/images/Rectangle1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     position: relative;
     height: 190px;
     width: 100%;
