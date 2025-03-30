@@ -26,25 +26,18 @@
         </div>
 
         <nav class="main-navigation">
-            <?php
-            wp_nav_menu(array(
-                'theme_location' => 'primary',
-                'menu_class' => 'nav-menu',
-                'container' => false,
-                'fallback_cb' => false,
-                'items_wrap' => '<ul class="%2$s">%3$s</ul>',
-                'depth' => 1,
-            ));
-            ?>
+            <ul class="nav-menu">
+                <li><a href="<?php echo esc_url(home_url('/about')); ?>">わたしたち</a></li>
+                <li><a href="<?php echo esc_url(home_url('/recruitment')); ?>">募集をみる</a></li>
+                <li><a href="<?php echo esc_url(home_url('/post')); ?>">投稿する</a></li>
+                <li><a href="<?php echo esc_url(home_url('/contact')); ?>">問い合わせ</a></li>
+            </ul>
         </nav>
 
         <div class="header-actions">
             <?php if (is_user_logged_in()) : ?>
                 <div class="user-menu">
-                    <a href="<?php echo esc_url(home_url('/user')); ?>" class="profile-link">プロフィール</a>
-                    <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="posts-link">募集をみる</a>
-                    <a href="<?php echo esc_url(home_url('/new-post')); ?>" class="new-post-btn">投稿する</a>
-                    <a href="<?php echo wp_logout_url(home_url()); ?>" class="logout-btn">ログアウト</a>
+                    <a href="<?php echo esc_url(home_url('/user')); ?>" class="profile-link">マイプロフィール</a>
                 </div>
             <?php else : ?>
                 <div class="auth-buttons">
