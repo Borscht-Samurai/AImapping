@@ -55,9 +55,9 @@
     </section>
 
     <!-- カテゴリー一覧 -->
-    <section class="categories">
+    <section class="categories" style="margin: 0 50px;">
         <div class="container">
-            <h2>カテゴリーから探す</h2>
+            <h2 style="font-size: 40px;">Category</h2>
             <div class="categories-grid">
                 <?php
                 $categories = get_recruitment_categories();
@@ -76,30 +76,6 @@
                     endif;
                 endforeach;
                 ?>
-            </div>
-        </div>
-    </section>
-
-    <!-- サイトの特徴 -->
-    <section class="features">
-        <div class="container">
-            <h2>AIMappingの特徴</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <i class="fas fa-users"></i>
-                    <h3>クリエイター同士の交流</h3>
-                    <p>AIを活用するクリエイター同士が集まり、知識や経験を共有できます。</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-calendar-alt"></i>
-                    <h3>イベント開催</h3>
-                    <p>オンライン・オフライン問わず、自由にイベントを開催できます。</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-project-diagram"></i>
-                    <h3>プロジェクト協力</h3>
-                    <p>新しいプロジェクトのパートナーを見つけたり、協力者を募集できます。</p>
-                </div>
             </div>
         </div>
     </section>
