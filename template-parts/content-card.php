@@ -49,6 +49,14 @@
                                 <i class="fas fa-<?php echo esc_attr($location_icon); ?>"></i>
                                 <?php echo esc_html(get_event_location()); ?>
                             </span>
+                            
+                            <div class="event-excerpt">
+                                <?php 
+                                // 投稿の抜粋を取得
+                                $excerpt = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 30);
+                                echo esc_html($excerpt);
+                                ?>
+                            </div>
                         </div>
                     </div>
                 </div>

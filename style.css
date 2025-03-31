@@ -332,16 +332,10 @@ body {
 }
 
 .event-card-bottom {
-    background-color: #ffffff;
     padding: 1rem 1.5rem;
-    height: 145px;
 }
 
 .event-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    overflow: hidden;
     margin: 0;
     padding: 0;
 }
@@ -365,7 +359,7 @@ body {
     color: #FE966C;
 }
 
-/* 募集カードの日付表示スタイル (ここから更新) */
+/* 募集カードの日付表示スタイル */
 .event-date-container {
     display: flex;
     gap: 1rem;
@@ -384,7 +378,7 @@ body {
 .event-month {
     font-size: 12px;
     font-weight: 500;
-    color: #000000;
+    color: #666;
     line-height: 1.2;
 }
 
@@ -401,8 +395,6 @@ body {
     gap: 0.5rem;
     flex: 1;
 }
-
-
 
 /* ヒーローセクション */
 .hero-section {
