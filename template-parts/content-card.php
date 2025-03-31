@@ -25,19 +25,32 @@
 
             <div class="event-card-bottom">
                 <div class="event-info">
-                    <span class="event-date">
-                        <i class="fas fa-calendar-alt"></i>
-                        <?php echo esc_html(get_event_date()); ?>
-                    </span>
                     <?php
-                    $is_online = get_post_meta(get_the_ID(), 'event_is_online', true);
-                    $location_class = $is_online ? 'online' : 'offline';
-                    $location_icon = $is_online ? 'video' : 'map-marker-alt';
+                    // イベント日付を取得してフォーマット
+                    $event_date = get_post_meta(get_the_ID(), 'event_date', true);
+                    if ($event_date) {
+                        $date_obj = new DateTime($event_date);
+                        $month = $date_obj->format('n'); // 月（先頭のゼロなし）
+                        $day = $date_obj->format('j'); // 日（先頭のゼロなし）
+                    }
                     ?>
-                    <span class="event-location <?php echo esc_attr($location_class); ?>">
-                        <i class="fas fa-<?php echo esc_attr($location_icon); ?>"></i>
-                        <?php echo esc_html(get_event_location()); ?>
-                    </span>
+                    <div class="event-date-container">
+                        <div class="event-date-display">
+                            <span class="event-month"><?php echo isset($month) ? esc_html($month . '月') : ''; ?></span>
+                            <span class="event-day"><?php echo isset($day) ? esc_html($day) : ''; ?></span>
+                        </div>
+                        <div class="event-details">
+                            <?php
+                            $is_online = get_post_meta(get_the_ID(), 'event_is_online', true);
+                            $location_class = $is_online ? 'online' : 'offline';
+                            $location_icon = $is_online ? 'video' : 'map-marker-alt';
+                            ?>
+                            <span class="event-location <?php echo esc_attr($location_class); ?>">
+                                <i class="fas fa-<?php echo esc_attr($location_icon); ?>"></i>
+                                <?php echo esc_html(get_event_location()); ?>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
