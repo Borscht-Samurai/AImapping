@@ -14,9 +14,10 @@
     </section>
 
     <!-- Events -->
-    <section class="latest-events" style="margin: 0 50px;">
+    <section class="latest-events" style="margin: 0 50px;"> <?php // TODO: インラインスタイルを削除し、CSSクラスに移行することを推奨します ?>
         <div class="container">
-            <h2 style="font-size: 40px;">Events</h2>
+            <h2 style="font-size: 40px;">Events</h2> <?php // TODO: インラインスタイルを削除し、CSSクラスに移行することを推奨します ?>
+            <!-- style.cssで統一されたevents-gridクラスを使用 -->
             <div class="events-grid">
                 <?php
                 $args = array(
@@ -48,16 +49,16 @@
                 endif;
                 ?>
             </div>
-            <div class="view-more" style="text-align: center; margin-top: 40px;">
-                <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="btn btn-outline" style="background-color: white; border: 2px solid black; padding: 10px 30px; border-radius: 25px; color: black; text-decoration: none; display: inline-block;font-size: 18px;">もっと見る</a>
+            <div class="view-more" style="text-align: center; margin-top: 40px;"> <?php // TODO: インラインスタイルを削除し、CSSクラスに移行することを推奨します ?>
+                <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="btn btn-outline" style="background-color: white; border: 2px solid black; padding: 10px 30px; border-radius: 25px; color: black; text-decoration: none; display: inline-block;font-size: 18px;">もっと見る</a> <?php // TODO: インラインスタイルを削除し、CSSクラス (例: .btn-view-more) に移行することを推奨します ?>
             </div>
         </div>
     </section>
 
     <!-- カテゴリー一覧 -->
-    <section class="categories" style="margin: 0 50px;">
+    <section class="categories" style="margin: 0 50px;"> <?php // TODO: インラインスタイルを削除し、CSSクラスに移行することを推奨します ?>
         <div class="container">
-            <h2 style="font-size: 40px;">Category</h2>
+            <h2 style="font-size: 40px;">Category</h2> <?php // TODO: インラインスタイルを削除し、CSSクラスに移行することを推奨します ?>
             <div class="categories-grid">
                 <?php
                 $categories = get_recruitment_categories();

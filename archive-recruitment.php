@@ -74,8 +74,8 @@ get_header();
 
         <!-- 募集一覧 -->
         <?php if (have_posts()) : ?>
-            <!-- フロントページと同じスタイルの募集一覧グリッド -->
-            <div class="events-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(345px, 1fr)); gap: 30px; margin-top: 30px;">
+            <!-- 募集一覧グリッド - style.cssで統一されたクラス使用 -->
+            <div class="events-grid">
                 <?php while (have_posts()) : the_post(); ?>
                     <?php get_template_part('template-parts/content', 'card'); ?>
                 <?php endwhile; ?>
@@ -103,131 +103,5 @@ get_header();
         <?php endif; ?>
     </div>
 </main>
-
-<style>
-/* カラーパレットの定義 */
-:root {
-    --color-primary: #FF966C;      /* テーマカラー1: FF966C */
-    --color-secondary: #A5FDF7;    /* テーマカラー2: A5FDF7 */
-    --color-primary-dark: #e87e50; /* 暗めのプライマリカラー */
-    --color-background: #FFFFFF;   /* 背景色を白に設定 */
-    --color-text: #2D3748;         /* テキストカラー - ダークグレー */
-    --shadow-light: #FFFFFF;
-    --shadow-dark: #D1D9E6;
-}
-
-body {
-    background-color: #FFFFFF; /* 背景色を白色に設定 */
-}
-
-/* ニューモーフィズムの基本スタイル */
-.shadow-neumorphism {
-    background: #FFFFFF; /* ニューモーフィズムの背景も白色に変更 */
-    box-shadow: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-}
-
-.shadow-neumorphism:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-
-/* フォームコントロールのニューモーフィズム */
-.filter-form select,
-.filter-form input {
-    background: var(--color-background);
-    border: none;
-    box-shadow: 
-        inset 4px 4px 8px var(--shadow-dark),
-        inset -4px -4px 8px var(--shadow-light);
-    transition: all 0.3s ease;
-}
-
-.filter-form select:focus,
-.filter-form input:focus {
-    box-shadow: 
-        inset 6px 6px 12px var(--shadow-dark),
-        inset -6px -6px 12px var(--shadow-light);
-}
-
-/* ボタンのニューモーフィズム */
-.bg-primary {
-    background: var(--color-primary);
-    box-shadow: 
-        6px 6px 12px var(--shadow-dark),
-        -6px -6px 12px var(--shadow-light);
-    transition: all 0.3s ease;
-}
-
-.bg-primary:hover {
-    background: var(--color-primary-dark);
-    transform: translateY(-2px);
-}
-
-/* ページネーションの改善 */
-.pagination-neumorphism {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 40px;
-}
-
-.pagination-neumorphism .page-numbers {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: var(--color-background);
-    box-shadow: 
-        6px 6px 12px var(--shadow-dark),
-        -6px -6px 12px var(--shadow-light);
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    color: var(--color-text);
-    text-decoration: none;
-}
-
-.pagination-neumorphism .page-numbers.current,
-.pagination-neumorphism .page-numbers:hover {
-    background: var(--color-background);
-    box-shadow: 
-        inset 6px 6px 12px var(--shadow-dark),
-        inset -6px -6px 12px var(--shadow-light);
-    color: var(--color-primary);
-}
-
-/* イベントカードのスタイル - フロントページと統一 */
-.event-card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    margin-bottom: 1.5rem;
-    max-width: 345px;
-    height: 335px;
-}
-
-.event-card-inner {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff;
-    background-color: #ffffff;
-    padding: 0;
-}
-
-.event-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-
-/* メディアクエリでモバイル表示を調整 */
-@media (max-width: 768px) {
-    .events-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
 
 <?php get_footer(); ?>
