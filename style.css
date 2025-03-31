@@ -332,7 +332,7 @@ body {
 }
 
 .event-card-bottom {
-    padding: 1rem 1.5rem;
+    padding: 1rem 10px;
 }
 
 .event-info {
@@ -376,7 +376,7 @@ body {
 }
 
 .event-month {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     color: #666;
     line-height: 1.2;
