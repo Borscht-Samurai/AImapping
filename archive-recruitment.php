@@ -1,7 +1,10 @@
-<?php get_header(); ?>
+<?php
+// archive-recruitment.php - 募集一覧ページテンプレート
+get_header();
+?>
 
 <main class="site-main">
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto py-8" style="margin: 0 50px;">
         <div class="archive-header mb-8">
             <h1 class="text-3xl font-bold mb-4">Events</h1>
             <div class="archive-description">
@@ -71,7 +74,8 @@
 
         <!-- 募集一覧 -->
         <?php if (have_posts()) : ?>
-            <div class="events-grid">
+            <!-- フロントページと同じスタイルの募集一覧グリッド -->
+            <div class="events-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(345px, 1fr)); gap: 30px; margin-top: 30px;">
                 <?php while (have_posts()) : the_post(); ?>
                     <?php get_template_part('template-parts/content', 'card'); ?>
                 <?php endwhile; ?>
@@ -103,16 +107,17 @@
 <style>
 /* カラーパレットの定義 */
 :root {
-    --color-primary: #6C63FF;      /* 明るい紫色 */
-    --color-primary-dark: #5A52D5;
-    --color-background: #E6E9EF;   /* 薄いグレー */
-    --color-text: #2D3748;         /* ダークグレー */
+    --color-primary: #FF966C;      /* テーマカラー1: FF966C */
+    --color-secondary: #A5FDF7;    /* テーマカラー2: A5FDF7 */
+    --color-primary-dark: #e87e50; /* 暗めのプライマリカラー */
+    --color-background: #FFFFFF;   /* 背景色を白に設定 */
+    --color-text: #2D3748;         /* テキストカラー - ダークグレー */
     --shadow-light: #FFFFFF;
     --shadow-dark: #D1D9E6;
 }
 
 body {
-    background-color: #FFFFFF; /* 背景色を白色に変更 */
+    background-color: #FFFFFF; /* 背景色を白色に設定 */
 }
 
 /* ニューモーフィズムの基本スタイル */
@@ -164,20 +169,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* 新しい募集カードのスタイル */
-.events-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(345px, 1fr));
-    gap: 30px;
-    margin-top: 30px;
-}
-
-@media (max-width: 768px) {
-    .events-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 /* ページネーションの改善 */
 .pagination-neumorphism {
     display: flex;
@@ -210,6 +201,13 @@ body {
         inset -6px -6px 12px var(--shadow-light);
     color: var(--color-primary);
 }
+
+/* メディアクエリでモバイル表示を調整 */
+@media (max-width: 768px) {
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+}
 </style>
 
-<?php get_footer(); ?> 
+<?php get_footer(); ?>
