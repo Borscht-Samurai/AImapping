@@ -123,18 +123,14 @@ body {
 /* ニューモーフィズムの基本スタイル */
 .shadow-neumorphism {
     background: #FFFFFF; /* ニューモーフィズムの背景も白色に変更 */
-    box-shadow: 
-        8px 8px 16px var(--shadow-dark),
-        -8px -8px 16px var(--shadow-light);
+    box-shadow: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff;
     border-radius: 20px;
     transition: all 0.3s ease;
 }
 
 .shadow-neumorphism:hover {
     transform: translateY(-2px);
-    box-shadow: 
-        10px 10px 20px var(--shadow-dark),
-        -10px -10px 20px var(--shadow-light);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }
 
 /* フォームコントロールのニューモーフィズム */
@@ -200,6 +196,30 @@ body {
         inset 6px 6px 12px var(--shadow-dark),
         inset -6px -6px 12px var(--shadow-light);
     color: var(--color-primary);
+}
+
+/* イベントカードのスタイル - フロントページと統一 */
+.event-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 1.5rem;
+    max-width: 345px;
+    height: 335px;
+}
+
+.event-card-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff;
+    background-color: #ffffff;
+    padding: 0;
+}
+
+.event-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }
 
 /* メディアクエリでモバイル表示を調整 */
