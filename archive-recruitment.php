@@ -3,7 +3,7 @@
 <main class="site-main">
     <div class="container mx-auto px-4 py-8">
         <div class="archive-header mb-8">
-            <h1 class="text-3xl font-bold mb-4">募集一覧</h1>
+            <h1 class="text-3xl font-bold mb-4">Events</h1>
             <div class="archive-description">
                 <p class="text-gray-600">AIを活用するクリエイター同士が集まる募集を探すことができます。</p>
             </div>
@@ -112,12 +112,12 @@
 }
 
 body {
-    background-color: var(--color-background);
+    background-color: #FFFFFF; /* 背景色を白色に変更 */
 }
 
 /* ニューモーフィズムの基本スタイル */
 .shadow-neumorphism {
-    background: var(--color-background);
+    background: #FFFFFF; /* ニューモーフィズムの背景も白色に変更 */
     box-shadow: 
         8px 8px 16px var(--shadow-dark),
         -8px -8px 16px var(--shadow-light);
