@@ -59,10 +59,6 @@ get_header();
                         <i class="fab fa-google"></i>
                         Googleで登録
                     </a>
-                    <a href="<?php echo esc_url(home_url('/wp-login.php?registerSocial=github')); ?>" class="btn btn-social btn-github">
-                        <i class="fab fa-github"></i>
-                        GitHubで登録
-                    </a>
                 </div>
 
                 <div class="auth-footer">
