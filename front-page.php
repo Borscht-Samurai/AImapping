@@ -55,6 +55,11 @@
         </div>
     </section>
 
+    <!-- 新しいセクション - もっと見るボタンの下のボックス -->
+    <section class="aqua-box-section" style="margin-top: 0px; background-color: #A5FDF7; width: 100%; height: 252px;">
+        <!-- ここにコンテンツを追加できます -->
+    </section>
+
     <!-- カテゴリー一覧 -->
     <section class="categories" style="margin: 0 50px;"> <?php // TODO: インラインスタイルを削除し、CSSクラスに移行することを推奨します ?>
         <div class="container">
