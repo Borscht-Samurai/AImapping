@@ -56,8 +56,12 @@
     </section>
 
     <!-- 新しいセクション - もっと見るボタンの下のボックス -->
-    <section class="aqua-box-section" style="margin-top: 0px; background-color: #A5FDF7; width: 100%; height: 252px;">
-        <!-- ここにコンテンツを追加できます -->
+    <section class="aqua-box-section" style="margin-top: 0px; background-color: #A5FDF7; width: 100%; height: 252px; display: flex; align-items: center;">
+        <div class="container" style="text-align: left; padding: 20px;">
+            <h2 style="font-weight: bold; font-size: 34px; margin-bottom: -10px;">イベントを登録する</h2>
+            <p>全国のAIクリエイターとつながり、<br>新しいプロジェクトを始めましょう</p>
+            <a href="<?php echo esc_url(home_url('/register')); ?>" class="btn btn-primary" style="background-color: #FF966C; color: white; padding: 10px 20px; border-radius: 50px; text-decoration: none; border: none;">新規登録をする</a>
+        </div>
     </section>
 
     <!-- カテゴリー一覧 -->
