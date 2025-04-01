@@ -57,11 +57,34 @@
 
     <!-- 新しいセクション - もっと見るボタンの下のボックス -->
     <section class="aqua-box-section" style="margin-top: 0px; background-color: #A5FDF7; width: 100%; height: 252px; display: flex; align-items: center;">
-        <div class="container" style="text-align: left; padding: 20px;">
+        <div class="container" style="text-align: left; padding: 20px; margin-left: 240px; max-width: 100%; box-sizing: border-box;">
             <h2 style="font-weight: bold; font-size: 34px; margin-bottom: -10px;">イベントを登録する</h2>
             <p>全国のAIクリエイターとつながり、<br>新しいプロジェクトを始めましょう</p>
-            <a href="<?php echo esc_url(home_url('/register')); ?>" class="btn btn-primary" style="background-color: #FF966C; color: white; padding: 10px 20px; border-radius: 50px; text-decoration: none; border: none;">新規登録をする</a>
+            <a href="<?php echo esc_url(home_url('/register')); ?>" class="btn btn-primary" style="background-color: #FF966C; color: white; padding: 10px 20px; border-radius: 50px; text-decoration: none; border: none; display: inline-block;">新規登録をする</a>
         </div>
+        <style>
+            @media screen and (max-width: 768px) {
+                .aqua-box-section .container {
+                    margin-left: 20px !important;
+                    padding: 15px !important;
+                }
+                .aqua-box-section h2 {
+                    font-size: 28px !important;
+                }
+                .aqua-box-section br {
+                    display: none;
+                }
+            }
+            @media screen and (max-width: 480px) {
+                .aqua-box-section .container {
+                    margin-left: 10px !important;
+                    padding: 10px !important;
+                }
+                .aqua-box-section h2 {
+                    font-size: 24px !important;
+                }
+            }
+        </style>
     </section>
 
     <!-- カテゴリー一覧 -->
