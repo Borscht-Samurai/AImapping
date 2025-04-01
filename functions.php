@@ -610,3 +610,64 @@ add_action('pre_get_posts', 'recruitment_custom_orderby');
 
 // --- 募集管理画面カスタマイズ ここまで ---
 
+/**
+ * ログイン失敗時のリダイレクト先をカスタムログインページに変更する
+ */
+function custom_login_failed_redirect( $username ) {
+    // リファラー（フォームが送信されたページ）を取得
+    $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+
+    // カスタムログインページのURLを取得
+    // '/login/' の部分は、実際のログインページのパーマリンク（スラッグ）に合わせて変更してください
+    $custom_login_page_url = home_url('/login/'); // ← ここの '/login/' を確認・修正してください
+
+    // リファラーがカスタムログインページであり、ユーザー名またはパスワードが入力されている場合
+    // (ユーザー名とパスワードの空チェックは authenticate フックで行うため、ここではチェックしない)
+    if ( !empty($referrer) && strpos($referrer, $custom_login_page_url) !== false ) {
+        // カスタムログインページに 'login=failed' パラメータを付けてリダイレクト
+        // wp_redirect() は exit しないので、後続の処理を防ぐために exit を呼び出す
+        wp_redirect( add_query_arg('login', 'failed', $custom_login_page_url) );
+        exit;
+    }
+    // それ以外の場合はデフォルトの動作（wp-login.phpでのエラー表示）に任せる可能性があるが、
+    // 通常はこのテンプレートから送信されるはずなので、リダイレクトされる想定
+}
+add_action( 'wp_login_failed', 'custom_login_failed_redirect', 10, 1 ); // 優先度を指定
+
+/**
+ * ユーザー名・パスワードが空の場合のリダイレクト処理
+ */
+function custom_login_empty_redirect( $user, $username, $password ) {
+    $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+
+    // カスタムログインページのURLを取得
+    // '/login/' の部分は、実際のログインページのパーマリンク（スラッグ）に合わせて変更してください
+    $custom_login_page_url = home_url('/login/'); // ← ここの '/login/' を確認・修正してください
+
+    // リファラーがカスタムログインページの場合のみ処理
+    if ( !empty($referrer) && strpos($referrer, $custom_login_page_url) !== false ) {
+        // ユーザー名またはパスワードが空の場合
+        if ( empty($username) || empty($password) ) {
+            // wp_authenticate() が WP_Error を返すようにすると、wp_login_failed フックが呼ばれる
+            // ここでエラーオブジェクトを生成し、wp_login_failed フック側でリダイレクトさせる
+            $error = new WP_Error();
+            // エラーコードは何でもよいが、 'empty_fields' など分かりやすいものが推奨される
+            $error->add('empty_fields', __('<strong>エラー</strong>: ユーザー名とパスワードの両方を入力してください。', 'textdomain')); // textdomain はテーマに合わせて変更
+            // wp_login_failed フックにエラーオブジェクトを渡すために、ユーザー引数を上書きする
+            // （通常は $username を渡すが、WP_Error オブジェクトを渡すことで login_failed 側で処理を分岐できるかもしれないが、
+            //   wp_login_failed フックの引数は $username 固定のため、この方法は使えない）
+
+            // 代わりに、ここで直接リダイレクトする
+             wp_redirect( add_query_arg('login', 'failed', $custom_login_page_url) );
+             exit;
+
+            // return $error; // これを返すと wp-login.php のエラー表示になる
+        }
+    }
+    // ユーザー名・パスワードが入力されていれば、通常の認証処理へ
+    return $user;
+}
+// authenticate フックは認証プロセスの一番最初に行われるため、優先度をデフォルトより少し後 (例: 30) に設定
+// 他のプラグイン（例：セキュリティ系）が authenticate フックを使っている場合、競合しないように調整が必要
+add_filter( 'authenticate', 'custom_login_empty_redirect', 30, 3 );
+
