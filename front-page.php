@@ -62,6 +62,7 @@
             <p>全国のAIクリエイターとつながり、<br>新しいプロジェクトを始めましょう</p>
             <a href="<?php echo esc_url(home_url('/register')); ?>" class="btn btn-primary" style="background-color: #FF966C; color: white; padding: 10px 20px; border-radius: 50px; text-decoration: none; border: none; display: inline-block;">新規登録をする</a>
         </div>
+        <img src="<?php echo esc_url(get_template_directory_uri() . '/images/9_Mindset_3D_Metal_Calendar.png'); ?>" alt="カレンダー" style="max-width: 100%; height: auto; margin-left: 100px; margin-top: -90px;" />
         <style>
             @media screen and (max-width: 768px) {
                 .aqua-box-section .container {
