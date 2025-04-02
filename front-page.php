@@ -56,13 +56,13 @@
     </section>
 
     <!-- 新しいセクション - もっと見るボタンの下のボックス -->
-    <section class="aqua-box-section" style="margin-top: 0px; background-color: #A5FDF7; width: 100%; height: 252px; display: flex; align-items: center;">
-        <div class="container" style="text-align: left; padding: 20px; margin-left: 240px; max-width: 100%; box-sizing: border-box;">
+    <section class="aqua-box-section" style="margin-top: 20px; background-color: #A5FDF7; width: 100%; height: 252px; display: flex; justify-content: center; align-items: center;">
+        <div class="container" style="text-align: left; padding: 20px; margin-left: 20px; max-width: 100%; box-sizing: border-box;">
             <h2 style="font-weight: bold; font-size: 34px; margin-bottom: -10px;">イベントを登録する</h2>
             <p>全国のAIクリエイターとつながり、<br>新しいプロジェクトを始めましょう</p>
-            <a href="<?php echo esc_url(home_url('/register')); ?>" class="btn btn-primary" style="background-color: #FF966C; color: white; padding: 10px 20px; border-radius: 50px; text-decoration: none; border: none; display: inline-block;">新規登録をする</a>
+            <a href="<?php echo esc_url(home_url('/register')); ?>" class="btn btn-primary" style="background-color: #FF966C; color: white; padding: 10px 20px; border-radius: 50px; text-decoration: none; border: none; display: inline-block; width: 208px; height: 35px; font-size: 15px; text-align: center; line-height: 35px;">新規登録をする</a>
         </div>
-        <img src="<?php echo esc_url(get_template_directory_uri() . '/images/9_Mindset_3D_Metal_Calendar.png'); ?>" alt="カレンダー" style="max-width: 100%; height: auto; margin-left: 100px; margin-top: -90px;" />
+        <img src="<?php echo esc_url(get_template_directory_uri() . '/images/9_Mindset_3D_Metal_Calendar.png'); ?>" alt="カレンダー" style="max-width: 100%; height: auto; margin-left: 120px; margin-top: -90px;" />
         <style>
             @media screen and (max-width: 768px) {
                 .aqua-box-section .container {
