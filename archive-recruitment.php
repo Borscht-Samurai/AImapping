@@ -139,4 +139,25 @@ get_header();
     </div>
 </main>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const locationSelect = document.getElementById('location');
+    const eventLocationSelect = document.getElementById('event_location');
+
+    // イベント場所が選択されたら開催形式をオフラインに自動設定
+    eventLocationSelect.addEventListener('change', function() {
+        if (this.value !== '') {
+            locationSelect.value = 'offline';
+        }
+    });
+
+    // 開催形式がオンラインに変更されたらイベント場所の選択をリセット
+    locationSelect.addEventListener('change', function() {
+        if (this.value === 'online') {
+            eventLocationSelect.value = '';
+        }
+    });
+});
+</script>
+
 <?php get_footer(); ?>

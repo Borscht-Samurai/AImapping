@@ -374,6 +374,24 @@ function aimapping_filter_query($query) {
 
     // 募集アーカイブページの場合の処理
     if ($query->is_post_type_archive('recruitment') || $query->is_tax('recruitment_category')) {
+        // 検索フィルターに関連するメタクエリを初期化
+        $meta_query = array();
+
+        // 期限切れの募集を非表示にする（既存のfilter_expired_recruitmentsの内容と統合）
+        $meta_query[] = array(
+            'relation' => 'OR',
+            array(
+                'key' => 'event_date',
+                'value' => current_time('mysql'),
+                'compare' => '>=',
+                'type' => 'DATETIME'
+            ),
+            array(
+                'key' => 'event_date',
+                'compare' => 'NOT EXISTS'
+            )
+        );
+
         // カテゴリーフィルター
         if (isset($_GET['category']) && !empty($_GET['category']) && $_GET['category'] != 0) {
             $tax_query = array(
@@ -388,8 +406,6 @@ function aimapping_filter_query($query) {
 
         // 開催形式フィルター（オンライン/オフライン）
         if (isset($_GET['location']) && !empty($_GET['location'])) {
-            $meta_query = array();
-            
             if ($_GET['location'] === 'online') {
                 $meta_query[] = array(
                     'key'     => 'event_is_online',
@@ -403,23 +419,30 @@ function aimapping_filter_query($query) {
                     'compare' => '='
                 );
             }
-            
-            $query->set('meta_query', $meta_query);
         }
 
-        // 開催場所フィルター
+        // 開催場所フィルター（オフラインの場合のみ適用）
         if (isset($_GET['event_location']) && !empty($_GET['event_location'])) {
-            $meta_query = $query->get('meta_query');
-            if (!is_array($meta_query)) {
-                $meta_query = array();
-            }
-            
-            $meta_query[] = array(
-                'key'     => 'event_location',
-                'value'   => $_GET['event_location'],
-                'compare' => 'LIKE'
+            // オフライン且つ特定の開催場所を指定する場合の条件
+            $location_meta_query = array(
+                'relation' => 'AND',
+                array(
+                    'key'     => 'event_is_online',
+                    'value'   => '0',
+                    'compare' => '='
+                ),
+                array(
+                    'key'     => 'event_location',
+                    'value'   => $_GET['event_location'],
+                    'compare' => '='
+                )
             );
             
+            $meta_query[] = $location_meta_query;
+        }
+
+        // メタクエリを設定
+        if (!empty($meta_query)) {
             $query->set('meta_query', $meta_query);
         }
 
@@ -448,22 +471,8 @@ add_action('pre_get_posts', 'aimapping_filter_query');
 
 // 募集一覧のクエリを修正して期限切れの募集を非表示にする
 function filter_expired_recruitments($query) {
-    if (!is_admin() && $query->is_main_query() && is_post_type_archive('recruitment')) {
-        $meta_query = array(
-            'relation' => 'OR',
-            array(
-                'key' => 'event_date',
-                'value' => current_time('mysql'),
-                'compare' => '>=',
-                'type' => 'DATETIME'
-            ),
-            array(
-                'key' => 'event_date',
-                'compare' => 'NOT EXISTS'
-            )
-        );
-        $query->set('meta_query', $meta_query);
-    }
+    // この関数の機能はaimapping_filter_query関数に統合されたため、空にします
+    return;
 }
 add_action('pre_get_posts', 'filter_expired_recruitments');
 
