@@ -407,6 +407,22 @@ function aimapping_filter_query($query) {
             $query->set('meta_query', $meta_query);
         }
 
+        // 開催場所フィルター
+        if (isset($_GET['event_location']) && !empty($_GET['event_location'])) {
+            $meta_query = $query->get('meta_query');
+            if (!is_array($meta_query)) {
+                $meta_query = array();
+            }
+            
+            $meta_query[] = array(
+                'key'     => 'event_location',
+                'value'   => $_GET['event_location'],
+                'compare' => 'LIKE'
+            );
+            
+            $query->set('meta_query', $meta_query);
+        }
+
         // 並び順の設定
         if (isset($_GET['orderby']) && !empty($_GET['orderby'])) {
             switch($_GET['orderby']) {
