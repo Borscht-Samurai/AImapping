@@ -3,6 +3,28 @@
 get_header();
 ?>
 
+<style>
+.search-filters {
+    background-color: #000000;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 32px;
+    font-size: 0.8rem;  
+}
+
+.search-filters label {
+    color: #ffffff;
+}
+
+.search-filters select {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 8px;
+    width: 100%;
+}
+</style>
+
 <main class="site-main">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="archive-header mb-8">
@@ -13,10 +35,10 @@ get_header();
         </div>
 
         <!-- 検索フィルター -->
-        <div class="search-filters mb-8">
+        <div class="search-filters">
             <form class="filter-form flex flex-wrap gap-4" method="get">
                 <div class="filter-group flex-1 min-w-[200px]">
-                    <label for="category" class="block mb-1 font-medium">カテゴリー：</label>
+                    <label for="category">カテゴリー：</label>
                     <?php
                     wp_dropdown_categories(array(
                         'taxonomy' => 'recruitment_category',
@@ -30,8 +52,8 @@ get_header();
                 </div>
 
                 <div class="filter-group flex-1 min-w-[200px]">
-                    <label for="orderby" class="block mb-1 font-medium">並び順：</label>
-                    <select name="orderby" id="orderby" class="w-full p-2 border rounded bg-white">
+                    <label for="orderby">並び順：</label>
+                    <select name="orderby" id="orderby">
                         <option value="date" <?php selected(isset($_GET['orderby']) ? $_GET['orderby'] : '', 'date'); ?>>新着順</option>
                         <option value="views" <?php selected(isset($_GET['orderby']) ? $_GET['orderby'] : '', 'views'); ?>>閲覧数順</option>
                         <option value="likes" <?php selected(isset($_GET['orderby']) ? $_GET['orderby'] : '', 'likes'); ?>>いいね数順</option>
@@ -39,8 +61,8 @@ get_header();
                 </div>
 
                 <div class="filter-group flex-1 min-w-[200px]">
-                    <label for="location" class="block mb-1 font-medium">開催形式：</label>
-                    <select name="location" id="location" class="w-full p-2 border rounded bg-white">
+                    <label for="location">開催形式：</label>
+                    <select name="location" id="location">
                         <option value="">すべて</option>
                         <option value="online" <?php selected(isset($_GET['location']) ? $_GET['location'] : '', 'online'); ?>>オンライン</option>
                         <option value="offline" <?php selected(isset($_GET['location']) ? $_GET['location'] : '', 'offline'); ?>>オフライン</option>
@@ -48,8 +70,8 @@ get_header();
                 </div>
 
                 <div class="filter-group flex-1 min-w-[200px]">
-                    <label for="event_location" class="block mb-1 font-medium">開催場所：</label>
-                    <select name="event_location" id="event_location" class="w-full p-2 border rounded bg-white">
+                    <label for="event_location">開催場所：</label>
+                    <select name="event_location" id="event_location">
                         <option value="">すべての場所</option>
                         <option value="北海道" <?php selected(isset($_GET['event_location']) ? $_GET['event_location'] : '', '北海道'); ?>>北海道</option>
                         <option value="青森県" <?php selected(isset($_GET['event_location']) ? $_GET['event_location'] : '', '青森県'); ?>>青森県</option>
