@@ -111,7 +111,7 @@ get_header();
 </style>
 
 <main class="site-main">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="container mx-auto px-5 py-8" style="margin-left: 20px; margin-right: 20px;">
         <div class="archive-header mb-8">
             <h1 class="text-3xl font-bold mb-4">Events</h1>
             <div class="archive-description">
@@ -235,10 +235,12 @@ get_header();
         <!-- 募集一覧 -->
         <?php if (have_posts()) : ?>
             <!-- 募集一覧グリッド - style.cssで統一されたクラス使用 -->
-            <div class="events-grid">
-                <?php while (have_posts()) : the_post(); ?>
-                    <?php get_template_part('template-parts/content', 'card'); ?>
-                <?php endwhile; ?>
+            <div class="events-grid-container">
+                <div class="events-grid">
+                    <?php while (have_posts()) : the_post(); ?>
+                        <?php get_template_part('template-parts/content', 'card'); ?>
+                    <?php endwhile; ?>
+                </div>
             </div>
 
             <!-- ページネーション -->
