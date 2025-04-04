@@ -10,6 +10,9 @@ get_header();
     padding: 24px;
     margin-bottom: 32px;
     font-size: 0.8rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .search-filters label {
