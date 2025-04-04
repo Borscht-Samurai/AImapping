@@ -9,19 +9,104 @@ get_header();
     border-radius: 8px;
     padding: 24px;
     margin-bottom: 32px;
-    font-size: 0.8rem;  
+    font-size: 0.8rem;
 }
 
 .search-filters label {
     color: #ffffff;
 }
 
-.search-filters select {
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 4px;
-    padding: 8px;
-    width: 100%;
+/* ドロップダウンメニューの白色下線デザイン */
+.search-filters select,
+.search-filters .dropdown-select,
+.search-filters select.dropdown-select,
+#category,
+#orderby,
+#location,
+#event_location {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-bottom: 1px solid #ffffff !important;
+    border-radius: 0 !important;
+    padding: 8px 16px 8px 0 !important;
+    width: 100% !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" viewBox="0 0 12 6"><path fill="white" d="M0 0l6 6 6-6z"/></svg>') !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.5rem center !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: none !important;
+}
+
+.search-filters select:hover,
+.search-filters .dropdown-select:hover,
+#category:hover,
+#orderby:hover,
+#location:hover,
+#event_location:hover {
+    border-bottom: 2px solid #ffffff !important;
+    transform: translateY(-2px);
+    background-color: #000000 !important;
+}
+
+.search-filters select:focus,
+.search-filters .dropdown-select:focus,
+#category:focus,
+#orderby:focus,
+#location:focus,
+#event_location:focus {
+    outline: none !important;
+    border-bottom: 2px solid #ffffff !important;
+    background-color: #000000 !important;
+    box-shadow: none !important;
+}
+
+.search-filters select option,
+.search-filters .dropdown-select option,
+#category option,
+#orderby option,
+#location option,
+#event_location option {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+/* 白色下線のボタンデザイン */
+.search-underline-btn {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+    background: none !important;
+    border: none !important;
+    padding: 8px 16px !important;
+    position: relative !important;
+    cursor: pointer !important;
+    font-size: 0.9rem !important;
+    transition: all 0.3s ease !important;
+    box-shadow: none !important;
+}
+
+.search-underline-btn::after {
+    content: '' !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 1px !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    background-color: #ffffff !important;
+    transition: all 0.3s ease !important;
+}
+
+.search-underline-btn:hover::after {
+    height: 2px !important;
+}
+
+.search-underline-btn:hover {
+    transform: translateY(-2px) !important;
+    background-color: #000000 !important;
 }
 </style>
 
@@ -40,20 +125,38 @@ get_header();
                 <div class="filter-group flex-1 min-w-[200px]">
                     <label for="category">カテゴリー：</label>
                     <?php
+                    // カテゴリードロップダウンのスタイルを上書きするスクリプトを追加
+                    add_action('wp_footer', function() {
+                        echo '<script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                // ドロップダウンのスタイルを強制的に適用
+                                const dropdowns = document.querySelectorAll("#category, #orderby, #location, #event_location");
+                                dropdowns.forEach(function(dropdown) {
+                                    dropdown.style.backgroundColor = "#000000";
+                                    dropdown.style.color = "#ffffff";
+                                    dropdown.style.border = "none";
+                                    dropdown.style.borderBottom = "1px solid #ffffff";
+                                    dropdown.style.borderRadius = "0";
+                                    dropdown.style.boxShadow = "none";
+                                });
+                            });
+                        </script>';
+                    });
+
                     wp_dropdown_categories(array(
                         'taxonomy' => 'recruitment_category',
                         'name' => 'category',
                         'selected' => isset($_GET['category']) ? $_GET['category'] : 0,
                         'show_option_all' => 'すべてのカテゴリー',
                         'hide_empty' => true,
-                        'class' => 'w-full p-2 border rounded bg-white'
+                        'class' => 'dropdown-select'
                     ));
                     ?>
                 </div>
 
                 <div class="filter-group flex-1 min-w-[200px]">
                     <label for="orderby">並び順：</label>
-                    <select name="orderby" id="orderby">
+                    <select name="orderby" id="orderby" class="dropdown-select">
                         <option value="date" <?php selected(isset($_GET['orderby']) ? $_GET['orderby'] : '', 'date'); ?>>新着順</option>
                         <option value="views" <?php selected(isset($_GET['orderby']) ? $_GET['orderby'] : '', 'views'); ?>>閲覧数順</option>
                         <option value="likes" <?php selected(isset($_GET['orderby']) ? $_GET['orderby'] : '', 'likes'); ?>>いいね数順</option>
@@ -62,7 +165,7 @@ get_header();
 
                 <div class="filter-group flex-1 min-w-[200px]">
                     <label for="location">開催形式：</label>
-                    <select name="location" id="location">
+                    <select name="location" id="location" class="dropdown-select">
                         <option value="">すべて</option>
                         <option value="online" <?php selected(isset($_GET['location']) ? $_GET['location'] : '', 'online'); ?>>オンライン</option>
                         <option value="offline" <?php selected(isset($_GET['location']) ? $_GET['location'] : '', 'offline'); ?>>オフライン</option>
@@ -71,7 +174,7 @@ get_header();
 
                 <div class="filter-group flex-1 min-w-[200px]">
                     <label for="event_location">開催場所：</label>
-                    <select name="event_location" id="event_location">
+                    <select name="event_location" id="event_location" class="dropdown-select">
                         <option value="">すべての場所</option>
                         <option value="北海道" <?php selected(isset($_GET['event_location']) ? $_GET['event_location'] : '', '北海道'); ?>>北海道</option>
                         <option value="青森県" <?php selected(isset($_GET['event_location']) ? $_GET['event_location'] : '', '青森県'); ?>>青森県</option>
@@ -124,7 +227,7 @@ get_header();
                 </div>
 
                 <div class="filter-actions flex-1 min-w-[200px] flex items-end">
-                    <button type="submit" class="px-6 py-2 bg-primary text-white rounded hover:bg-primary-dark transition-colors">検索</button>
+                    <button type="submit" class="search-underline-btn">検索</button>
                 </div>
             </form>
         </div>
