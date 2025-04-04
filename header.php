@@ -19,7 +19,7 @@
                 if (has_custom_logo()) {
                     the_custom_logo();
                 } else {
-                    echo '<span class="site-title">AI Mapping</span>';
+                    echo '<img src="' . get_template_directory_uri() . '/images/Logo.png" alt="AI Mapping" class="custom-logo" style="height: auto;">';
                 }
                 ?>
             </a>
@@ -49,4 +49,4 @@
     </div>
 </header>
 
-<div class="site-content"> 
+<div class="site-content">
