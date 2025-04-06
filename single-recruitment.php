@@ -3,7 +3,7 @@ get_header();
 
 while (have_posts()) :
     the_post();
-    
+
     // メタ情報の取得
     $deadline = get_post_meta(get_the_ID(), 'recruitment_deadline', true);
     $event_date = get_post_meta(get_the_ID(), 'recruitment_event_date', true);
@@ -15,7 +15,7 @@ while (have_posts()) :
     <!-- ヘッダー部分 -->
     <header class="mb-8">
         <h1 class="text-4xl font-bold mb-4"><?php the_title(); ?></h1>
-        
+
         <div class="flex flex-wrap items-center gap-4 text-gray-600 mb-4">
             <div class="flex items-center">
                 <?php echo get_avatar(get_the_author_meta('ID'), 40, '', '', array('class' => 'rounded-full mr-2')); ?>
@@ -63,7 +63,7 @@ while (have_posts()) :
         <div class="lg:col-span-1">
             <div class="bg-white rounded-lg shadow-neumorphism p-6 sticky top-4">
                 <h2 class="text-xl font-bold mb-4">イベント詳細</h2>
-                
+
                 <div class="space-y-4">
                     <div>
                         <h3 class="font-semibold text-gray-600">
@@ -106,6 +106,20 @@ while (have_posts()) :
         </div>
     </div>
 
+    <!-- 投稿者アクション -->
+    <?php if (is_user_logged_in() && get_current_user_id() === get_the_author_meta('ID')) : ?>
+    <div class="mt-8 bg-white rounded-lg shadow-neumorphism p-6">
+        <div class="flex justify-end gap-4">
+            <a href="<?php echo esc_url(get_edit_post_link()); ?>" class="inline-flex items-center px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-edit mr-2"></i> 編集
+            </a>
+            <a href="<?php echo esc_url(get_delete_post_link()); ?>" class="inline-flex items-center px-4 py-2 rounded-full border border-red-300 text-red-600 hover:bg-red-50 transition-colors" onclick="return confirm('この投稿を削除してもよろしいですか？');">
+                <i class="fas fa-trash mr-2"></i> 削除
+            </a>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <!-- コメントセクション -->
     <div class="mt-8 bg-white rounded-lg shadow-neumorphism p-6">
         <?php
@@ -119,4 +133,4 @@ while (have_posts()) :
 <?php
 endwhile;
 get_footer();
-?> 
+?>
