@@ -1,6 +1,13 @@
 <?php
 get_header();
 
+// グラデーションセクション
+?>
+<section class="gradient-box-section">
+    <div class="gradient-box"></div>
+</section>
+
+<?php
 while (have_posts()) :
     the_post();
 
@@ -11,7 +18,7 @@ while (have_posts()) :
     $location = get_post_meta(get_the_ID(), 'recruitment_location', true);
 ?>
 
-<article class="container mx-auto px-4 py-8">
+<article class="container mx-auto px-4 py-8" style="margin-top: -200px; position: relative; z-index: 10;">
     <!-- ヘッダー部分 -->
     <header class="mb-8">
         <h1 class="text-4xl font-bold mb-4"><?php the_title(); ?></h1>
