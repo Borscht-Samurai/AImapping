@@ -1,28 +1,29 @@
 <?php
 get_header();
 
-// グラデーションセクション
-?>
-<section class="gradient-box-section">
-    <div class="gradient-box"></div>
-</section>
-
-<?php
+// メタ情報の取得
 while (have_posts()) :
     the_post();
-
-    // メタ情報の取得
     $deadline = get_post_meta(get_the_ID(), 'recruitment_deadline', true);
     $event_date = get_post_meta(get_the_ID(), 'recruitment_event_date', true);
     $location_type = get_post_meta(get_the_ID(), 'recruitment_location_type', true);
     $location = get_post_meta(get_the_ID(), 'recruitment_location', true);
 ?>
 
-<article class="container mx-auto px-4 py-8" style="margin-top: -200px; position: relative; z-index: 10;">
+<!-- グラデーションセクション -->
+<section class="gradient-box-section">
+    <div class="gradient-box" style="height: 365px; display: flex; justify-content: center; align-items: center;">
+        <div style="width: 100%; max-width: 1100px; padding: 0 20px; text-align: center;">
+            <!-- タイトルのみを中央に配置 -->
+            <h1 class="text-4xl font-bold text-white drop-shadow-lg"><?php the_title(); ?></h1>
+        </div>
+    </div>
+</section>
+
+<article class="container mx-auto px-4 py-8" style="position: relative; z-index: 10;">
     <!-- ヘッダー部分 -->
     <header class="mb-8">
-        <h1 class="text-4xl font-bold mb-4"><?php the_title(); ?></h1>
-
+        <!-- アカウント情報 -->
         <div class="flex flex-wrap items-center gap-4 text-gray-600 mb-4">
             <div class="flex items-center">
                 <?php echo get_avatar(get_the_author_meta('ID'), 40, '', '', array('class' => 'rounded-full mr-2')); ?>
