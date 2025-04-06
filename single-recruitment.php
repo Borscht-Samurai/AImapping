@@ -20,7 +20,7 @@ while (have_posts()) :
     </div>
 </section>
 
-<article class="container mx-auto px-4 py-8" style="position: relative; z-index: 10;">
+<article class="container mx-auto px-4 py-8" style="position: relative; z-index: 10; margin:100px 70px;">
     <!-- ヘッダー部分 -->
     <header class="mb-8">
         <!-- アカウント情報 -->
