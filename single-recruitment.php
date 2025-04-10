@@ -5,7 +5,7 @@ get_header();
 while (have_posts()) :
     the_post();
     $deadline = get_post_meta(get_the_ID(), 'recruitment_deadline', true);
-    $event_date = get_post_meta(get_the_ID(), 'recruitment_event_date', true);
+    $event_date = get_post_meta(get_the_ID(), 'event_date', true);
     $location_type = get_post_meta(get_the_ID(), 'recruitment_location_type', true);
     $location = get_post_meta(get_the_ID(), 'recruitment_location', true);
 ?>
@@ -44,13 +44,6 @@ while (have_posts()) :
             <div class="event-info-box">
                 <h3 class="event-info-title">開催情報</h3>
                 <div class="event-details">
-                    <div class="event-detail-item">
-                        <p class="event-detail-label">
-                            <i class="fas fa-clock"></i>募集期限
-                        </p>
-                        <p class="event-detail-value"><?php echo esc_html(date_i18n('Y年n月j日', strtotime($deadline))); ?></p>
-                    </div>
-
                     <div class="event-detail-item">
                         <p class="event-detail-label">
                             <i class="fas fa-calendar"></i>開催日時
