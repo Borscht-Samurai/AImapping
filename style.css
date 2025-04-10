@@ -1349,19 +1349,13 @@ p {
 .content-box {
     background-color: white;
     border-radius: 8px;
-    box-shadow: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff;
     padding: 24px;
     margin-bottom: 32px;
-}
-
-.content-wrapper {
-    max-width: none;
 }
 
 .event-info-box {
     background-color: white;
     border-radius: 8px;
-    box-shadow: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff;
     padding: 24px;
     margin-bottom: 32px;
 }
@@ -1419,7 +1413,6 @@ p {
 .comments-box {
     background-color: white;
     border-radius: 8px;
-    box-shadow: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff;
     padding: 24px;
 }
 
@@ -1440,4 +1433,24 @@ p {
 .gradient-box .recruitment-title {
     color: white;
     text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 2つのボックスセクション */
+.two-boxes-section {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    gap: 20px;
+}
+
+.left-box {
+    width: 70%;
+}
+
+.right-box {
+    width: 30%;
+    background-color: #A5FDF7;
+    border-radius: 8px;
 }
