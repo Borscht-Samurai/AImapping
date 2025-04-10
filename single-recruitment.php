@@ -39,35 +39,35 @@ while (have_posts()) :
 
     <!-- 開催情報 -->
     <div class="bg-white rounded-lg shadow-neumorphism p-6 mb-8">
-        <h2 class="text-xl font-bold mb-4">開催情報</h2>
-        <div class="space-y-4">
+        <h3 class="text-xl font-bold" style="margin: 10px 0;">開催情報</h3>
+        <div class="space-y-4 [&>*]:my-0">
             <div>
-                <h3 class="font-semibold text-gray-600">
+                <p class="font-semibold text-gray-600 mb-0">
                     <i class="fas fa-clock mr-2"></i>募集期限
-                </h3>
-                <p><?php echo esc_html(date_i18n('Y年n月j日', strtotime($deadline))); ?></p>
+                </p>
+                <p class="text-base mb-0"><?php echo esc_html(date_i18n('Y年n月j日', strtotime($deadline))); ?></p>
             </div>
 
             <div>
-                <h3 class="font-semibold text-gray-600">
+                <p class="font-semibold text-gray-600 mb-0">
                     <i class="fas fa-calendar mr-2"></i>開催日時
-                </h3>
-                <p><?php echo esc_html(date_i18n('Y年n月j日 H:i', strtotime($event_date))); ?></p>
+                </p>
+                <p class="text-base mb-0"><?php echo esc_html(date_i18n('Y年n月j日 H:i', strtotime($event_date))); ?></p>
             </div>
 
             <div>
-                <h3 class="font-semibold text-gray-600">
+                <p class="font-semibold text-gray-600 mb-0">
                     <i class="fas fa-map-marker-alt mr-2"></i>開催形式
-                </h3>
-                <p><?php echo esc_html(ucfirst($location_type)); ?></p>
+                </p>
+                <p class="text-base mb-0"><?php echo esc_html(ucfirst($location_type)); ?></p>
             </div>
 
             <?php if ($location) : ?>
             <div>
-                <h3 class="font-semibold text-gray-600">
+                <p class="font-semibold text-gray-600 mb-0">
                     <i class="fas fa-location-dot mr-2"></i>開催場所
-                </h3>
-                <p><?php echo esc_html($location); ?></p>
+                </p>
+                <p class="text-base mb-0"><?php echo esc_html($location); ?></p>
             </div>
             <?php endif; ?>
 
