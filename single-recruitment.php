@@ -4,10 +4,9 @@ get_header();
 // メタ情報の取得
 while (have_posts()) :
     the_post();
-    $deadline = get_post_meta(get_the_ID(), 'recruitment_deadline', true);
     $event_date = get_post_meta(get_the_ID(), 'event_date', true);
-    $location_type = get_post_meta(get_the_ID(), 'recruitment_location_type', true);
-    $location = get_post_meta(get_the_ID(), 'recruitment_location', true);
+    $event_is_online = get_post_meta(get_the_ID(), 'event_is_online', true);
+    $event_location = get_post_meta(get_the_ID(), 'event_location', true);
 ?>
 
 <!-- グラデーションセクション -->
@@ -55,15 +54,15 @@ while (have_posts()) :
                         <p class="event-detail-label">
                             <i class="fas fa-map-marker-alt"></i>開催形式
                         </p>
-                        <p class="event-detail-value"><?php echo esc_html(ucfirst($location_type)); ?></p>
+                        <p class="event-detail-value"><?php echo $event_is_online == '1' ? 'オンライン' : 'オフライン'; ?></p>
                     </div>
 
-                    <?php if ($location) : ?>
+                    <?php if (!$event_is_online || ($event_is_online == '0' && !empty($event_location))) : ?>
                     <div class="event-detail-item">
                         <p class="event-detail-label">
                             <i class="fas fa-location-dot"></i>開催場所
                         </p>
-                        <p class="event-detail-value"><?php echo esc_html($location); ?></p>
+                        <p class="event-detail-value"><?php echo esc_html($event_location); ?></p>
                     </div>
                     <?php endif; ?>
 
