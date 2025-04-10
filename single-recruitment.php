@@ -26,8 +26,8 @@ while (have_posts()) :
 
     <!-- アカウント情報 -->
     <div class="flex items-center gap-4 text-gray-600 mb-8">
-        <?php echo get_avatar(get_the_author_meta('ID'), 40, '', '', array('class' => 'rounded-full')); ?>
-        <span class="text-sm"><?php the_author(); ?></span>
+        <?php echo get_avatar(get_the_author_meta('ID'), 15, '', '', array('class' => 'rounded-full align-middle')); ?>
+        <span class="text-10-5"><?php the_author(); ?></span>
     </div>
 
     <!-- イベント詳細テキスト -->
