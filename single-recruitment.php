@@ -12,68 +12,68 @@ while (have_posts()) :
 
 <!-- グラデーションセクション -->
 <section class="gradient-box-section">
-    <div class="gradient-box" style="height: 365px; display: flex; justify-content: center; align-items: center;">
-        <div style="width: 100%; max-width: 1100px; padding: 0 20px; text-align: center;">
+    <div class="gradient-box">
+        <div class="gradient-box-content">
             <!-- タイトル -->
-            <h1 class="recruitment-title font-bold text-white drop-shadow-lg"><?php the_title(); ?></h1>
+            <h1 class="recruitment-title"><?php the_title(); ?></h1>
         </div>
     </div>
 </section>
 
-<article class="container mx-auto px-4 py-8" style="position: relative; z-index: 10; margin:100px 70px;">
+<article class="recruitment-container">
     <!-- タイトル -->
-    <h1 class="recruitment-title font-bold mb-8"><?php the_title(); ?></h1>
+    <h1 class="recruitment-title"><?php the_title(); ?></h1>
 
     <!-- アカウント情報 -->
-    <div class="flex items-center gap-4 text-gray-600 mb-8">
-        <?php echo get_avatar(get_the_author_meta('ID'), 15, '', '', array('class' => 'rounded-full align-middle')); ?>
-        <span class="text-10-5"><?php the_author(); ?></span>
+    <div class="author-info">
+        <?php echo get_avatar(get_the_author_meta('ID'), 15, '', '', array('class' => 'author-avatar')); ?>
+        <span class="author-name"><?php the_author(); ?></span>
     </div>
 
     <!-- イベント詳細テキスト -->
-    <div class="bg-white rounded-lg shadow-neumorphism p-6 mb-8">
-        <div class="prose max-w-none">
+    <div class="content-box">
+        <div class="content-wrapper">
             <?php the_content(); ?>
         </div>
     </div>
 
     <!-- 開催情報 -->
-    <div class="bg-white rounded-lg shadow-neumorphism p-6 mb-8">
-        <h3 class="text-xl font-bold" style="margin: 10px 0;">開催情報</h3>
-        <div class="space-y-4 [&>*]:my-0">
-            <div>
-                <p class="font-semibold text-gray-600 mb-0">
-                    <i class="fas fa-clock mr-2"></i>募集期限
+    <div class="event-info-box">
+        <h3 class="event-info-title">開催情報</h3>
+        <div class="event-details">
+            <div class="event-detail-item">
+                <p class="event-detail-label">
+                    <i class="fas fa-clock"></i>募集期限
                 </p>
-                <p class="text-base mb-0"><?php echo esc_html(date_i18n('Y年n月j日', strtotime($deadline))); ?></p>
+                <p class="event-detail-value"><?php echo esc_html(date_i18n('Y年n月j日', strtotime($deadline))); ?></p>
             </div>
 
-            <div>
-                <p class="font-semibold text-gray-600 mb-0">
-                    <i class="fas fa-calendar mr-2"></i>開催日時
+            <div class="event-detail-item">
+                <p class="event-detail-label">
+                    <i class="fas fa-calendar"></i>開催日時
                 </p>
-                <p class="text-base mb-0"><?php echo esc_html(date_i18n('Y年n月j日 H:i', strtotime($event_date))); ?></p>
+                <p class="event-detail-value"><?php echo esc_html(date_i18n('Y年n月j日 H:i', strtotime($event_date))); ?></p>
             </div>
 
-            <div>
-                <p class="font-semibold text-gray-600 mb-0">
-                    <i class="fas fa-map-marker-alt mr-2"></i>開催形式
+            <div class="event-detail-item">
+                <p class="event-detail-label">
+                    <i class="fas fa-map-marker-alt"></i>開催形式
                 </p>
-                <p class="text-base mb-0"><?php echo esc_html(ucfirst($location_type)); ?></p>
+                <p class="event-detail-value"><?php echo esc_html(ucfirst($location_type)); ?></p>
             </div>
 
             <?php if ($location) : ?>
-            <div>
-                <p class="font-semibold text-gray-600 mb-0">
-                    <i class="fas fa-location-dot mr-2"></i>開催場所
+            <div class="event-detail-item">
+                <p class="event-detail-label">
+                    <i class="fas fa-location-dot"></i>開催場所
                 </p>
-                <p class="text-base mb-0"><?php echo esc_html($location); ?></p>
+                <p class="event-detail-value"><?php echo esc_html($location); ?></p>
             </div>
             <?php endif; ?>
 
             <!-- 参加ボタン -->
-            <div class="mt-6">
-                <button class="w-full bg-primary text-white py-3 px-6 rounded-full hover:bg-primary-dark transition-colors">
+            <div class="join-button-container">
+                <button class="join-button">
                     参加を申し込む
                 </button>
             </div>
@@ -81,7 +81,7 @@ while (have_posts()) :
     </div>
 
     <!-- コメントセクション -->
-    <div class="bg-white rounded-lg shadow-neumorphism p-6">
+    <div class="comments-box">
         <?php
         if (comments_open() || get_comments_number()) :
             comments_template();
