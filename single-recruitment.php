@@ -65,13 +65,6 @@ while (have_posts()) :
                         <p class="event-detail-value"><?php echo esc_html($event_location); ?></p>
                     </div>
                     <?php endif; ?>
-
-                    <!-- 参加ボタン -->
-                    <div class="join-button-container">
-                        <button class="join-button">
-                            参加を申し込む
-                        </button>
-                    </div>
                 </div>
             </div>
         </article>
@@ -79,6 +72,41 @@ while (have_posts()) :
     <div class="right-box">
         <div class="google-adsense-box">
             <!-- ここにコンテンツを追加 -->
+        </div>
+
+        <!-- カテゴリーセクション -->
+        <div class="categories-sidebar">
+            <h3 class="categories-title">Categories</h3>
+            <ul class="categories-list">
+                <?php
+                // データベースから実際のカテゴリーを取得
+                $categories = get_terms(array(
+                    'taxonomy' => 'recruitment_category',
+                    'hide_empty' => false, // 投稿がないカテゴリーも表示
+                    'orderby' => 'name', // 名前順で並び替え
+                    'order' => 'ASC'
+                ));
+
+                if (!empty($categories) && !is_wp_error($categories)) :
+                    foreach ($categories as $category) :
+                        // カテゴリーのリンクを生成
+                        $category_link = add_query_arg(array(
+                            'category' => $category->term_id
+                        ), home_url('/recruitment'));
+                ?>
+                    <li class="category-item">
+                        <a href="<?php echo esc_url($category_link); ?>" class="category-link">
+                            <?php echo esc_html($category->name); ?>
+                        </a>
+                    </li>
+                <?php
+                    endforeach;
+                else :
+                    // カテゴリーが存在しない場合のメッセージ
+                    echo '<li class="no-categories">カテゴリーがありません</li>';
+                endif;
+                ?>
+            </ul>
         </div>
     </div>
 </section>
