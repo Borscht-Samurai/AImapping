@@ -1455,3 +1455,11 @@ p {
     background-color: #A5FDF7;
     border-radius: 8px;
 }
+
+.right-box-inner {
+    width: 312px;
+    height: 260px;
+    margin-top: 100px;
+    background-color: #FF966C;
+    border-radius: 8px;
+}

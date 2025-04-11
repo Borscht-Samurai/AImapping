@@ -77,7 +77,9 @@ while (have_posts()) :
         </article>
     </div>
     <div class="right-box">
-        <!-- 右側のボックスコンテンツ -->
+        <div class="right-box-inner">
+            <!-- ここにコンテンツを追加 -->
+        </div>
     </div>
 </section>
 
