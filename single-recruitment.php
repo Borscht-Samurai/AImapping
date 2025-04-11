@@ -65,13 +65,6 @@ while (have_posts()) :
                         <p class="event-detail-value"><?php echo esc_html($event_location); ?></p>
                     </div>
                     <?php endif; ?>
-
-                    <!-- 参加ボタン -->
-                    <div class="join-button-container">
-                        <button class="join-button">
-                            参加を申し込む
-                        </button>
-                    </div>
                 </div>
             </div>
         </article>
