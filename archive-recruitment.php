@@ -112,21 +112,28 @@ get_header();
     background-color: #000000 !important;
 }
 
-/* === 追加 === */
+/* === 修正 === */
 .events-grid {
-    /* display: grid; or display: flex; が style.css などで定義されている前提 */
-    justify-content: flex-start; /* アイテム数が少ない場合に左揃えにする */
-    gap: 20px; /* カード間の隙間（必要に応じて調整） */
+    display: flex; /* Flexbox を明示的に使用 */
+    flex-wrap: wrap; /* カードが複数行になることを許可 */
+    justify-content: flex-start; /* アイテムを左揃えに配置 */
+    gap: 20px; /* カード間の隙間 */
+    /* style.css などで grid が指定されている場合を上書き */
+    display: flex !important;
+    justify-content: flex-start !important;
 }
 
 /* content-card.php のルート要素（通常は article）を想定 */
 .events-grid > article {
-    max-width: 380px;
-    width: 100%; /* 親コンテナの幅に合わせる */
-    /* margin-left: 0;  不要な場合が多い */
-    /* margin-right: auto; 不要な場合が多い */
+    max-width: 380px; /* カードの最大幅 */
+    width: 100%; /* 基本的にコンテナ幅に追従 */
+    flex-grow: 0; /* アイテムが余分なスペースを占有しないように */
+    flex-shrink: 0; /* アイテムが縮小しないように（max-width が効く） */
+    /* 不要なマージンをリセット（念のため）*/
+    margin-left: 0;
+    margin-right: 0;
 }
-/* === /追加 === */
+/* === /修正 === */
 </style>
 
 <main class="site-main">
