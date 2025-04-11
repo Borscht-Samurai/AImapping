@@ -20,6 +20,27 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-com
     --shadow-light: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
     --shadow-inset: inset 9px 9px 16px rgb(163,177,198,0.6), inset -9px -9px 16px rgba(255,255,255, 0.5);
     --font-family-base: 'Noto Sans JP', sans-serif;
+    
+    /* フォントサイズの変数 */
+    --font-size-base: 16px;
+    --font-size-h1: 2.5rem;
+    --font-size-h2: 2rem;
+    --font-size-h3: 1.75rem;
+    --font-size-h4: 1.5rem;
+    --font-size-h5: 1.25rem;
+    --font-size-h6: 1rem;
+    --font-size-p: 1rem;
+    --font-size-small: 0.875rem;
+    --font-size-xsmall: 0.75rem;
+}
+
+/* ブラウザのデフォルトスタイルをリセット */
+p {
+    margin: 0;
+}
+
+h3 {
+    margin: 0;
 }
 
 body {
@@ -1211,4 +1232,236 @@ body {
     margin-top: 20px;
     padding: 4rem 0;
     background-color: #ffffff;
+}
+
+/* タイトルサイズ */
+.recruitment-title {
+    font-size: clamp(35px, 5vw, 40px);
+    line-height: 1.2;
+}
+
+/* カスタムフォントサイズ */
+.text-10-5 {
+    font-size: 12px !important;
+}
+
+/* ページごとのフォントサイズ設定 */
+.page-front-page {
+    --font-size-h1: 3rem;
+    --font-size-h2: 2.5rem;
+    --font-size-h3: 2rem;
+    --font-size-p: 1.1rem;
+}
+
+.page-recruitment {
+    --font-size-h1: 2.25rem;
+    --font-size-h2: 1.75rem;
+    --font-size-h3: 1.5rem;
+    --font-size-p: 0.95rem;
+}
+
+.page-faq {
+    --font-size-h1: 2rem;
+    --font-size-h2: 1.5rem;
+    --font-size-h3: 1.25rem;
+    --font-size-p: 0.9rem;
+}
+
+.page-contact {
+    --font-size-h1: 2rem;
+    --font-size-h2: 1.5rem;
+    --font-size-h3: 1.25rem;
+    --font-size-p: 0.95rem;
+}
+
+/* 基本のフォントサイズ設定 */
+h1 {
+    font-size: var(--font-size-h1);
+}
+
+h2 {
+    font-size: var(--font-size-h2);
+}
+
+h3 {
+    font-size: var(--font-size-h3);
+}
+
+h4 {
+    font-size: var(--font-size-h4);
+}
+
+h5 {
+    font-size: var(--font-size-h5);
+}
+
+h6 {
+    font-size: var(--font-size-h6);
+}
+
+p {
+    font-size: var(--font-size-p);
+}
+
+.small-text {
+    font-size: var(--font-size-small);
+}
+
+.xsmall-text {
+    font-size: var(--font-size-xsmall);
+}
+
+/* 募集詳細ページのスタイル */
+.recruitment-container {
+    position: relative;
+    z-index: 10;
+    margin: 100px 70px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+}
+
+.recruitment-title {
+    font-size: clamp(35px, 5vw, 40px);
+    line-height: 1.2;
+    font-weight: bold;
+    margin-bottom: 32px;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #666;
+    margin-bottom: 32px;
+}
+
+.author-avatar {
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.author-name {
+    font-size: 12px;
+}
+
+.content-box {
+    background-color: white;
+    border-radius: 8px;
+    padding: 0px;
+    margin-bottom: 32px;
+}
+
+.event-info-box {
+    background-color: white;
+    border-radius: 8px;
+    padding: 0px;
+    margin-bottom: 32px;
+    margin-top: 70px;
+}
+
+.event-info-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.event-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.event-detail-item {
+    margin: 0;
+}
+
+.event-detail-label {
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.event-detail-label i {
+    margin-right: 8px;
+}
+
+.event-detail-value {
+    font-size: 16px;
+    margin: 0;
+}
+
+.join-button-container {
+    margin-top: 24px;
+}
+
+.join-button {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.join-button:hover {
+    background-color: var(--primary-dark);
+}
+
+.comments-box {
+    background-color: white;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.gradient-box {
+    height: 365px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gradient-box-content {
+    width: 100%;
+    max-width: 1100px;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.gradient-box .recruitment-title {
+    color: white;
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 2つのボックスセクション */
+.two-boxes-section {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    gap: 20px;
+}
+
+.left-box {
+    width: 70%;
+}
+
+.right-box {
+    width: 30%;
+    background-color: #A5FDF7;
+    border-radius: 8px;
+}
+
+.google-adsense-box {
+    width: 312px;
+    height: 260px;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FF966C;
+    border-radius: 8px;
 }

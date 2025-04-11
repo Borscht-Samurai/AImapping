@@ -1,5 +1,7 @@
 <?php get_header(); ?>
 
+<body <?php body_class('page-front-page'); ?>>
+
 <main class="site-main">
     <!-- 白い四角セクション -->
     <section class="white-box-section">
@@ -116,3 +118,5 @@
 </main>
 
 <?php get_footer(); ?> 
+</body>
+</rewritten_file> 
