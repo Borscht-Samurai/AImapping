@@ -79,28 +79,33 @@ while (have_posts()) :
             <h3 class="categories-title">Categories</h3>
             <ul class="categories-list">
                 <?php
-                // 定義済みのカテゴリーを取得
-                $recruitment_categories = array(
-                    'study' => '勉強会',
-                    'online' => 'オンライン交流会',
-                    'project' => 'プロジェクト協力者',
-                    'meetup' => '交流会',
-                    'workshop' => 'ワークショップ',
-                    'hackathon' => 'ハッカソン'
-                );
+                // データベースから実際のカテゴリーを取得
+                $categories = get_terms(array(
+                    'taxonomy' => 'recruitment_category',
+                    'hide_empty' => false, // 投稿がないカテゴリーも表示
+                    'orderby' => 'name', // 名前順で並び替え
+                    'order' => 'ASC'
+                ));
 
-                foreach ($recruitment_categories as $slug => $name) :
-                    // カテゴリーのリンクを生成
-                    $category_link = add_query_arg(array(
-                        'category' => $slug
-                    ), home_url('/recruitment'));
+                if (!empty($categories) && !is_wp_error($categories)) :
+                    foreach ($categories as $category) :
+                        // カテゴリーのリンクを生成
+                        $category_link = add_query_arg(array(
+                            'category' => $category->term_id
+                        ), home_url('/recruitment'));
                 ?>
                     <li class="category-item">
                         <a href="<?php echo esc_url($category_link); ?>" class="category-link">
-                            <?php echo esc_html($name); ?>
+                            <?php echo esc_html($category->name); ?>
                         </a>
                     </li>
-                <?php endforeach; ?>
+                <?php
+                    endforeach;
+                else :
+                    // カテゴリーが存在しない場合のメッセージ
+                    echo '<li class="no-categories">カテゴリーがありません</li>';
+                endif;
+                ?>
             </ul>
         </div>
     </div>
