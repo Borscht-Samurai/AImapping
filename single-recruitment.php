@@ -73,6 +73,36 @@ while (have_posts()) :
         <div class="google-adsense-box">
             <!-- ここにコンテンツを追加 -->
         </div>
+
+        <!-- カテゴリーセクション -->
+        <div class="categories-sidebar">
+            <h3 class="categories-title">Categories</h3>
+            <ul class="categories-list">
+                <?php
+                // 定義済みのカテゴリーを取得
+                $recruitment_categories = array(
+                    'study' => '勉強会',
+                    'online' => 'オンライン交流会',
+                    'project' => 'プロジェクト協力者',
+                    'meetup' => '交流会',
+                    'workshop' => 'ワークショップ',
+                    'hackathon' => 'ハッカソン'
+                );
+
+                foreach ($recruitment_categories as $slug => $name) :
+                    // カテゴリーのリンクを生成
+                    $category_link = add_query_arg(array(
+                        'category' => $slug
+                    ), home_url('/recruitment'));
+                ?>
+                    <li class="category-item">
+                        <a href="<?php echo esc_url($category_link); ?>" class="category-link">
+                            <?php echo esc_html($name); ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     </div>
 </section>
 
