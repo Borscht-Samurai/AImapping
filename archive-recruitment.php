@@ -111,6 +111,22 @@ get_header();
     transform: translateY(-2px) !important;
     background-color: #000000 !important;
 }
+
+/* === 追加 === */
+.events-grid {
+    /* display: grid; or display: flex; が style.css などで定義されている前提 */
+    justify-content: flex-start; /* アイテム数が少ない場合に左揃えにする */
+    gap: 20px; /* カード間の隙間（必要に応じて調整） */
+}
+
+/* content-card.php のルート要素（通常は article）を想定 */
+.events-grid > article {
+    max-width: 380px;
+    width: 100%; /* 親コンテナの幅に合わせる */
+    /* margin-left: 0;  不要な場合が多い */
+    /* margin-right: auto; 不要な場合が多い */
+}
+/* === /追加 === */
 </style>
 
 <main class="site-main">
