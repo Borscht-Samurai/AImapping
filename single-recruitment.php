@@ -77,7 +77,7 @@ while (have_posts()) :
         </article>
     </div>
     <div class="right-box">
-        <div class="right-box-inner">
+        <div class="google-adsense-box">
             <!-- ここにコンテンツを追加 -->
         </div>
     </div>
