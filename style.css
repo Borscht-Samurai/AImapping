@@ -1547,6 +1547,17 @@ p {
     transform: translateY(-2px);
 }
 
+/* Xアイコンのカスタムスタイル */
+.x-icon i {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Threadsアイコンのカスタムスタイル */
+.threads-icon i {
+    font-size: 1.2em;
+}
+
 @media (max-width: 768px) {
     .categories-sidebar {
         margin-top: 20px;
