@@ -120,6 +120,13 @@ while (have_posts()) :
                 ?>
             </ul>
         </div>
+
+        <!-- 応援ボタンセクション -->
+        <div class="support-button-section">
+            <button class="support-button">
+                応援する <i class="fas fa-hand-paper"></i>
+            </button>
+        </div>
     </div>
 </section>
 
