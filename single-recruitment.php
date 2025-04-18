@@ -66,6 +66,18 @@ while (have_posts()) :
                     </div>
                     <?php endif; ?>
                 </div>
+
+                <!-- SNSシェアセクション -->
+                <div class="social-share-section">
+                    <div class="social-share-line"></div>
+                    <div class="social-share-icons">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" onclick="navigator.clipboard.writeText('<?php echo esc_url(get_permalink()); ?>');alert('URLをコピーしました');return false;" class="social-icon"><i class="fas fa-share-alt"></i></a>
+                    </div>
+                    <div class="social-share-line"></div>
+                </div>
             </div>
         </article>
     </div>
