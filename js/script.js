@@ -2,17 +2,28 @@
 document.addEventListener('DOMContentLoaded', function() {
     const likeButtons = document.querySelectorAll('.like-button');
 
+    // いいね処理中かどうかを追跡するフラグ
+    let isProcessing = false;
+
     likeButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
 
-            // いいね済みかどうかを確認
-            const isLiked = this.classList.contains('active');
+            // すでに処理中の場合は何もしない
+            if (isProcessing) {
+                return;
+            }
+
+            // 処理中フラグをセット
+            isProcessing = true;
 
             const postId = this.dataset.postId;
             const likeCount = this.querySelector('.like-count');
             const heartIcon = this.querySelector('i');
+
+            // ボタンを無効化
+            this.disabled = true;
 
             // AJAXでいいねを送信
             jQuery.ajax({
@@ -35,13 +46,32 @@ document.addEventListener('DOMContentLoaded', function() {
                         heartIcon.style.animation = 'heartBeat 0.3s ease';
                         setTimeout(function() {
                             heartIcon.style.animation = '';
+                            // アニメーション完了後にボタンを再度有効化
+                            button.disabled = false;
+                            // 処理中フラグを解除
+                            isProcessing = false;
                         }, 300);
                     } else {
-                        console.error('いいねの処理に失敗しました。');
+                        // ログインが必要な場合
+                        if (response.data && response.data.require_login) {
+                            if (confirm('いいねを付けるにはログインが必要です。\nログインページに移動しますか？')) {
+                                // サイトのルートURLを取得
+                                const rootUrl = window.location.origin;
+                                window.location.href = rootUrl + '/login?redirect_to=' + encodeURIComponent(window.location.href);
+                            }
+                        } else {
+                            console.error('いいねの処理に失敗しました。');
+                        }
+                        // エラー時はすぐにボタンを再度有効化
+                        button.disabled = false;
+                        isProcessing = false;
                     }
                 },
                 error: function(error) {
                     console.error('Error:', error);
+                    // エラー時もボタンを再度有効化
+                    button.disabled = false;
+                    isProcessing = false;
                 }
             });
         });

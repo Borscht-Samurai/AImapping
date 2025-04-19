@@ -216,7 +216,7 @@ body {
     border-radius: 4px;
     padding: 0.5rem 1rem;
   }
-  
+
   .register-btn:hover {
     background-color: #333;
   }
@@ -689,7 +689,7 @@ body {
     box-shadow: 12px 12px 20px rgb(163,177,198,0.6), -12px -12px 20px rgba(255,255,255, 0.5);
 }
 
-.event-footer .like-button.liked {
+.event-footer .like-button.active, .event-footer .like-button.liked {
     color: #FF6B6B;
 }
 

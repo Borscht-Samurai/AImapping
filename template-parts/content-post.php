@@ -26,7 +26,7 @@
                 endforeach;
             endif;
             ?>
-            
+
             <?php if (get_post_type() === 'event') : ?>
                 <span class="post-date">
                     <i class="fas fa-calendar"></i>
@@ -65,9 +65,9 @@
                 <i class="fas fa-eye"></i>
                 <?php echo get_post_views(get_the_ID()); ?> 回の閲覧
             </span>
-            <button class="like-button <?php echo user_liked_post(get_the_ID()) ? 'liked' : ''; ?>" data-post-id="<?php echo get_the_ID(); ?>">
-                <i class="fas fa-heart"></i>
-                <span class="likes-count"><?php echo get_post_likes(get_the_ID()); ?></span>
+            <button class="like-button <?php echo user_liked_post(get_the_ID()) ? 'active' : ''; ?>" data-post-id="<?php echo get_the_ID(); ?>">
+                <i class="<?php echo user_liked_post(get_the_ID()) ? 'fas' : 'far'; ?> fa-heart"></i>
+                <span class="like-count"><?php echo get_post_likes(get_the_ID()); ?></span>
             </button>
         </div>
 
@@ -76,7 +76,7 @@
                 <a href="<?php echo esc_url(home_url('/edit-post?post_id=' . get_the_ID())); ?>" class="btn btn-secondary">
                     <i class="fas fa-edit"></i> 編集
                 </a>
-                <?php 
+                <?php
                 $delete_url = add_query_arg(
                     array(
                         'action' => 'delete_post',
@@ -97,7 +97,7 @@
         if (get_post_type() === 'event' && get_post_status() === 'publish') :
             $event_date = get_post_meta(get_the_ID(), 'event_date', true);
             $is_past_event = strtotime($event_date) < current_time('timestamp');
-            
+
             if (!$is_past_event) :
                 // ユーザーがすでに参加登録しているか確認
                 $is_attending = false;
@@ -113,7 +113,7 @@
                             <button class="btn btn-success participation-btn" disabled>
                                 <i class="fas fa-check"></i> 参加登録済み
                             </button>
-                            
+
                             <?php
                             $cancel_url = add_query_arg(
                                 array(
@@ -147,14 +147,14 @@
                             <i class="fas fa-sign-in-alt"></i> ログインして参加する
                         </a>
                     <?php endif; ?>
-                    
+
                     <?php
                     // 参加者数を表示
                     $attendees = get_post_meta(get_the_ID(), 'event_attendees', true);
                     $attendees = $attendees ? explode(',', $attendees) : array();
                     $attendees_count = count($attendees);
                     ?>
-                    
+
                     <div class="attendees-count">
                         <i class="fas fa-users"></i> <?php echo esc_html($attendees_count); ?> 人が参加予定
                     </div>
@@ -193,9 +193,9 @@
                 ),
             ),
         );
-        
+
         $related_query = new WP_Query($related_args);
-        
+
         if ($related_query->have_posts()) : ?>
             <div class="related-events">
                 <h3>関連イベント</h3>

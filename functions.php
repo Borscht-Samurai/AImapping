@@ -195,6 +195,14 @@ function handle_like_button() {
         wp_send_json_error('投稿IDが指定されていません。');
     }
 
+    // ログイン状態の確認
+    if (!is_user_logged_in()) {
+        wp_send_json_error(array(
+            'message' => 'いいねを付けるにはログインが必要です。',
+            'require_login' => true
+        ));
+    }
+
     $post_id = intval($_POST['post_id']);
     $user_id = get_current_user_id();
 
