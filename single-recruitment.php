@@ -67,6 +67,14 @@ while (have_posts()) :
                     <?php endif; ?>
                 </div>
 
+                <!-- いいねボタンセクション -->
+                <div class="like-button-section">
+                    <button class="like-button <?php echo user_liked_post(get_the_ID()) ? 'active' : ''; ?>" data-post-id="<?php echo get_the_ID(); ?>">
+                        <i class="<?php echo user_liked_post(get_the_ID()) ? 'fas' : 'far'; ?> fa-heart"></i>
+                        <span class="like-count"><?php echo get_post_likes(get_the_ID()); ?></span>
+                    </button>
+                </div>
+
                 <!-- SNSシェアセクション -->
                 <div class="social-share-section">
                     <div class="social-share-line"></div>

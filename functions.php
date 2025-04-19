@@ -24,7 +24,7 @@ function aimapping_scripts() {
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
     wp_enqueue_style('google-fonts-noto-sans-jp', 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap', array(), null);
     wp_enqueue_script('aimapping-script', get_template_directory_uri() . '/js/script.js', array('jquery'), '1.0.0', true);
-    
+
     // AJAX URLとnonceをJavaScriptに渡す
     wp_localize_script('aimapping-script', 'aimapping_ajax', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
@@ -144,6 +144,22 @@ function get_post_likes($post_id) {
     return $likes ? number_format($likes) : '0';
 }
 
+// ユーザーが投稿にいいねしたかどうかを確認する関数
+function user_liked_post($post_id) {
+    if (!is_user_logged_in()) {
+        return false;
+    }
+
+    $user_id = get_current_user_id();
+    $liked_posts = get_user_meta($user_id, 'liked_posts', true);
+
+    if (!is_array($liked_posts)) {
+        return false;
+    }
+
+    return in_array($post_id, $liked_posts);
+}
+
 // 閲覧数をカウントアップする関数
 function increment_post_views() {
     if (is_single()) {
@@ -181,7 +197,7 @@ function handle_like_button() {
 
     $post_id = intval($_POST['post_id']);
     $user_id = get_current_user_id();
-    
+
     // ユーザーごとのいいね状態を保存するメタキー
     $liked_posts = get_user_meta($user_id, 'liked_posts', true);
     if (!is_array($liked_posts)) {
@@ -190,7 +206,7 @@ function handle_like_button() {
 
     // いいねの状態を確認
     $is_liked = in_array($post_id, $liked_posts);
-    
+
     // いいね数を取得
     $likes = get_post_meta($post_id, 'post_likes', true);
     $likes = $likes ? intval($likes) : 0;
@@ -297,7 +313,7 @@ function handle_new_post_submission() {
         // イベントメタ情報を保存
         update_post_meta($post_id, 'event_date', sanitize_text_field($_POST['event_date']));
         update_post_meta($post_id, 'event_is_online', $_POST['location_type'] === 'online' ? '1' : '0');
-        
+
         if ($_POST['location_type'] === 'offline' && !empty($_POST['location_detail'])) {
             update_post_meta($post_id, 'event_location', sanitize_text_field($_POST['location_detail']));
         } elseif ($_POST['location_type'] === 'online') {
@@ -331,21 +347,21 @@ add_action('template_redirect', 'handle_new_post_submission');
 // 投稿タイプを変更する関数
 function convert_event_to_recruitment() {
     global $wpdb;
-    
+
     // 投稿タイプの変更
     $wpdb->query(
         $wpdb->prepare(
             "UPDATE {$wpdb->posts} SET post_type = 'recruitment' WHERE post_type = 'event'"
         )
     );
-    
+
     // タクソノミーの変更
     $wpdb->query(
         $wpdb->prepare(
             "UPDATE {$wpdb->term_taxonomy} SET taxonomy = 'recruitment_category' WHERE taxonomy = 'event_category'"
         )
     );
-    
+
     // パーマリンク構造を更新
     flush_rewrite_rules();
 }
@@ -437,7 +453,7 @@ function aimapping_filter_query($query) {
                     'compare' => '='
                 )
             );
-            
+
             $meta_query[] = $location_meta_query;
         }
 
