@@ -63,47 +63,6 @@ if (!$user) {
             </div>
         </div>
 
-        <div class="profile-skills">
-            <div class="skills-label">Skills</div>
-            <div class="skills-tags">
-                <?php
-                $skills = get_user_meta($user_id, 'skills', true);
-                if (!empty($skills)) :
-                    $skills_array = explode(',', $skills);
-                    foreach ($skills_array as $skill) :
-                        echo '<span class="skill-tag">' . esc_html(trim($skill)) . '</span>';
-                    endforeach;
-                else :
-                    // デフォルトのスキルを表示
-                    $default_skills = ['HTML', 'CSS', 'Dart', 'C++', 'UI Design'];
-                    foreach ($default_skills as $skill) :
-                        echo '<span class="skill-tag">' . esc_html($skill) . '</span>';
-                    endforeach;
-                endif;
-                ?>
-            </div>
-        </div>
-
-        <div class="profile-actions-grid">
-            <div class="action-card">
-                <h3>Ready for work</h3>
-                <p>Show recruiters that you're ready for work.</p>
-                <a href="#" class="action-link"><i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="action-card">
-                <h3>Share posts</h3>
-                <p>Share latest news to get connected with others.</p>
-                <a href="#" class="action-link"><i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="action-card">
-                <h3>Update</h3>
-                <p>Keep your profile updated so that recruiters know you better.</p>
-                <a href="#" class="action-link"><i class="fas fa-arrow-right"></i></a>
-            </div>
-        </div>
-
         <?php if (!empty($user->description)) : ?>
             <div class="profile-bio">
                 <?php echo wpautop(esc_html($user->description)); ?>
