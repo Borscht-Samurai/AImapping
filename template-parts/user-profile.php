@@ -42,24 +42,6 @@ if (!$user) {
                         </div>
                     <?php endif; ?>
                 </div>
-
-                <div class="profile-location">
-                    <?php
-                    $location = get_user_meta($user_id, 'location', true);
-                    if (!empty($location)) :
-                        echo esc_html($location);
-                    else :
-                        echo 'Los Angeles, California';
-                    endif;
-                    ?>
-                </div>
-
-                <?php if (is_user_logged_in() && get_current_user_id() === $user_id) : ?>
-                <div class="profile-edit-buttons">
-                    <a href="<?php echo esc_url(home_url('/edit-profile')); ?>" class="edit-profile-btn">Edit Profile</a>
-                    <a href="<?php echo esc_url(home_url('/settings')); ?>" class="settings-btn">Settings</a>
-                </div>
-                <?php endif; ?>
             </div>
         </div>
 

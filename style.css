@@ -1163,17 +1163,20 @@ body {
 
 .profile-header {
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
-    gap: 2rem;
+    text-align: left;
     margin-bottom: 2rem;
     position: relative;
     padding-top: 20px;
+    padding-left: 20px;
 }
 
 .avatar-container {
-    margin-top: -80px;
+    margin-top: -50px;
     position: relative;
     z-index: 10;
+    margin-bottom: 1rem;
 }
 
 .avatar-container img {
@@ -1186,8 +1189,10 @@ body {
 }
 
 .profile-info {
-    flex: 1;
-    padding-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .profile-name {
@@ -1200,7 +1205,8 @@ body {
 .profile-role {
     display: flex;
     align-items: center;
-    margin-bottom: 0.5rem;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
 }
 
 .current-role {
@@ -1232,6 +1238,7 @@ body {
     display: flex;
     gap: 1rem;
     margin-top: 1rem;
+    justify-content: flex-start;
 }
 
 .edit-profile-btn, .settings-btn {
@@ -1459,30 +1466,17 @@ body {
 /* レスポンシブデザイン - プロフィールページ */
 @media (max-width: 768px) {
     .profile-header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+        align-items: flex-start;
+        padding-left: 15px;
     }
 
     .avatar-container {
-        margin-top: -60px;
+        margin-top: -40px;
     }
 
     .avatar-container img {
         width: 120px;
         height: 120px;
-    }
-
-    .profile-info {
-        padding-top: 0;
-    }
-
-    .profile-role {
-        justify-content: center;
-    }
-
-    .profile-edit-buttons {
-        justify-content: center;
     }
 
     .profile-actions-grid {
@@ -1515,8 +1509,12 @@ body {
         height: 250px;
     }
 
+    .profile-header {
+        padding-left: 10px;
+    }
+
     .avatar-container {
-        margin-top: -50px;
+        margin-top: -30px;
     }
 
     .avatar-container img {

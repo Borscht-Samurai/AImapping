@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Template Name: プロフィール編集ページ
@@ -97,10 +98,6 @@ $current_user = wp_get_current_user();
                                 update_user_meta($current_user->ID, 'role', sanitize_text_field($_POST['role']));
                             }
 
-                            if (isset($_POST['location'])) {
-                                update_user_meta($current_user->ID, 'location', sanitize_text_field($_POST['location']));
-                            }
-
                             if (isset($_POST['skills'])) {
                                 update_user_meta($current_user->ID, 'skills', sanitize_text_field($_POST['skills']));
                             }
@@ -185,11 +182,6 @@ $current_user = wp_get_current_user();
                     <div class="form-group">
                         <label for="role">役職</label>
                         <input type="text" id="role" name="role" class="form-control" value="<?php echo esc_attr(get_user_meta($current_user->ID, 'role', true)); ?>" placeholder="例: Software Engineer">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="location">場所</label>
-                        <input type="text" id="location" name="location" class="form-control" value="<?php echo esc_attr(get_user_meta($current_user->ID, 'location', true)); ?>" placeholder="例: 東京都渋谷区">
                     </div>
 
                     <div class="form-group">
