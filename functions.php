@@ -389,6 +389,43 @@ add_action('init', function() {
     }
 });
 
+// カスタムアバターを表示するためのフィルター
+function custom_avatar_filter($avatar, $id_or_email, $size, $default, $alt) {
+    // ユーザーIDを取得
+    $user_id = 0;
+    if (is_numeric($id_or_email)) {
+        $user_id = (int) $id_or_email;
+    } elseif (is_string($id_or_email)) {
+        $user = get_user_by('email', $id_or_email);
+        if ($user) {
+            $user_id = $user->ID;
+        }
+    } elseif (is_object($id_or_email)) {
+        if (!empty($id_or_email->user_id)) {
+            $user_id = (int) $id_or_email->user_id;
+        } elseif (!empty($id_or_email->comment_author_email)) {
+            $user = get_user_by('email', $id_or_email->comment_author_email);
+            if ($user) {
+                $user_id = $user->ID;
+            }
+        }
+    }
+
+    // ユーザーIDが取得できた場合、カスタムアバターを確認
+    if ($user_id > 0) {
+        $custom_avatar_id = get_user_meta($user_id, 'custom_avatar', true);
+        if ($custom_avatar_id) {
+            $image = wp_get_attachment_image_src($custom_avatar_id, 'thumbnail');
+            if ($image) {
+                $avatar = "<img alt='{$alt}' src='{$image[0]}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' loading='lazy' />";
+            }
+        }
+    }
+
+    return $avatar;
+}
+add_filter('get_avatar', 'custom_avatar_filter', 10, 5);
+
 // 検索フィルターの処理
 function aimapping_filter_query($query) {
     // メインクエリでなければ処理しない

@@ -93,13 +93,9 @@ $current_user = wp_get_current_user();
                                 update_user_meta($current_user->ID, 'user_url', esc_url_raw($_POST['user_url']));
                             }
 
-                            // 役職、場所、スキルを更新
+                            // 役職を更新
                             if (isset($_POST['role'])) {
                                 update_user_meta($current_user->ID, 'role', sanitize_text_field($_POST['role']));
-                            }
-
-                            if (isset($_POST['skills'])) {
-                                update_user_meta($current_user->ID, 'skills', sanitize_text_field($_POST['skills']));
                             }
 
                             // SNSリンクを更新
@@ -119,20 +115,43 @@ $current_user = wp_get_current_user();
                                 require_once(ABSPATH . 'wp-admin/includes/file.php');
                                 require_once(ABSPATH . 'wp-admin/includes/media.php');
 
-                                // アップロードディレクトリを取得
-                                $upload_dir = wp_upload_dir();
+                                // ファイルサイズと形式のチェック
+                                $file = $_FILES['profile_image'];
+                                $file_size = $file['size']; // バイト単位
+                                $max_size = 500 * 1024; // 500KB
 
-                                // カスタムアバターが既に存在する場合は削除
-                                $old_avatar_id = get_user_meta($current_user->ID, 'custom_avatar', true);
-                                if ($old_avatar_id) {
-                                    wp_delete_attachment($old_avatar_id, true);
-                                }
+                                // ファイル形式のチェック
+                                $file_type = wp_check_filetype($file['name']);
+                                $allowed_types = array('jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png');
 
-                                // 新しいアバターをアップロード
-                                $avatar_id = media_handle_upload('profile_image', 0);
+                                // デバッグ情報
+                                echo '<!-- ファイル情報: ' . print_r($file, true) . ' -->';
+                                echo '<!-- ファイルタイプ: ' . $file_type['type'] . ' -->';
+                                echo '<!-- ファイルサイズ: ' . $file_size . ' バイト -->';
 
-                                if (!is_wp_error($avatar_id)) {
-                                    update_user_meta($current_user->ID, 'custom_avatar', $avatar_id);
+                                if ($file_size > $max_size) {
+                                    echo '<div class="form-message error">プロフィール画像のサイズが大きすぎます。500KB以下のファイルを選択してください。</div>';
+                                } elseif (!in_array($file_type['type'], $allowed_types)) {
+                                    echo '<div class="form-message error">プロフィール画像は、JPGまたはPNG形式のみをアップロードできます。</div>';
+                                } else {
+                                    // アップロードディレクトリを取得
+                                    $upload_dir = wp_upload_dir();
+
+                                    // カスタムアバターが既に存在する場合は削除
+                                    $old_avatar_id = get_user_meta($current_user->ID, 'custom_avatar', true);
+                                    if ($old_avatar_id) {
+                                        wp_delete_attachment($old_avatar_id, true);
+                                    }
+
+                                    // 新しいアバターをアップロード
+                                    $avatar_id = media_handle_upload('profile_image', 0);
+
+                                    if (is_wp_error($avatar_id)) {
+                                        echo '<div class="form-message error">プロフィール画像のアップロードに失敗しました: ' . $avatar_id->get_error_message() . '</div>';
+                                    } else {
+                                        update_user_meta($current_user->ID, 'custom_avatar', $avatar_id);
+                                        echo '<div class="form-message success">プロフィール画像が更新されました。</div>';
+                                    }
                                 }
                             }
 
@@ -142,21 +161,47 @@ $current_user = wp_get_current_user();
                                 require_once(ABSPATH . 'wp-admin/includes/file.php');
                                 require_once(ABSPATH . 'wp-admin/includes/media.php');
 
-                                // 既存の背景画像があれば削除
-                                $old_header_bg_id = get_user_meta($current_user->ID, 'profile_header_bg', true);
-                                if ($old_header_bg_id) {
-                                    wp_delete_attachment($old_header_bg_id, true);
-                                }
+                                // ファイルサイズと形式のチェック
+                                $file = $_FILES['profile_header_bg'];
+                                $file_size = $file['size']; // バイト単位
+                                $max_size = 1024 * 1024; // 1MB
 
-                                // 新しい背景画像をアップロード
-                                $header_bg_id = media_handle_upload('profile_header_bg', 0);
+                                // ファイル形式のチェック
+                                $file_type = wp_check_filetype($file['name']);
+                                $allowed_types = array('jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png');
 
-                                if (!is_wp_error($header_bg_id)) {
-                                    update_user_meta($current_user->ID, 'profile_header_bg', $header_bg_id);
+                                // デバッグ情報
+                                echo '<!-- 背景画像情報: ' . print_r($file, true) . ' -->';
+                                echo '<!-- 背景画像タイプ: ' . $file_type['type'] . ' -->';
+                                echo '<!-- 背景画像サイズ: ' . $file_size . ' バイト -->';
+
+                                if ($file_size > $max_size) {
+                                    echo '<div class="form-message error">背景画像のサイズが大きすぎます。1MB以下のファイルを選択してください。</div>';
+                                } elseif (!in_array($file_type['type'], $allowed_types)) {
+                                    echo '<div class="form-message error">背景画像は、JPGまたはPNG形式のみをアップロードできます。</div>';
+                                } else {
+                                    // 既存の背景画像があれば削除
+                                    $old_header_bg_id = get_user_meta($current_user->ID, 'profile_header_bg', true);
+                                    if ($old_header_bg_id) {
+                                        wp_delete_attachment($old_header_bg_id, true);
+                                    }
+
+                                    // 新しい背景画像をアップロード
+                                    $header_bg_id = media_handle_upload('profile_header_bg', 0);
+
+                                    if (is_wp_error($header_bg_id)) {
+                                        echo '<div class="form-message error">背景画像のアップロードに失敗しました: ' . $header_bg_id->get_error_message() . '</div>';
+                                    } else {
+                                        update_user_meta($current_user->ID, 'profile_header_bg', $header_bg_id);
+                                        echo '<div class="form-message success">背景画像が更新されました。</div>';
+                                    }
                                 }
                             }
 
-                            echo '<div class="form-message success">プロフィールが更新されました。</div>';
+                            // プロフィール画像や背景画像がアップロードされていない場合の成功メッセージ
+                            if (empty($_FILES['profile_image']['name']) && empty($_FILES['profile_header_bg']['name'])) {
+                                echo '<div class="form-message success">プロフィールが更新されました。</div>';
+                            }
 
                             // 最新のユーザー情報を取得
                             $current_user = get_userdata($current_user->ID);
@@ -202,12 +247,6 @@ $current_user = wp_get_current_user();
                     <div class="form-group">
                         <label for="role">役職</label>
                         <input type="text" id="role" name="role" class="form-control" value="<?php echo esc_attr(get_user_meta($current_user->ID, 'role', true)); ?>" placeholder="例: Software Engineer">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="skills">スキル</label>
-                        <input type="text" id="skills" name="skills" class="form-control" value="<?php echo esc_attr(get_user_meta($current_user->ID, 'skills', true)); ?>" placeholder="例: HTML, CSS, JavaScript, PHP">
-                        <p class="form-hint">カンマ区切りで入力してください。</p>
                     </div>
                 </div>
 
