@@ -1130,6 +1130,410 @@ body {
     margin: 20px 0;
 }
 
+/* プロフィールページのスタイル */
+.profile-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+}
+
+.user-profile-card {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.profile-header-gradient {
+    width: 100%;
+    height: 365px;
+    background: linear-gradient(-45deg, #FF966C, #A5FDF7, #FF966C, #A5FDF7);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    position: relative;
+    border-radius: 8px;
+    margin-bottom: -100px;
+}
+
+.profile-content {
+    position: relative;
+    padding: 0 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.profile-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-top: 20px;
+}
+
+.avatar-container {
+    margin-top: -80px;
+    position: relative;
+    z-index: 10;
+}
+
+.avatar-container img {
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.profile-info {
+    flex: 1;
+    padding-top: 20px;
+}
+
+.profile-name {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+    color: #000;
+}
+
+.profile-role {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.current-role {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #f5f5f5;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+}
+
+.role-label {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.role-value {
+    font-weight: 500;
+    color: #000;
+}
+
+.profile-location {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.profile-edit-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.edit-profile-btn, .settings-btn {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    border: 1px solid #000;
+    background-color: transparent;
+    color: #000;
+}
+
+.edit-profile-btn:hover, .settings-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.profile-skills {
+    margin-bottom: 2rem;
+}
+
+.skills-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #000;
+    display: flex;
+    align-items: center;
+}
+
+.skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skill-tag {
+    display: inline-block;
+    padding: 0.25rem 1rem;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    color: #000;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.profile-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.action-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.action-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #000;
+}
+
+.action-card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.action-link {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.action-link:hover {
+    background-color: #e5e5e5;
+}
+
+.profile-bio {
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.profile-meta {
+    margin-bottom: 2rem;
+}
+
+.profile-website {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.profile-website a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.profile-website a:hover {
+    text-decoration: underline;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.post-count, .attendance-count {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.profile-social {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    color: #000;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.social-link:hover {
+    background-color: #e5e5e5;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.profile-tabs {
+    margin-top: 2rem;
+}
+
+.tab-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.tab-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: transparent;
+    color: #666;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.tab-btn.active {
+    color: #000;
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.no-events {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.no-events p {
+    margin-bottom: 1rem;
+    color: #666;
+}
+
+/* レスポンシブデザイン - プロフィールページ */
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .avatar-container {
+        margin-top: -60px;
+    }
+
+    .avatar-container img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile-info {
+        padding-top: 0;
+    }
+
+    .profile-role {
+        justify-content: center;
+    }
+
+    .profile-edit-buttons {
+        justify-content: center;
+    }
+
+    .profile-actions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-stats {
+        justify-content: center;
+    }
+
+    .profile-social {
+        justify-content: center;
+    }
+
+    .profile-actions {
+        flex-direction: column;
+    }
+
+    .tab-buttons {
+        flex-wrap: wrap;
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-header-gradient {
+        height: 250px;
+    }
+
+    .avatar-container {
+        margin-top: -50px;
+    }
+
+    .avatar-container img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-name {
+        font-size: 1.5rem;
+    }
+
+    .edit-profile-btn, .settings-btn {
+        padding: 0.4rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
 .like-button {
     display: inline-flex;
     align-items: center;
