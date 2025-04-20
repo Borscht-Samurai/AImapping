@@ -13,9 +13,22 @@ if (!$user) {
 ?>
 
 <div class="user-profile-card">
-    <div class="profile-header-gradient">
-        <!-- グラデーションヘッダー背景 -->
+    <?php
+    // プロフィール背景画像のIDを取得
+    $header_bg_id = get_user_meta($user_id, 'profile_header_bg', true);
+
+    if ($header_bg_id) :
+        // 背景画像が設定されている場合
+        $header_bg_url = wp_get_attachment_image_url($header_bg_id, 'large');
+    ?>
+    <div class="profile-header-image" style="background-image: url('<?php echo esc_url($header_bg_url); ?>')">
+        <!-- カスタム背景画像 -->
     </div>
+    <?php else : ?>
+    <div class="profile-header-gradient">
+        <!-- デフォルトのグラデーション背景 -->
+    </div>
+    <?php endif; ?>
 
     <div class="profile-content">
         <div class="profile-header">
@@ -24,7 +37,16 @@ if (!$user) {
             </div>
 
             <div class="profile-info">
-                <h2 class="profile-name"><?php echo esc_html($user->display_name); ?></h2>
+                <div class="profile-name-container">
+                    <h2 class="profile-name"><?php echo esc_html($user->display_name); ?></h2>
+                    <?php if (is_user_logged_in() && get_current_user_id() === $user_id) : ?>
+                    <div class="profile-edit-button">
+                        <a href="<?php echo esc_url(home_url('/edit-profile')); ?>" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-user-edit"></i> プロフィール編集
+                        </a>
+                    </div>
+                    <?php endif; ?>
+                </div>
 
                 <div class="profile-role">
                     <?php
@@ -108,12 +130,7 @@ if (!$user) {
 
     <?php if (isset($args['show_actions']) && $args['show_actions'] && is_user_logged_in() && get_current_user_id() === $user_id) : ?>
         <div class="profile-actions">
-            <a href="<?php echo esc_url(home_url('/edit-profile')); ?>" class="btn btn-secondary">
-                <i class="fas fa-user-edit"></i> プロフィールを編集
-            </a>
-            <a href="<?php echo esc_url(home_url('/new-post')); ?>" class="btn btn-primary">
-                <i class="fas fa-plus"></i> 新規募集を作成
-            </a>
+            <!-- 新規募集を作成ボタンを削除 -->
         </div>
     <?php elseif (isset($args['show_actions']) && $args['show_actions'] && is_user_logged_in() && get_current_user_id() !== $user_id) : ?>
         <div class="profile-actions">

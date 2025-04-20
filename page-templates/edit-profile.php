@@ -136,6 +136,26 @@ $current_user = wp_get_current_user();
                                 }
                             }
 
+                            // プロフィール背景画像のアップロード処理
+                            if (!empty($_FILES['profile_header_bg']['name'])) {
+                                require_once(ABSPATH . 'wp-admin/includes/image.php');
+                                require_once(ABSPATH . 'wp-admin/includes/file.php');
+                                require_once(ABSPATH . 'wp-admin/includes/media.php');
+
+                                // 既存の背景画像があれば削除
+                                $old_header_bg_id = get_user_meta($current_user->ID, 'profile_header_bg', true);
+                                if ($old_header_bg_id) {
+                                    wp_delete_attachment($old_header_bg_id, true);
+                                }
+
+                                // 新しい背景画像をアップロード
+                                $header_bg_id = media_handle_upload('profile_header_bg', 0);
+
+                                if (!is_wp_error($header_bg_id)) {
+                                    update_user_meta($current_user->ID, 'profile_header_bg', $header_bg_id);
+                                }
+                            }
+
                             echo '<div class="form-message success">プロフィールが更新されました。</div>';
 
                             // 最新のユーザー情報を取得
@@ -200,6 +220,24 @@ $current_user = wp_get_current_user();
                         </div>
                         <input type="file" id="profile_image" name="profile_image" class="form-control" accept="image/*">
                         <p class="form-hint">500KB以下のJPG、PNG形式のみ。</p>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>プロフィール背景画像</h2>
+
+                    <div class="form-group">
+                        <?php
+                        $header_bg_id = get_user_meta($current_user->ID, 'profile_header_bg', true);
+                        if ($header_bg_id) :
+                            $header_bg_url = wp_get_attachment_image_url($header_bg_id, 'large');
+                        ?>
+                        <div class="current-header-bg">
+                            <img src="<?php echo esc_url($header_bg_url); ?>" alt="現在の背景画像" style="max-width: 100%; height: auto; border-radius: 8px;">
+                        </div>
+                        <?php endif; ?>
+                        <input type="file" id="profile_header_bg" name="profile_header_bg" class="form-control" accept="image/*">
+                        <p class="form-hint">プロフィールページのヘッダー背景画像を設定します。アップロードしない場合はデフォルトのグラデーションが表示されます。</p>
                     </div>
                 </div>
 
