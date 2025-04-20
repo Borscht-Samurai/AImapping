@@ -1337,10 +1337,12 @@ body {
 .profile-bio {
     margin-bottom: 2rem;
     line-height: 1.6;
+    padding-left: 20px;
 }
 
 .profile-meta {
     margin-bottom: 2rem;
+    padding-left: 20px;
 }
 
 .profile-website {
@@ -1399,6 +1401,7 @@ body {
     display: flex;
     gap: 1rem;
     margin-bottom: 2rem;
+    padding-left: 20px;
 }
 
 .profile-tabs {
@@ -1470,6 +1473,12 @@ body {
         padding-left: 15px;
     }
 
+    .profile-bio,
+    .profile-meta,
+    .profile-actions {
+        padding-left: 15px;
+    }
+
     .avatar-container {
         margin-top: -40px;
     }
@@ -1510,6 +1519,12 @@ body {
     }
 
     .profile-header {
+        padding-left: 10px;
+    }
+
+    .profile-bio,
+    .profile-meta,
+    .profile-actions {
         padding-left: 10px;
     }
 
