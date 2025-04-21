@@ -1220,13 +1220,26 @@ body {
     color: #000;
 }
 
-.profile-edit-button {
+.profile-buttons {
     margin-left: auto;
+    display: flex;
+    gap: 0.5rem;
 }
 
 .btn-sm {
     padding: 0.4rem 0.8rem;
     font-size: 0.85rem;
+}
+
+.btn-danger {
+    background-color: #ff4757;
+    color: white;
+    border: 1px solid #ff4757;
+}
+
+.btn-danger:hover {
+    background-color: #ff6b81;
+    border-color: #ff6b81;
 }
 
 .profile-role {
@@ -1511,9 +1524,11 @@ body {
         align-items: flex-start;
     }
 
-    .profile-edit-button {
+    .profile-buttons {
         margin-left: 0;
         margin-top: 0.5rem;
+        flex-direction: column;
+        gap: 0.5rem;
     }
 
     .avatar-container {

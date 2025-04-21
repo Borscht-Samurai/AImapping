@@ -40,7 +40,10 @@ if (!$user) {
                 <div class="profile-name-container">
                     <h2 class="profile-name"><?php echo esc_html($user->display_name); ?></h2>
                     <?php if (is_user_logged_in() && get_current_user_id() === $user_id) : ?>
-                    <div class="profile-edit-button">
+                    <div class="profile-buttons">
+                        <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>" class="btn btn-danger btn-sm">
+                            <i class="fas fa-sign-out-alt"></i> ログアウト
+                        </a>
                         <a href="<?php echo esc_url(home_url('/edit-profile')); ?>" class="btn btn-secondary btn-sm">
                             <i class="fas fa-user-edit"></i> プロフィール編集
                         </a>
