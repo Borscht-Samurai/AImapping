@@ -757,3 +757,46 @@ function custom_login_empty_redirect( $user, $username, $password ) {
 // 他のプラグイン（例：セキュリティ系）が authenticate フックを使っている場合、競合しないように調整が必要
 add_filter( 'authenticate', 'custom_login_empty_redirect', 30, 3 );
 
+/**
+ * 投稿削除機能のハンドラー
+ */
+function handle_delete_post() {
+    // リクエストチェック
+    if (!isset($_GET['action']) || $_GET['action'] !== 'delete_post' || !isset($_GET['post_id']) || !isset($_GET['nonce'])) {
+        return;
+    }
+
+    $post_id = intval($_GET['post_id']);
+    $nonce = $_GET['nonce'];
+
+    // nonceの検証
+    if (!wp_verify_nonce($nonce, 'delete_post_' . $post_id)) {
+        wp_die('不正なアクセスです。');
+    }
+
+    // 投稿が存在するか確認
+    $post = get_post($post_id);
+    if (!$post) {
+        wp_die('指定された投稿が存在しません。');
+    }
+
+    // 投稿者か管理者か確認
+    if (get_current_user_id() !== $post->post_author && !current_user_can('administrator')) {
+        wp_die('この投稿を削除する権限がありません。');
+    }
+
+    // 投稿を削除
+    $deleted = wp_delete_post($post_id, true);
+
+    if ($deleted) {
+        // 削除成功時は一覧ページにリダイレクト
+        wp_redirect(home_url('/recruitment'));
+        exit;
+    } else {
+        // 削除失敗時はエラーメッセージを表示
+        wp_die('投稿の削除に失敗しました。');
+    }
+}
+add_action('admin_post_delete_post', 'handle_delete_post');
+add_action('admin_post_nopriv_delete_post', 'handle_delete_post');
+
