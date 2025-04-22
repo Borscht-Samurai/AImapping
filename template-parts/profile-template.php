@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: プロフィールページ
- * 
+ *
  * page-templates/profile-template.php - ユーザー自身のプロフィールページテンプレート
  */
 
@@ -27,24 +27,24 @@ get_header();
                 'show_recent_events' => true
             ));
             ?>
-            
-            <div class="profile-tabs">
+
+            <div class="profile-tabs" style="max-width: 1100px; margin: 0 auto;">
                 <div class="tab-buttons">
                     <button class="tab-btn active" data-tab="upcoming-events">参加予定の募集</button>
                     <button class="tab-btn" data-tab="past-events">過去の参加募集</button>
                     <button class="tab-btn" data-tab="my-events">主催募集</button>
                 </div>
-                
+
                 <div class="tab-content active" id="upcoming-events">
                     <h2>参加予定の募集</h2>
-                    
+
                     <?php
                     // 参加予定のイベントを取得
                     $attended_events = get_user_meta($current_user->ID, 'attended_events', true);
-                    
+
                     if ($attended_events) {
                         $attended_events_array = explode(',', $attended_events);
-                        
+
                         $args = array(
                             'post_type' => 'recruitment',
                             'posts_per_page' => 10,
@@ -61,16 +61,16 @@ get_header();
                             'meta_key' => 'event_date',
                             'order' => 'ASC'
                         );
-                        
+
                         $upcoming_events = new WP_Query($args);
-                        
+
                         if ($upcoming_events->have_posts()) : ?>
-                            <div class="events-grid">
+                            <div class="events-grid" style="max-width: 1100px; margin: 0 auto;">
                                 <?php while ($upcoming_events->have_posts()) : $upcoming_events->the_post(); ?>
                                     <?php get_template_part('template-parts/content', 'card'); ?>
                                 <?php endwhile; ?>
                             </div>
-                            
+
                             <?php
                             wp_reset_postdata();
                         else : ?>
@@ -86,17 +86,17 @@ get_header();
                         </div>
                     <?php } ?>
                 </div>
-                
+
                 <div class="tab-content" id="past-events">
                     <h2>過去の参加募集</h2>
-                    
+
                     <?php
                     // 過去の参加イベントを取得
                     $attended_events = get_user_meta($current_user->ID, 'attended_events', true);
-                    
+
                     if ($attended_events) {
                         $attended_events_array = explode(',', $attended_events);
-                        
+
                         $args = array(
                             'post_type' => 'recruitment',
                             'posts_per_page' => 10,
@@ -113,16 +113,16 @@ get_header();
                             'meta_key' => 'event_date',
                             'order' => 'DESC'
                         );
-                        
+
                         $past_events = new WP_Query($args);
-                        
+
                         if ($past_events->have_posts()) : ?>
-                            <div class="events-grid">
+                            <div class="events-grid" style="max-width: 1100px; margin: 0 auto;">
                                 <?php while ($past_events->have_posts()) : $past_events->the_post(); ?>
                                     <?php get_template_part('template-parts/content', 'card'); ?>
                                 <?php endwhile; ?>
                             </div>
-                            
+
                             <?php
                             wp_reset_postdata();
                         else : ?>
@@ -136,10 +136,10 @@ get_header();
                         </div>
                     <?php } ?>
                 </div>
-                
+
                 <div class="tab-content" id="my-events">
                     <h2>主催募集一覧</h2>
-                    
+
                     <?php
                     // ユーザーが投稿したイベントを取得
                     $args = array(
@@ -149,16 +149,16 @@ get_header();
                         'orderby' => 'date',
                         'order' => 'DESC'
                     );
-                    
+
                     $user_events = new WP_Query($args);
-                    
+
                     if ($user_events->have_posts()) : ?>
-                        <div class="events-grid">
+                        <div class="events-grid" style="max-width: 1100px; margin: 0 auto;">
                             <?php while ($user_events->have_posts()) : $user_events->the_post(); ?>
                                 <?php get_template_part('template-parts/content', 'card'); ?>
                             <?php endwhile; ?>
                         </div>
-                        
+
                         <?php
                         wp_reset_postdata();
                     else : ?>
@@ -178,13 +178,13 @@ get_header();
         // タブ切り替え機能
         const tabBtns = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
-        
+
         tabBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 // すべてのタブからアクティブクラスを削除
                 tabBtns.forEach(btn => btn.classList.remove('active'));
                 tabContents.forEach(content => content.classList.remove('active'));
-                
+
                 // クリックされたタブとそれに対応するコンテンツをアクティブに
                 this.classList.add('active');
                 const tabId = this.getAttribute('data-tab');

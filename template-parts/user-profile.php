@@ -187,7 +187,7 @@ if (!$user) {
         if ($recent_events->have_posts()) : ?>
             <div class="recent-events">
                 <h3><?php echo esc_html($user->display_name); ?>さんの最近の募集</h3>
-                <div class="events-grid">
+                <div class="events-grid" style="max-width: 1100px; margin: 0 auto;">
                     <?php while ($recent_events->have_posts()) : $recent_events->the_post(); ?>
                         <?php get_template_part('template-parts/content', 'card'); ?>
                     <?php endwhile; ?>
