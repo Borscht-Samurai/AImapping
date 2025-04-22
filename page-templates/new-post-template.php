@@ -4,6 +4,9 @@
  * Description: 新規投稿作成用のテンプレート（編集モードもサポート）
  */
 
+// エラー表示を抹消
+@ini_set('display_errors', 0);
+
 // WordPressメディアアップローダーのスクリプトを読み込み
 wp_enqueue_media();
 

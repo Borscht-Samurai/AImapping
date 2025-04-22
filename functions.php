@@ -863,3 +863,14 @@ function handle_delete_post() {
 add_action('admin_post_delete_post', 'handle_delete_post');
 add_action('admin_post_nopriv_delete_post', 'handle_delete_post');
 
+/**
+ * ページテンプレートでコメント数を取得しようとした場合にエラーを回避する
+ */
+function fix_comment_count_error($count, $post_id) {
+    if (is_page_template('page-templates/new-post-template.php') || is_page_template('page-templates/edit-post-template.php')) {
+        return 0;
+    }
+    return $count;
+}
+add_filter('get_comments_number', 'fix_comment_count_error', 10, 2);
+
