@@ -32,7 +32,7 @@ get_header();
 
                 <div class="form-group">
                     <label for="post_content">イベント内容 <span class="required">*</span></label>
-                    <textarea id="post_content" name="post_content" required class="form-control" rows="5"></textarea>
+                    <textarea id="post_content" name="post_content" required class="form-control" rows="10"></textarea>
                     <div class="media-buttons" style="margin-top: 10px; display: flex; gap: 10px;">
                         <button type="button" id="insert-media-button" class="btn btn-secondary" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
                             <i class="fas fa-image" style="margin-right: 5px;"></i>画像を挿入
@@ -41,11 +41,12 @@ get_header();
                             <i class="fas fa-edit" style="margin-right: 5px;"></i>画像を編集
                         </button>
                     </div>
-                    <div id="image-preview" style="margin-top: 10px; display: none;">
-                        <h4 style="font-size: 1rem; margin-bottom: 5px;">プレビュー</h4>
-                        <div id="preview-content" style="border: 1px solid #ddd; padding: 10px; border-radius: 4px; background-color: #f9f9f9;"></div>
-                    </div>
-                    <p class="form-hint" style="margin-top: 5px; font-size: 0.85rem; color: #666;">イベント内容に画像を挿入できます。ボタンをクリックして画像をアップロードしてください。挿入後の画像はテキスト内で選択して「画像を編集」ボタンでサイズ変更が可能です。</p>
+                    <p class="form-hint" style="margin-top: 5px; font-size: 0.85rem; color: #666;">イベント内容に画像を挿入できます。ボタンをクリックして画像をアップロードしてください。画像をドラッグ選択して「画像を編集」ボタンでサイズ変更が可能です。</p>
+                </div>
+
+                <div class="form-group">
+                    <h4 style="font-size: 1.1rem; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">プレビュー</h4>
+                    <div id="preview-content" style="border: 1px solid #ddd; padding: 15px; border-radius: 4px; background-color: #f9f9f9; min-height: 200px; max-height: 400px; overflow: auto;"></div>
                 </div>
 
                 <div class="form-group">
@@ -151,32 +152,79 @@ get_header();
                 var selectedImageRange = null;
 
                 // テキストエリアの変更を監視してプレビューを更新
-                $('#post_content').on('input selectionchange mouseup keyup', function() {
-                    checkForImageTag();
+                $('#post_content').on('input mouseup keyup click select change', function() {
+                    setTimeout(updatePreview, 50); // 少し遅延させて確実に内容を取得
                 });
 
-                // テキスト内の画像タグをチェックする関数
-                function checkForImageTag() {
+                // 初期表示時にプレビューを更新
+                setTimeout(updatePreview, 100);
+
+                // プレビューを更新する関数
+                function updatePreview() {
                     var textArea = $('#post_content');
                     var content = textArea.val();
                     var cursorPos = textArea.prop('selectionStart');
                     var cursorEnd = textArea.prop('selectionEnd');
 
+                    // 常にプレビューを表示
+                    if (content) {
+                        // 画像がテキストと同じ行で被らないようにする
+                        // 画像タグの前後に改行を追加し、段落タグで囲む
+                        var formattedContent = content
+                            .replace(/(<img[^>]+>)/g, function(match) {
+                                // 画像タグの前後に改行がない場合は追加
+                                if (!match.startsWith('\n')) {
+                                    match = '\n' + match;
+                                }
+                                if (!match.endsWith('\n')) {
+                                    match = match + '\n';
+                                }
+                                return '<p>' + match + '</p>';
+                            })
+                            // 改行を<br>タグに変換
+                            .replace(/\n/g, '<br>');
+
+                        // プレビューを表示
+                        $('#preview-content').html(formattedContent);
+                    } else {
+                        $('#preview-content').html('<p>プレビューがここに表示されます</p>');
+                    }
+
+                    // 選択範囲がある場合は画像タグをチェック
+                    checkForImageTag(content, cursorPos, cursorEnd);
+                }
+
+                // テキスト内の画像タグをチェックする関数
+                function checkForImageTag(content, cursorPos, cursorEnd) {
                     // 選択範囲がある場合
                     if (cursorPos !== cursorEnd) {
                         var selectedText = content.substring(cursorPos, cursorEnd);
-                        var imgTagRegex = /<img[^>]+>/i;
 
-                        if (imgTagRegex.test(selectedText)) {
+                        // 画像タグの完全な選択を確認
+                        if (selectedText.indexOf('<img') >= 0 && selectedText.indexOf('/>') >= 0) {
+                            console.log('画像タグが選択されました:', selectedText);
+
                             // 画像タグが選択されている場合
                             selectedImageTag = selectedText;
                             selectedImageRange = { start: cursorPos, end: cursorEnd };
                             $('#edit-image-button').prop('disabled', false);
-
-                            // プレビューを表示
-                            $('#preview-content').html(selectedText);
-                            $('#image-preview').show();
                             return;
+                        } else {
+                            // 部分的な選択の場合、完全な画像タグを探す
+                            var imgTagStart = content.lastIndexOf('<img', cursorPos);
+                            var imgTagEnd = content.indexOf('/>', cursorEnd) + 2;
+
+                            if (imgTagStart >= 0 && imgTagEnd > imgTagStart && imgTagEnd <= content.length) {
+                                var fullImgTag = content.substring(imgTagStart, imgTagEnd);
+                                if (fullImgTag.indexOf('<img') >= 0 && fullImgTag.indexOf('/>') >= 0) {
+                                    console.log('完全な画像タグを検出しました:', fullImgTag);
+
+                                    selectedImageTag = fullImgTag;
+                                    selectedImageRange = { start: imgTagStart, end: imgTagEnd };
+                                    $('#edit-image-button').prop('disabled', false);
+                                    return;
+                                }
+                            }
                         }
                     }
 
@@ -184,30 +232,44 @@ get_header();
                     selectedImageTag = null;
                     selectedImageRange = null;
                     $('#edit-image-button').prop('disabled', true);
-                    $('#image-preview').hide();
                 }
 
                 // 画像編集ボタンのクリックイベント
                 $('#edit-image-button').click(function() {
+                    console.log('編集ボタンがクリックされました');
                     if (selectedImageTag) {
+                        console.log('編集する画像タグ:', selectedImageTag);
                         showImageEditDialog(selectedImageTag, selectedImageRange);
+                    } else {
+                        console.log('画像タグが選択されていません');
+                        // 画像が選択されていない場合はメッセージを表示
+                        alert('編集する画像を選択してください。\n\nテキスト内の画像をクリックして選択してから、「画像を編集」ボタンをクリックしてください。');
                     }
                 });
 
                 // 画像編集ダイアログを表示する関数
                 function showImageEditDialog(imgTag, range) {
+                    console.log('編集ダイアログを表示します:', imgTag);
+
                     // 画像のURLを取得
                     var srcMatch = imgTag.match(/src=['"]([^'"]+)['"]/);
-                    if (!srcMatch || !srcMatch[1]) return;
+                    if (!srcMatch || !srcMatch[1]) {
+                        console.error('src属性が見つかりません');
+                        alert('画像のソースが見つかりません。画像タグが正しく選択されているか確認してください。');
+                        return;
+                    }
 
                     var imgSrc = srcMatch[1];
+                    console.log('画像ソース:', imgSrc);
 
                     // 現在のサイズを取得
                     var widthMatch = imgTag.match(/width:\s*([^;]+);/);
                     var currentWidth = widthMatch ? widthMatch[1] : '50%';
+                    console.log('現在の幅:', currentWidth);
 
                     // 中央揃えかどうかを取得
                     var isCentered = imgTag.includes('margin: 10px auto; display: block;');
+                    console.log('中央揃え:', isCentered);
 
                     // 既存のダイアログがあれば削除
                     $('#image-edit-dialog').remove();
@@ -270,6 +332,7 @@ get_header();
 
                     // 更新ボタン
                     $('#update-image').click(function() {
+                        console.log('画像を更新します');
                         var width;
                         switch(selectedSize) {
                             case 'small':
@@ -284,28 +347,65 @@ get_header();
                             default:
                                 width = '50%';
                         }
+                        console.log('選択された幅:', width);
 
                         var centerAlign = $('#center-align-edit').is(':checked');
                         var alignStyle = centerAlign ? 'margin: 10px auto; display: block;' : 'margin: 10px 0;';
+                        console.log('中央揃え:', centerAlign);
 
-                        // 新しい画像タグを作成
-                        var newImgTag = imgTag.replace(/style="[^"]*"/, 'style="width: ' + width + '; height: auto; ' + alignStyle + '"');
+                        try {
+                            // 新しい画像タグを作成
+                            var styleRegex = /style="[^"]*"/;
+                            var newStyle = 'style="width: ' + width + '; height: auto; ' + alignStyle + '"';
 
-                        // テキストエリアの内容を更新
-                        var textArea = $('#post_content');
-                        var content = textArea.val();
-                        var newContent = content.substring(0, range.start) + newImgTag + content.substring(range.end);
-                        textArea.val(newContent);
+                            var newImgTag;
+                            if (styleRegex.test(imgTag)) {
+                                // style属性があれば置換
+                                newImgTag = imgTag.replace(styleRegex, newStyle);
+                            } else {
+                                // style属性がなければ追加
+                                newImgTag = imgTag.replace(/<img/, '<img ' + newStyle);
+                            }
 
-                        // プレビューを更新
-                        $('#preview-content').html(newImgTag);
+                            // 画像がテキストと同じ行で被らないように、前後に改行がなければ追加
+                            if (!newImgTag.startsWith('\n')) {
+                                newImgTag = '\n' + newImgTag;
+                            }
+                            if (!newImgTag.endsWith('\n')) {
+                                newImgTag = newImgTag + '\n';
+                            }
 
-                        // 選択範囲を更新
-                        selectedImageTag = newImgTag;
-                        selectedImageRange = { start: range.start, end: range.start + newImgTag.length };
+                            console.log('新しい画像タグ:', newImgTag);
 
-                        // ダイアログを閉じる
-                        $('#image-edit-dialog').remove();
+                            // テキストエリアの内容を更新
+                            var textArea = $('#post_content');
+                            var content = textArea.val();
+
+                            // 選択範囲が有効か確認
+                            if (range && range.start >= 0 && range.end <= content.length) {
+                                var newContent = content.substring(0, range.start) + newImgTag + content.substring(range.end);
+                                textArea.val(newContent);
+                                console.log('テキストエリアを更新しました');
+
+                                // プレビューを更新
+                                updatePreview();
+
+                                // 選択範囲を更新
+                                selectedImageTag = newImgTag;
+                                selectedImageRange = { start: range.start, end: range.start + newImgTag.length };
+
+                                // ダイアログを閉じる
+                                $('#image-edit-dialog').remove();
+                            } else {
+                                console.error('無効な選択範囲:', range);
+                                alert('画像の更新に失敗しました。もう一度画像を選択してください。');
+                                $('#image-edit-dialog').remove();
+                            }
+                        } catch (error) {
+                            console.error('画像更新エラー:', error);
+                            alert('画像の更新中にエラーが発生しました。\n' + error.message);
+                            $('#image-edit-dialog').remove();
+                        }
                     });
                 }
 
@@ -412,7 +512,8 @@ get_header();
                             var centerAlign = $('#center-align').is(':checked');
                             var alignStyle = centerAlign ? 'margin: 10px auto; display: block;' : 'margin: 10px 0;';
 
-                            var imgTag = '<img src="' + attachment.url + '" alt="' + attachment.title + '" class="img-fluid" style="width: ' + width + '; height: auto; ' + alignStyle + '" />';
+                            // 画像がテキストと同じ行で被らないように、前後に改行を追加
+                            var imgTag = '\n<img src="' + attachment.url + '" alt="' + attachment.title + '" class="img-fluid" style="width: ' + width + '; height: auto; ' + alignStyle + '" />\n';
 
                             // カーソル位置に画像タグを挿入
                             var textArea = $('#post_content');
@@ -422,6 +523,9 @@ get_header();
 
                             // テキストエリアに画像タグを挿入
                             textArea.val(textBefore + imgTag + textAfter);
+
+                            // プレビューを更新
+                            updatePreview();
 
                             // ダイアログを閉じる
                             $('#image-size-dialog').remove();
