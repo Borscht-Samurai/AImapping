@@ -4,6 +4,9 @@
  * Description: 新規投稿作成用のテンプレート
  */
 
+// WordPressメディアアップローダーのスクリプトを読み込み
+wp_enqueue_media();
+
 get_header();
 ?>
 
@@ -19,7 +22,7 @@ get_header();
 
     <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
         <?php if (is_user_logged_in()) : ?>
-            <form id="new-post-form" method="post" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" style="max-width: 800px; margin: 0 auto; padding: 2rem 0;">
+            <form id="new-post-form" method="post" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" enctype="multipart/form-data" style="max-width: 800px; margin: 0 auto; padding: 2rem 0;">
                 <?php wp_nonce_field('new_post_action', 'new_post_nonce'); ?>
 
                 <div class="form-group">
@@ -30,6 +33,12 @@ get_header();
                 <div class="form-group">
                     <label for="post_content">イベント内容 <span class="required">*</span></label>
                     <textarea id="post_content" name="post_content" required class="form-control" rows="5"></textarea>
+                    <div class="media-buttons" style="margin-top: 10px;">
+                        <button type="button" id="insert-media-button" class="btn btn-secondary" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
+                            <i class="fas fa-image" style="margin-right: 5px;"></i>画像を挿入
+                        </button>
+                    </div>
+                    <p class="form-hint" style="margin-top: 5px; font-size: 0.85rem; color: #666;">イベント内容に画像を挿入できます。ボタンをクリックして画像をアップロードしてください。</p>
                 </div>
 
                 <div class="form-group">
@@ -120,12 +129,53 @@ get_header();
 
             <script>
             jQuery(document).ready(function($) {
+                // 開催形式の変更時の処理
                 $('#location_type').change(function() {
                     if ($(this).val() === 'offline') {
                         $('#location_detail_group').show();
                     } else {
                         $('#location_detail_group').hide();
                     }
+                });
+
+                // メディアアップローダーの初期化
+                var mediaUploader;
+
+                $('#insert-media-button').click(function(e) {
+                    e.preventDefault();
+
+                    // メディアアップローダーが既に存在する場合は再利用
+                    if (mediaUploader) {
+                        mediaUploader.open();
+                        return;
+                    }
+
+                    // メディアアップローダーの作成
+                    mediaUploader = wp.media({
+                        title: 'イベント内容に挿入する画像を選択',
+                        button: {
+                            text: '画像を挿入'
+                        },
+                        multiple: false
+                    });
+
+                    // 画像選択時の処理
+                    mediaUploader.on('select', function() {
+                        var attachment = mediaUploader.state().get('selection').first().toJSON();
+                        var imgTag = '<img src="' + attachment.url + '" alt="' + attachment.title + '" class="img-fluid" style="max-width: 100%; height: auto; margin: 10px 0;" />';
+
+                        // カーソル位置に画像タグを挿入
+                        var textArea = $('#post_content');
+                        var cursorPos = textArea.prop('selectionStart');
+                        var textBefore = textArea.val().substring(0, cursorPos);
+                        var textAfter = textArea.val().substring(cursorPos);
+
+                        // テキストエリアに画像タグを挿入
+                        textArea.val(textBefore + imgTag + textAfter);
+                    });
+
+                    // メディアアップローダーを開く
+                    mediaUploader.open();
                 });
             });
             </script>
