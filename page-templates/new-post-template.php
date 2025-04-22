@@ -33,12 +33,19 @@ get_header();
                 <div class="form-group">
                     <label for="post_content">イベント内容 <span class="required">*</span></label>
                     <textarea id="post_content" name="post_content" required class="form-control" rows="5"></textarea>
-                    <div class="media-buttons" style="margin-top: 10px;">
+                    <div class="media-buttons" style="margin-top: 10px; display: flex; gap: 10px;">
                         <button type="button" id="insert-media-button" class="btn btn-secondary" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
                             <i class="fas fa-image" style="margin-right: 5px;"></i>画像を挿入
                         </button>
+                        <button type="button" id="edit-image-button" class="btn btn-secondary" style="font-size: 0.9rem; padding: 0.5rem 1rem;" disabled>
+                            <i class="fas fa-edit" style="margin-right: 5px;"></i>画像を編集
+                        </button>
                     </div>
-                    <p class="form-hint" style="margin-top: 5px; font-size: 0.85rem; color: #666;">イベント内容に画像を挿入できます。ボタンをクリックして画像をアップロードしてください。</p>
+                    <div id="image-preview" style="margin-top: 10px; display: none;">
+                        <h4 style="font-size: 1rem; margin-bottom: 5px;">プレビュー</h4>
+                        <div id="preview-content" style="border: 1px solid #ddd; padding: 10px; border-radius: 4px; background-color: #f9f9f9;"></div>
+                    </div>
+                    <p class="form-hint" style="margin-top: 5px; font-size: 0.85rem; color: #666;">イベント内容に画像を挿入できます。ボタンをクリックして画像をアップロードしてください。挿入後の画像はテキスト内で選択して「画像を編集」ボタンでサイズ変更が可能です。</p>
                 </div>
 
                 <div class="form-group">
@@ -140,6 +147,167 @@ get_header();
 
                 // メディアアップローダーの初期化
                 var mediaUploader;
+                var selectedImageTag = null;
+                var selectedImageRange = null;
+
+                // テキストエリアの変更を監視してプレビューを更新
+                $('#post_content').on('input selectionchange mouseup keyup', function() {
+                    checkForImageTag();
+                });
+
+                // テキスト内の画像タグをチェックする関数
+                function checkForImageTag() {
+                    var textArea = $('#post_content');
+                    var content = textArea.val();
+                    var cursorPos = textArea.prop('selectionStart');
+                    var cursorEnd = textArea.prop('selectionEnd');
+
+                    // 選択範囲がある場合
+                    if (cursorPos !== cursorEnd) {
+                        var selectedText = content.substring(cursorPos, cursorEnd);
+                        var imgTagRegex = /<img[^>]+>/i;
+
+                        if (imgTagRegex.test(selectedText)) {
+                            // 画像タグが選択されている場合
+                            selectedImageTag = selectedText;
+                            selectedImageRange = { start: cursorPos, end: cursorEnd };
+                            $('#edit-image-button').prop('disabled', false);
+
+                            // プレビューを表示
+                            $('#preview-content').html(selectedText);
+                            $('#image-preview').show();
+                            return;
+                        }
+                    }
+
+                    // 画像タグが選択されていない場合
+                    selectedImageTag = null;
+                    selectedImageRange = null;
+                    $('#edit-image-button').prop('disabled', true);
+                    $('#image-preview').hide();
+                }
+
+                // 画像編集ボタンのクリックイベント
+                $('#edit-image-button').click(function() {
+                    if (selectedImageTag) {
+                        showImageEditDialog(selectedImageTag, selectedImageRange);
+                    }
+                });
+
+                // 画像編集ダイアログを表示する関数
+                function showImageEditDialog(imgTag, range) {
+                    // 画像のURLを取得
+                    var srcMatch = imgTag.match(/src=['"]([^'"]+)['"]/);
+                    if (!srcMatch || !srcMatch[1]) return;
+
+                    var imgSrc = srcMatch[1];
+
+                    // 現在のサイズを取得
+                    var widthMatch = imgTag.match(/width:\s*([^;]+);/);
+                    var currentWidth = widthMatch ? widthMatch[1] : '50%';
+
+                    // 中央揃えかどうかを取得
+                    var isCentered = imgTag.includes('margin: 10px auto; display: block;');
+
+                    // 既存のダイアログがあれば削除
+                    $('#image-edit-dialog').remove();
+
+                    // ダイアログのHTMLを作成
+                    var dialogHtml = '<div id="image-edit-dialog" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center;">' +
+                        '<div style="background: white; padding: 20px; border-radius: 8px; max-width: 500px; width: 90%;">' +
+                            '<h3 style="margin-top: 0; margin-bottom: 15px;">画像サイズを編集</h3>' +
+                            '<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">' +
+                                '<div class="size-option" data-size="small" style="flex: 1; min-width: 120px; border: 2px solid #ddd; border-radius: 4px; padding: 10px; cursor: pointer; text-align: center;">' +
+                                    '<img src="' + imgSrc + '" style="max-width: 100%; height: auto; max-height: 100px;" />' +
+                                    '<p style="margin: 5px 0 0;">小さい (25%)</p>' +
+                                '</div>' +
+                                '<div class="size-option" data-size="medium" style="flex: 1; min-width: 120px; border: 2px solid #ddd; border-radius: 4px; padding: 10px; cursor: pointer; text-align: center;">' +
+                                    '<img src="' + imgSrc + '" style="max-width: 100%; height: auto; max-height: 100px;" />' +
+                                    '<p style="margin: 5px 0 0;">中くらい (50%)</p>' +
+                                '</div>' +
+                                '<div class="size-option" data-size="large" style="flex: 1; min-width: 120px; border: 2px solid #ddd; border-radius: 4px; padding: 10px; cursor: pointer; text-align: center;">' +
+                                    '<img src="' + imgSrc + '" style="max-width: 100%; height: auto; max-height: 100px;" />' +
+                                    '<p style="margin: 5px 0 0;">大きい (100%)</p>' +
+                                '</div>' +
+                            '</div>' +
+                            '<div style="display: flex; justify-content: space-between;">' +
+                                '<button id="cancel-edit" class="btn btn-secondary" style="padding: 8px 15px;">キャンセル</button>' +
+                                '<div style="display: flex; gap: 10px;">' +
+                                    '<label style="display: flex; align-items: center;">' +
+                                        '<input type="checkbox" id="center-align-edit" ' + (isCentered ? 'checked' : '') + ' style="margin-right: 5px;">' +
+                                        '中央揃え' +
+                                    '</label>' +
+                                    '<button id="update-image" class="btn btn-primary" style="padding: 8px 15px;">更新する</button>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+
+                    // ダイアログを追加
+                    $('body').append(dialogHtml);
+
+                    // 選択されたサイズを設定
+                    var selectedSize;
+                    if (currentWidth === '25%') selectedSize = 'small';
+                    else if (currentWidth === '50%') selectedSize = 'medium';
+                    else if (currentWidth === '100%') selectedSize = 'large';
+                    else selectedSize = 'medium';
+
+                    // サイズオプションのクリックイベント
+                    $('.size-option').click(function() {
+                        $('.size-option').css('border-color', '#ddd');
+                        $(this).css('border-color', '#6C63FF');
+                        selectedSize = $(this).data('size');
+                    });
+
+                    // 現在のサイズを選択
+                    $('.size-option[data-size="' + selectedSize + '"]').click();
+
+                    // キャンセルボタン
+                    $('#cancel-edit').click(function() {
+                        $('#image-edit-dialog').remove();
+                    });
+
+                    // 更新ボタン
+                    $('#update-image').click(function() {
+                        var width;
+                        switch(selectedSize) {
+                            case 'small':
+                                width = '25%';
+                                break;
+                            case 'medium':
+                                width = '50%';
+                                break;
+                            case 'large':
+                                width = '100%';
+                                break;
+                            default:
+                                width = '50%';
+                        }
+
+                        var centerAlign = $('#center-align-edit').is(':checked');
+                        var alignStyle = centerAlign ? 'margin: 10px auto; display: block;' : 'margin: 10px 0;';
+
+                        // 新しい画像タグを作成
+                        var newImgTag = imgTag.replace(/style="[^"]*"/, 'style="width: ' + width + '; height: auto; ' + alignStyle + '"');
+
+                        // テキストエリアの内容を更新
+                        var textArea = $('#post_content');
+                        var content = textArea.val();
+                        var newContent = content.substring(0, range.start) + newImgTag + content.substring(range.end);
+                        textArea.val(newContent);
+
+                        // プレビューを更新
+                        $('#preview-content').html(newImgTag);
+
+                        // 選択範囲を更新
+                        selectedImageTag = newImgTag;
+                        selectedImageRange = { start: range.start, end: range.start + newImgTag.length };
+
+                        // ダイアログを閉じる
+                        $('#image-edit-dialog').remove();
+                    });
+                }
 
                 $('#insert-media-button').click(function(e) {
                     e.preventDefault();
@@ -162,17 +330,103 @@ get_header();
                     // 画像選択時の処理
                     mediaUploader.on('select', function() {
                         var attachment = mediaUploader.state().get('selection').first().toJSON();
-                        var imgTag = '<img src="' + attachment.url + '" alt="' + attachment.title + '" class="img-fluid" style="max-width: 100%; height: auto; margin: 10px 0;" />';
 
-                        // カーソル位置に画像タグを挿入
-                        var textArea = $('#post_content');
-                        var cursorPos = textArea.prop('selectionStart');
-                        var textBefore = textArea.val().substring(0, cursorPos);
-                        var textAfter = textArea.val().substring(cursorPos);
-
-                        // テキストエリアに画像タグを挿入
-                        textArea.val(textBefore + imgTag + textAfter);
+                        // 画像サイズ選択ダイアログを表示
+                        showImageSizeDialog(attachment);
                     });
+
+                    // 画像サイズ選択ダイアログを表示する関数
+                    function showImageSizeDialog(attachment) {
+                        // 既存のダイアログがあれば削除
+                        $('#image-size-dialog').remove();
+
+                        // ダイアログのHTMLを作成
+                        var dialogHtml = '<div id="image-size-dialog" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center;">' +
+                            '<div style="background: white; padding: 20px; border-radius: 8px; max-width: 500px; width: 90%;">' +
+                                '<h3 style="margin-top: 0; margin-bottom: 15px;">画像サイズを選択</h3>' +
+                                '<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">' +
+                                    '<div class="size-option" data-size="small" style="flex: 1; min-width: 120px; border: 2px solid #ddd; border-radius: 4px; padding: 10px; cursor: pointer; text-align: center;">' +
+                                        '<img src="' + attachment.url + '" style="max-width: 100%; height: auto; max-height: 100px;" />' +
+                                        '<p style="margin: 5px 0 0;">小さい (25%)</p>' +
+                                    '</div>' +
+                                    '<div class="size-option" data-size="medium" style="flex: 1; min-width: 120px; border: 2px solid #ddd; border-radius: 4px; padding: 10px; cursor: pointer; text-align: center;">' +
+                                        '<img src="' + attachment.url + '" style="max-width: 100%; height: auto; max-height: 100px;" />' +
+                                        '<p style="margin: 5px 0 0;">中くらい (50%)</p>' +
+                                    '</div>' +
+                                    '<div class="size-option" data-size="large" style="flex: 1; min-width: 120px; border: 2px solid #ddd; border-radius: 4px; padding: 10px; cursor: pointer; text-align: center;">' +
+                                        '<img src="' + attachment.url + '" style="max-width: 100%; height: auto; max-height: 100px;" />' +
+                                        '<p style="margin: 5px 0 0;">大きい (100%)</p>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div style="display: flex; justify-content: space-between;">' +
+                                    '<button id="cancel-insert" class="btn btn-secondary" style="padding: 8px 15px;">キャンセル</button>' +
+                                    '<div style="display: flex; gap: 10px;">' +
+                                        '<label style="display: flex; align-items: center;">' +
+                                            '<input type="checkbox" id="center-align" style="margin-right: 5px;">' +
+                                            '中央揃え' +
+                                        '</label>' +
+                                        '<button id="insert-selected-size" class="btn btn-primary" style="padding: 8px 15px;">挿入する</button>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>';
+
+                        // ダイアログを追加
+                        $('body').append(dialogHtml);
+
+                        // 選択されたサイズを追跡
+                        var selectedSize = 'medium'; // デフォルトは中サイズ
+
+                        // サイズオプションのクリックイベント
+                        $('.size-option').click(function() {
+                            $('.size-option').css('border-color', '#ddd');
+                            $(this).css('border-color', '#6C63FF');
+                            selectedSize = $(this).data('size');
+                        });
+
+                        // 中サイズをデフォルトで選択
+                        $('.size-option[data-size="medium"]').click();
+
+                        // キャンセルボタン
+                        $('#cancel-insert').click(function() {
+                            $('#image-size-dialog').remove();
+                        });
+
+                        // 挿入ボタン
+                        $('#insert-selected-size').click(function() {
+                            var width;
+                            switch(selectedSize) {
+                                case 'small':
+                                    width = '25%';
+                                    break;
+                                case 'medium':
+                                    width = '50%';
+                                    break;
+                                case 'large':
+                                    width = '100%';
+                                    break;
+                                default:
+                                    width = '50%';
+                            }
+
+                            var centerAlign = $('#center-align').is(':checked');
+                            var alignStyle = centerAlign ? 'margin: 10px auto; display: block;' : 'margin: 10px 0;';
+
+                            var imgTag = '<img src="' + attachment.url + '" alt="' + attachment.title + '" class="img-fluid" style="width: ' + width + '; height: auto; ' + alignStyle + '" />';
+
+                            // カーソル位置に画像タグを挿入
+                            var textArea = $('#post_content');
+                            var cursorPos = textArea.prop('selectionStart');
+                            var textBefore = textArea.val().substring(0, cursorPos);
+                            var textAfter = textArea.val().substring(cursorPos);
+
+                            // テキストエリアに画像タグを挿入
+                            textArea.val(textBefore + imgTag + textAfter);
+
+                            // ダイアログを閉じる
+                            $('#image-size-dialog').remove();
+                        });
+                    }
 
                     // メディアアップローダーを開く
                     mediaUploader.open();
