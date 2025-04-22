@@ -90,7 +90,7 @@ while (have_posts()) :
                 <!-- 編集・削除ボタンセクション（投稿者本人のみ表示） -->
                 <?php if (is_user_logged_in() && get_current_user_id() === get_the_author_meta('ID')) : ?>
                 <div class="post-edit-delete-section">
-                    <a href="<?php echo esc_url(home_url('/edit-post?post_id=' . get_the_ID())); ?>" class="edit-button">
+                    <a href="<?php echo esc_url(home_url('/new-post?post_id=' . get_the_ID())); ?>" class="edit-button">
                         <i class="fas fa-edit"></i> 編集
                     </a>
                     <?php
