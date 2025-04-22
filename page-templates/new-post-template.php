@@ -1,11 +1,26 @@
 <?php
 /**
  * Template Name: 新規投稿
- * Description: 新規投稿作成用のテンプレート
+ * Description: 新規投稿作成用のテンプレート（編集モードもサポート）
  */
 
 // WordPressメディアアップローダーのスクリプトを読み込み
 wp_enqueue_media();
+
+// 編集モードかチェック
+$edit_mode = false;
+$post_id = isset($_GET['post_id']) ? intval($_GET['post_id']) : 0;
+$post = null;
+
+if ($post_id > 0) {
+    $post = get_post($post_id);
+    if ($post && $post->post_type === 'recruitment') {
+        // 投稿者か管理者かチェック
+        if (is_user_logged_in() && (get_current_user_id() === $post->post_author || current_user_can('administrator'))) {
+            $edit_mode = true;
+        }
+    }
+}
 
 get_header();
 ?>
@@ -15,7 +30,7 @@ get_header();
     <section class="gradient-box-section">
         <div class="gradient-box">
             <div class="gradient-box-content">
-                <h1 class="recruitment-title" style="color: white;">新規イベントの投稿</h1>
+                <h1 class="recruitment-title" style="color: white;"><?php echo $edit_mode ? '募集の編集' : '新規募集の投稿'; ?></h1>
             </div>
         </div>
     </section>
@@ -25,14 +40,40 @@ get_header();
             <form id="new-post-form" method="post" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" enctype="multipart/form-data" style="max-width: 800px; margin: 0 auto; padding: 2rem 0;">
                 <?php wp_nonce_field('new_post_action', 'new_post_nonce'); ?>
 
+                <?php
+                // 編集モードの場合、既存のデータを取得
+                $post_title = '';
+                $post_content = '';
+                $post_category = '';
+                $event_date = '';
+                $event_is_online = '';
+                $event_location = '';
+
+                if ($edit_mode && $post) {
+                    $post_title = $post->post_title;
+                    $post_content = $post->post_content;
+
+                    // カテゴリーを取得
+                    $terms = wp_get_post_terms($post_id, 'recruitment_category', array('fields' => 'slugs'));
+                    if (!empty($terms)) {
+                        $post_category = $terms[0];
+                    }
+
+                    // カスタムフィールドを取得
+                    $event_date = get_post_meta($post_id, 'event_date', true);
+                    $event_is_online = get_post_meta($post_id, 'event_is_online', true);
+                    $event_location = get_post_meta($post_id, 'event_location', true);
+                }
+                ?>
+
                 <div class="form-group">
-                    <label for="post_title">イベントタイトル <span class="required">*</span></label>
-                    <input type="text" id="post_title" name="post_title" required class="form-control">
+                    <label for="post_title">募集タイトル <span class="required">*</span></label>
+                    <input type="text" id="post_title" name="post_title" required class="form-control" value="<?php echo esc_attr($post_title); ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="post_content">イベント内容 <span class="required">*</span></label>
-                    <textarea id="post_content" name="post_content" required class="form-control" rows="10"></textarea>
+                    <label for="post_content">募集内容 <span class="required">*</span></label>
+                    <textarea id="post_content" name="post_content" required class="form-control" rows="10"><?php echo esc_textarea($post_content); ?></textarea>
                     <div class="media-buttons" style="margin-top: 10px; display: flex; gap: 10px;">
                         <button type="button" id="insert-media-button" class="btn btn-secondary" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
                             <i class="fas fa-image" style="margin-right: 5px;"></i>画像を挿入
@@ -57,82 +98,62 @@ get_header();
                         $categories = get_recruitment_categories();
                         foreach ($categories as $slug => $name) :
                         ?>
-                            <option value="<?php echo esc_attr($slug); ?>"><?php echo esc_html($name); ?></option>
+                            <option value="<?php echo esc_attr($slug); ?>" <?php selected($post_category, $slug); ?>><?php echo esc_html($name); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="event_date">開催日時 <span class="required">*</span></label>
-                    <input type="datetime-local" id="event_date" name="event_date" required class="form-control">
+                    <input type="datetime-local" id="event_date" name="event_date" required class="form-control" value="<?php echo esc_attr($event_date); ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="location_type">開催形式 <span class="required">*</span></label>
                     <select id="location_type" name="location_type" required class="form-control">
                         <option value="">選択してください</option>
-                        <option value="online">オンライン</option>
-                        <option value="offline">オフライン</option>
+                        <option value="online" <?php selected($event_is_online, '1'); ?>>オンライン</option>
+                        <option value="offline" <?php selected($event_is_online, '0'); ?>>オフライン</option>
                     </select>
                 </div>
 
-                <div class="form-group" id="location_detail_group" style="display: none;">
+                <?php
+                // 開催場所の初期表示設定
+                $location_display = ($edit_mode && $event_is_online === '0') ? 'block' : 'none';
+                ?>
+                <div class="form-group" id="location_detail_group" style="display: <?php echo $location_display; ?>">
                     <label for="location_detail">開催場所 (都道府県)</label>
                     <select id="location_detail" name="location_detail" class="form-control">
                         <option value="">選択してください</option>
-                        <option value="北海道">北海道</option>
-                        <option value="青森県">青森県</option>
-                        <option value="岩手県">岩手県</option>
-                        <option value="宮城県">宮城県</option>
-                        <option value="秋田県">秋田県</option>
-                        <option value="山形県">山形県</option>
-                        <option value="福島県">福島県</option>
-                        <option value="茨城県">茨城県</option>
-                        <option value="栃木県">栃木県</option>
-                        <option value="群馬県">群馬県</option>
-                        <option value="埼玉県">埼玉県</option>
-                        <option value="千葉県">千葉県</option>
-                        <option value="東京都">東京都</option>
-                        <option value="神奈川県">神奈川県</option>
-                        <option value="新潟県">新潟県</option>
-                        <option value="富山県">富山県</option>
-                        <option value="石川県">石川県</option>
-                        <option value="福井県">福井県</option>
-                        <option value="山梨県">山梨県</option>
-                        <option value="長野県">長野県</option>
-                        <option value="岐阜県">岐阜県</option>
-                        <option value="静岡県">静岡県</option>
-                        <option value="愛知県">愛知県</option>
-                        <option value="三重県">三重県</option>
-                        <option value="滋賀県">滋賀県</option>
-                        <option value="京都府">京都府</option>
-                        <option value="大阪府">大阪府</option>
-                        <option value="兵庫県">兵庫県</option>
-                        <option value="奈良県">奈良県</option>
-                        <option value="和歌山県">和歌山県</option>
-                        <option value="鳥取県">鳥取県</option>
-                        <option value="島根県">島根県</option>
-                        <option value="岡山県">岡山県</option>
-                        <option value="広島県">広島県</option>
-                        <option value="山口県">山口県</option>
-                        <option value="徳島県">徳島県</option>
-                        <option value="香川県">香川県</option>
-                        <option value="愛媛県">愛媛県</option>
-                        <option value="高知県">高知県</option>
-                        <option value="福岡県">福岡県</option>
-                        <option value="佐賀県">佐賀県</option>
-                        <option value="長崎県">長崎県</option>
-                        <option value="熊本県">熊本県</option>
-                        <option value="大分県">大分県</option>
-                        <option value="宮崎県">宮崎県</option>
-                        <option value="鹿児島県">鹿児島県</option>
-                        <option value="沖縄県">沖縄県</option>
+                        <?php
+                        $prefectures = array(
+                            '北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県',
+                            '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県',
+                            '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県',
+                            '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県',
+                            '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県',
+                            '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県',
+                            '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'
+                        );
+
+                        foreach ($prefectures as $prefecture) :
+                        ?>
+                            <option value="<?php echo esc_attr($prefecture); ?>" <?php selected($event_location, $prefecture); ?>><?php echo esc_html($prefecture); ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
 
                 <div class="form-actions" style="text-align: center; margin-top: 2rem;">
-                    <button type="submit" class="btn btn-primary">イベントを投稿する</button>
+                    <button type="submit" class="btn btn-primary"><?php echo $edit_mode ? '募集を更新する' : '募集を投稿する'; ?></button>
+                    <?php if ($edit_mode) : ?>
+                    <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="btn btn-secondary" style="margin-left: 10px;">キャンセル</a>
+                    <?php endif; ?>
                 </div>
+
+                <?php if ($edit_mode) : ?>
+                <input type="hidden" name="post_id" value="<?php echo esc_attr($post_id); ?>">
+                <input type="hidden" name="edit_mode" value="1">
+                <?php endif; ?>
             </form>
 
             <script>

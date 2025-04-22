@@ -305,49 +305,112 @@ function handle_new_post_submission() {
         }
     }
 
-    // 投稿データの準備
-    $post_data = array(
-        'post_title'    => sanitize_text_field($_POST['post_title']),
-        'post_content'  => wp_kses_post($_POST['post_content']),
-        'post_status'   => 'publish',
-        'post_type'     => 'recruitment',
-        'post_author'   => get_current_user_id()
-    );
+    // 編集モードかチェック
+    $edit_mode = isset($_POST['edit_mode']) && $_POST['edit_mode'] == '1';
+    $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
 
-    // 投稿を作成
-    $post_id = wp_insert_post($post_data);
-
-    if (!is_wp_error($post_id)) {
-        // イベントメタ情報を保存
-        update_post_meta($post_id, 'event_date', sanitize_text_field($_POST['event_date']));
-        update_post_meta($post_id, 'event_is_online', $_POST['location_type'] === 'online' ? '1' : '0');
-
-        if ($_POST['location_type'] === 'offline' && !empty($_POST['location_detail'])) {
-            update_post_meta($post_id, 'event_location', sanitize_text_field($_POST['location_detail']));
-        } elseif ($_POST['location_type'] === 'online') {
-            update_post_meta($post_id, 'event_location', 'オンライン開催');
+    if ($edit_mode && $post_id > 0) {
+        // 投稿が存在するかチェック
+        $post = get_post($post_id);
+        if (!$post || $post->post_type !== 'recruitment') {
+            wp_die('指定された投稿が存在しません。');
         }
 
-        // カテゴリーを設定
-        if (!empty($_POST['post_category'])) {
-            $category_slug = sanitize_text_field($_POST['post_category']);
-            $term = get_term_by('slug', $category_slug, 'recruitment_category');
-            if ($term) {
-                wp_set_object_terms($post_id, $term->term_id, 'recruitment_category');
+        // 投稿者か管理者かチェック
+        if (get_current_user_id() !== $post->post_author && !current_user_can('administrator')) {
+            wp_die('この投稿を編集する権限がありません。');
+        }
+
+        // 投稿データの準備
+        $post_data = array(
+            'ID'            => $post_id,
+            'post_title'    => sanitize_text_field($_POST['post_title']),
+            'post_content'  => wp_kses_post($_POST['post_content']),
+        );
+
+        // 投稿を更新
+        $updated = wp_update_post($post_data);
+
+        if (!is_wp_error($updated)) {
+            // イベントメタ情報を保存
+            update_post_meta($post_id, 'event_date', sanitize_text_field($_POST['event_date']));
+            update_post_meta($post_id, 'event_is_online', $_POST['location_type'] === 'online' ? '1' : '0');
+
+            if ($_POST['location_type'] === 'offline' && !empty($_POST['location_detail'])) {
+                update_post_meta($post_id, 'event_location', sanitize_text_field($_POST['location_detail']));
+            } elseif ($_POST['location_type'] === 'online') {
+                update_post_meta($post_id, 'event_location', 'オンライン開催');
             } else {
-                // カテゴリーが存在しない場合は新規作成
-                $new_term = wp_insert_term($category_slug, 'recruitment_category', array('slug' => $category_slug));
-                if (!is_wp_error($new_term)) {
-                    wp_set_object_terms($post_id, $new_term['term_id'], 'recruitment_category');
+                delete_post_meta($post_id, 'event_location');
+            }
+
+            // カテゴリーを設定
+            if (!empty($_POST['post_category'])) {
+                $category_slug = sanitize_text_field($_POST['post_category']);
+                $term = get_term_by('slug', $category_slug, 'recruitment_category');
+                if ($term) {
+                    wp_set_object_terms($post_id, $term->term_id, 'recruitment_category');
+                } else {
+                    // カテゴリーが存在しない場合は新規作成
+                    $new_term = wp_insert_term($category_slug, 'recruitment_category', array('slug' => $category_slug));
+                    if (!is_wp_error($new_term)) {
+                        wp_set_object_terms($post_id, $new_term['term_id'], 'recruitment_category');
+                    }
                 }
             }
-        }
 
-        // リダイレクト
-        wp_redirect(get_permalink($post_id));
-        exit;
+            // リダイレクト
+            wp_redirect(get_permalink($post_id));
+            exit;
+        } else {
+            wp_die('投稿の更新に失敗しました。');
+        }
     } else {
-        wp_die('投稿の作成に失敗しました。');
+        // 新規投稿モード
+        // 投稿データの準備
+        $post_data = array(
+            'post_title'    => sanitize_text_field($_POST['post_title']),
+            'post_content'  => wp_kses_post($_POST['post_content']),
+            'post_status'   => 'publish',
+            'post_type'     => 'recruitment',
+            'post_author'   => get_current_user_id()
+        );
+
+        // 投稿を作成
+        $post_id = wp_insert_post($post_data);
+
+        if (!is_wp_error($post_id)) {
+            // イベントメタ情報を保存
+            update_post_meta($post_id, 'event_date', sanitize_text_field($_POST['event_date']));
+            update_post_meta($post_id, 'event_is_online', $_POST['location_type'] === 'online' ? '1' : '0');
+
+            if ($_POST['location_type'] === 'offline' && !empty($_POST['location_detail'])) {
+                update_post_meta($post_id, 'event_location', sanitize_text_field($_POST['location_detail']));
+            } elseif ($_POST['location_type'] === 'online') {
+                update_post_meta($post_id, 'event_location', 'オンライン開催');
+            }
+
+            // カテゴリーを設定
+            if (!empty($_POST['post_category'])) {
+                $category_slug = sanitize_text_field($_POST['post_category']);
+                $term = get_term_by('slug', $category_slug, 'recruitment_category');
+                if ($term) {
+                    wp_set_object_terms($post_id, $term->term_id, 'recruitment_category');
+                } else {
+                    // カテゴリーが存在しない場合は新規作成
+                    $new_term = wp_insert_term($category_slug, 'recruitment_category', array('slug' => $category_slug));
+                    if (!is_wp_error($new_term)) {
+                        wp_set_object_terms($post_id, $new_term['term_id'], 'recruitment_category');
+                    }
+                }
+            }
+
+            // リダイレクト
+            wp_redirect(get_permalink($post_id));
+            exit;
+        } else {
+            wp_die('投稿の作成に失敗しました。');
+        }
     }
 }
 add_action('template_redirect', 'handle_new_post_submission');
@@ -756,4 +819,47 @@ function custom_login_empty_redirect( $user, $username, $password ) {
 // authenticate フックは認証プロセスの一番最初に行われるため、優先度をデフォルトより少し後 (例: 30) に設定
 // 他のプラグイン（例：セキュリティ系）が authenticate フックを使っている場合、競合しないように調整が必要
 add_filter( 'authenticate', 'custom_login_empty_redirect', 30, 3 );
+
+/**
+ * 投稿削除機能のハンドラー
+ */
+function handle_delete_post() {
+    // リクエストチェック
+    if (!isset($_GET['action']) || $_GET['action'] !== 'delete_post' || !isset($_GET['post_id']) || !isset($_GET['nonce'])) {
+        return;
+    }
+
+    $post_id = intval($_GET['post_id']);
+    $nonce = $_GET['nonce'];
+
+    // nonceの検証
+    if (!wp_verify_nonce($nonce, 'delete_post_' . $post_id)) {
+        wp_die('不正なアクセスです。');
+    }
+
+    // 投稿が存在するか確認
+    $post = get_post($post_id);
+    if (!$post) {
+        wp_die('指定された投稿が存在しません。');
+    }
+
+    // 投稿者か管理者か確認
+    if (get_current_user_id() !== $post->post_author && !current_user_can('administrator')) {
+        wp_die('この投稿を削除する権限がありません。');
+    }
+
+    // 投稿を削除
+    $deleted = wp_delete_post($post_id, true);
+
+    if ($deleted) {
+        // 削除成功時は一覧ページにリダイレクト
+        wp_redirect(home_url('/recruitment'));
+        exit;
+    } else {
+        // 削除失敗時はエラーメッセージを表示
+        wp_die('投稿の削除に失敗しました。');
+    }
+}
+add_action('admin_post_delete_post', 'handle_delete_post');
+add_action('admin_post_nopriv_delete_post', 'handle_delete_post');
 

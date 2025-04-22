@@ -86,6 +86,28 @@ while (have_posts()) :
                     </div>
                     <div class="social-share-line"></div>
                 </div>
+
+                <!-- 編集・削除ボタンセクション（投稿者本人のみ表示） -->
+                <?php if (is_user_logged_in() && get_current_user_id() === get_the_author_meta('ID')) : ?>
+                <div class="post-edit-delete-section">
+                    <a href="<?php echo esc_url(home_url('/new-post?post_id=' . get_the_ID())); ?>" class="edit-button">
+                        <i class="fas fa-edit"></i> 編集
+                    </a>
+                    <?php
+                    $delete_url = add_query_arg(
+                        array(
+                            'action' => 'delete_post',
+                            'post_id' => get_the_ID(),
+                            'nonce' => wp_create_nonce('delete_post_' . get_the_ID())
+                        ),
+                        admin_url('admin-post.php')
+                    );
+                    ?>
+                    <a href="<?php echo esc_url($delete_url); ?>" class="delete-button" onclick="return confirm('この投稿を削除してもよろしいですか？');">
+                        <i class="fas fa-trash"></i> 削除
+                    </a>
+                </div>
+                <?php endif; ?>
             </div>
         </article>
     </div>
