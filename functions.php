@@ -874,3 +874,96 @@ function fix_comment_count_error($count, $post_id) {
 }
 add_filter('get_comments_number', 'fix_comment_count_error', 10, 2);
 
+/**
+ * カスタムページテンプレートを登録する
+ */
+function register_custom_page_templates($templates) {
+    // テンプレートの配列に追加
+    $templates['page-templates/contact-template.php'] = 'お問い合わせページ';
+    $templates['page-templates/login-template.php'] = 'ログインページ';
+    $templates['page-templates/register-template.php'] = '会員登録ページ';
+    $templates['page-templates/new-post-template.php'] = '新規投稿';
+    $templates['page-templates/edit-post-template.php'] = '投稿編集ページ';
+    $templates['page-templates/edit-profile.php'] = 'プロフィール編集ページ';
+
+    return $templates;
+}
+add_filter('theme_page_templates', 'register_custom_page_templates');
+
+/**
+ * カスタムテンプレートの読み込みパスを修正
+ */
+function locate_template_in_subfolders($template) {
+    global $post;
+
+    if (is_null($post)) {
+        return $template;
+    }
+
+    // 現在のテンプレート名を取得
+    $current_template = get_post_meta($post->ID, '_wp_page_template', true);
+
+    // テンプレートが指定されていない場合は処理しない
+    if (!$current_template || $current_template == 'default') {
+        return $template;
+    }
+
+    // page-templates ディレクトリ内のテンプレートを探す
+    if (strpos($current_template, 'page-templates/') === 0) {
+        $file = get_template_directory() . '/' . $current_template;
+
+        if (file_exists($file)) {
+            return $file;
+        }
+    }
+
+    return $template;
+}
+add_filter('page_template', 'locate_template_in_subfolders');
+
+/**
+ * 特定のスラッグのページに特定のテンプレートを強制的に適用
+ */
+function force_template_for_specific_pages($template) {
+    global $post;
+
+    if (is_null($post)) {
+        return $template;
+    }
+
+    // お問い合わせページ（スラッグ: contact）
+    if (is_page() && $post->post_name === 'contact') {
+        $contact_template = get_template_directory() . '/page-templates/contact-template.php';
+        if (file_exists($contact_template)) {
+            return $contact_template;
+        }
+    }
+
+    // ログインページ（スラッグ: login）
+    if (is_page() && $post->post_name === 'login') {
+        $login_template = get_template_directory() . '/page-templates/login-template.php';
+        if (file_exists($login_template)) {
+            return $login_template;
+        }
+    }
+
+    // 会員登録ページ（スラッグ: register）
+    if (is_page() && $post->post_name === 'register') {
+        $register_template = get_template_directory() . '/page-templates/register-template.php';
+        if (file_exists($register_template)) {
+            return $register_template;
+        }
+    }
+
+    // 新規投稿ページ（スラッグ: new-post）
+    if (is_page() && $post->post_name === 'new-post') {
+        $new_post_template = get_template_directory() . '/page-templates/new-post-template.php';
+        if (file_exists($new_post_template)) {
+            return $new_post_template;
+        }
+    }
+
+    return $template;
+}
+add_filter('template_include', 'force_template_for_specific_pages', 99);
+
