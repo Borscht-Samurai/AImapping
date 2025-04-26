@@ -21,7 +21,7 @@
 <div class="privacy-policy-checkbox">
     [acceptance privacy-policy] AI Mappingの<a href="/privacy-policy">プライバシーポリシー</a>に同意します [/acceptance]
 </div>
-
+[recaptcha]
 <div class="submit-button-container">
     [submit "送信する"]
 </div>
