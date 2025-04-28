@@ -886,6 +886,7 @@ function register_custom_page_templates($templates) {
     $templates['page-templates/edit-post-template.php'] = '投稿編集ページ';
     $templates['page-templates/edit-profile.php'] = 'プロフィール編集ページ';
     $templates['page-templates/privacy-policy-template.php'] = 'プライバシーポリシー';
+    $templates['page-templates/terms-of-service-template.php'] = '利用規約';
 
     return $templates;
 }
@@ -969,6 +970,14 @@ function force_template_for_specific_pages($template) {
         $privacy_template = get_template_directory() . '/page-templates/privacy-policy-template.php';
         if (file_exists($privacy_template)) {
             return $privacy_template;
+        }
+    }
+
+    // 利用規約ページ（スラッグ: terms）
+    if (is_page() && $post->post_name === 'terms') {
+        $terms_template = get_template_directory() . '/page-templates/terms-of-service-template.php';
+        if (file_exists($terms_template)) {
+            return $terms_template;
         }
     }
 
