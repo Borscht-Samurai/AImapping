@@ -122,6 +122,22 @@ function get_category_icon($slug) {
 
 // 募集カテゴリーのリストを取得する関数
 function get_recruitment_categories() {
+    // データベースから実際のカテゴリーを取得
+    $categories = get_terms(array(
+        'taxonomy' => 'recruitment_category',
+        'hide_empty' => false,
+    ));
+
+    // カテゴリーが存在する場合は、slug => name の配列を作成して返す
+    if (!empty($categories) && !is_wp_error($categories)) {
+        $category_list = array();
+        foreach ($categories as $category) {
+            $category_list[$category->slug] = $category->name;
+        }
+        return $category_list;
+    }
+
+    // カテゴリーが存在しない場合は、デフォルトのカテゴリーリストを返す
     return array(
         'study' => '勉強会',
         'online' => 'オンライン交流',
@@ -352,7 +368,23 @@ function handle_new_post_submission() {
                     wp_set_object_terms($post_id, $term->term_id, 'recruitment_category');
                 } else {
                     // カテゴリーが存在しない場合は新規作成
-                    $new_term = wp_insert_term($category_slug, 'recruitment_category', array('slug' => $category_slug));
+                    // カテゴリー名を取得（POSTデータまたはデフォルトカテゴリーリストから）
+                    $category_name = '';
+                    if (!empty($_POST['post_category_name'])) {
+                        $category_name = sanitize_text_field($_POST['post_category_name']);
+                    } else {
+                        $default_categories = array(
+                            'study' => '勉強会',
+                            'online' => 'オンライン交流',
+                            'project' => 'プロジェクト協力者募集',
+                            'meetup' => '交流会',
+                            'workshop' => 'ワークショップ',
+                            'hackathon' => 'ハッカソン'
+                        );
+                        $category_name = isset($default_categories[$category_slug]) ? $default_categories[$category_slug] : $category_slug;
+                    }
+
+                    $new_term = wp_insert_term($category_name, 'recruitment_category', array('slug' => $category_slug));
                     if (!is_wp_error($new_term)) {
                         wp_set_object_terms($post_id, $new_term['term_id'], 'recruitment_category');
                     }
@@ -398,7 +430,23 @@ function handle_new_post_submission() {
                     wp_set_object_terms($post_id, $term->term_id, 'recruitment_category');
                 } else {
                     // カテゴリーが存在しない場合は新規作成
-                    $new_term = wp_insert_term($category_slug, 'recruitment_category', array('slug' => $category_slug));
+                    // カテゴリー名を取得（POSTデータまたはデフォルトカテゴリーリストから）
+                    $category_name = '';
+                    if (!empty($_POST['post_category_name'])) {
+                        $category_name = sanitize_text_field($_POST['post_category_name']);
+                    } else {
+                        $default_categories = array(
+                            'study' => '勉強会',
+                            'online' => 'オンライン交流',
+                            'project' => 'プロジェクト協力者募集',
+                            'meetup' => '交流会',
+                            'workshop' => 'ワークショップ',
+                            'hackathon' => 'ハッカソン'
+                        );
+                        $category_name = isset($default_categories[$category_slug]) ? $default_categories[$category_slug] : $category_slug;
+                    }
+
+                    $new_term = wp_insert_term($category_name, 'recruitment_category', array('slug' => $category_slug));
                     if (!is_wp_error($new_term)) {
                         wp_set_object_terms($post_id, $new_term['term_id'], 'recruitment_category');
                     }
