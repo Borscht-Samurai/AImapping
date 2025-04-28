@@ -15,6 +15,7 @@ get_header();
     <div class="container">
         <article class="privacy-page">
             <div class="privacy-policy-container">
+                <h2 class="privacy-subtitle">プライバシーポリシー</h2>
                 <div class="privacy-content">
                     <p>AI Mapping（以下、「当サイト」といいます）は、利用者の皆様のプライバシーを尊重し、個人情報の保護に最大限の注意を払っています。以下に、当サイトにおける個人情報の取り扱いに関する方針（プライバシーポリシー）を定めます。</p>
 
@@ -64,7 +65,7 @@ get_header();
 
                     <h3>第9条（お問い合わせ窓口）</h3>
                     <p>本ポリシーに関するお問い合わせは、下記の窓口までお願いいたします。<br>
-                    Niina aimapping.gmail.com</p>
+                    Niina<br> aimapping.gmail.com</p>
 
                     <p class="policy-dates">制定日：2025年5月5日<br>最終改定日：2025年5月18日</p>
                 </div>
@@ -96,7 +97,7 @@ get_header();
     }
 
     .privacy-policy-container {
-        max-width: 800px;
+        max-width: 1000px;
         margin: 0 auto;
         padding: 0 20px;
     }
@@ -106,6 +107,7 @@ get_header();
         font-weight: bold;
         margin-bottom: 30px;
         text-align: left;
+        padding-left: 30px; /* 本文のパディングに合わせる */
     }
 
     .privacy-content {
