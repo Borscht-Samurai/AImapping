@@ -515,11 +515,22 @@ body {
     padding: 0 1rem;
 }
 
+.footer-widgets-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 .footer-widgets {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 8rem;
     margin-bottom: 2rem;
+    max-width: 900px;
+}
+
+.footer-widget {
+    text-align: left;
 }
 
 .footer-widget h3 {
@@ -527,12 +538,23 @@ body {
     font-size: 1.2rem;
     font-family: var(--font-family-base);
     color: #ffffff;
+    text-align: left;
 }
 
 .footer-widget ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    text-align: left;
+}
+
+/* Follow Usセクションのみ中央揃え */
+.footer-widget:nth-child(3) {
+    text-align: center;
+}
+
+.footer-widget:nth-child(3) h3 {
+    text-align: center;
 }
 
 .footer-widget ul li {
@@ -552,6 +574,7 @@ body {
 .social-links {
     display: flex;
     gap: 1rem;
+    justify-content: center;
 }
 
 .social-link {
@@ -892,6 +915,13 @@ body {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         padding: 0 15px;
     }
+
+    .footer-widgets {
+        flex-direction: column;
+        gap: 3rem;
+        align-items: flex-start;
+        padding-left: 2rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -931,6 +961,15 @@ body {
         grid-template-columns: 1fr;
         padding: 0 10px;
         gap: 20px;
+    }
+
+    .footer-widgets {
+        padding-left: 1rem;
+    }
+
+    /* モバイル表示でもFollow Usセクションは中央揃えを維持 */
+    .footer-widget:nth-child(3) {
+        align-self: center;
     }
 }
 
