@@ -137,9 +137,9 @@ while (have_posts()) :
                         ), home_url('/recruitment'));
                 ?>
                     <li class="category-item">
-                        <a href="<?php echo esc_url($category_link); ?>" class="category-link">
+                        <span class="category-link">
                             <?php echo esc_html($category->name); ?>
-                        </a>
+                        </span>
                     </li>
                 <?php
                     endforeach;

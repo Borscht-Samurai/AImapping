@@ -12,7 +12,7 @@ if (!is_active_sidebar('sidebar-1')) {
 <aside id="secondary" class="widget-area">
     <div class="sidebar-inner">
         <?php dynamic_sidebar('sidebar-1'); ?>
-        
+
         <?php
         // イベントアーカイブページやイベント詳細ページの場合、追加のウィジェットを表示
         if (is_post_type_archive('event') || is_singular('event') || is_tax('event_category')) :
@@ -25,16 +25,16 @@ if (!is_active_sidebar('sidebar-1')) {
                         'taxonomy' => 'event_category',
                         'hide_empty' => true,
                     ));
-                    
+
                     if (!empty($categories) && !is_wp_error($categories)) :
                         foreach ($categories as $category) :
                             ?>
                             <li class="event-category-item">
-                                <a href="<?php echo esc_url(get_term_link($category)); ?>" class="event-category-link">
+                                <span class="event-category-link">
                                     <i class="fas fa-<?php echo esc_attr(get_category_icon($category->slug)); ?>"></i>
                                     <?php echo esc_html($category->name); ?>
                                     <span class="count">(<?php echo esc_html($category->count); ?>)</span>
-                                </a>
+                                </span>
                             </li>
                             <?php
                         endforeach;
@@ -42,7 +42,7 @@ if (!is_active_sidebar('sidebar-1')) {
                     ?>
                 </ul>
             </div>
-            
+
             <div class="widget popular-events-widget">
                 <h2 class="widget-title">人気のイベント</h2>
                 <ul class="popular-events-list">
@@ -54,9 +54,9 @@ if (!is_active_sidebar('sidebar-1')) {
                         'orderby' => 'meta_value_num',
                         'order' => 'DESC',
                     );
-                    
+
                     $popular_events = new WP_Query($popular_args);
-                    
+
                     if ($popular_events->have_posts()) :
                         while ($popular_events->have_posts()) : $popular_events->the_post();
                             ?>
@@ -91,7 +91,7 @@ if (!is_active_sidebar('sidebar-1')) {
                     ?>
                 </ul>
             </div>
-            
+
             <div class="widget upcoming-events-widget">
                 <h2 class="widget-title">開催予定のイベント</h2>
                 <ul class="upcoming-events-list">
@@ -111,9 +111,9 @@ if (!is_active_sidebar('sidebar-1')) {
                             )
                         )
                     );
-                    
+
                     $upcoming_events = new WP_Query($upcoming_args);
-                    
+
                     if ($upcoming_events->have_posts()) :
                         while ($upcoming_events->have_posts()) : $upcoming_events->the_post();
                             ?>
@@ -144,7 +144,7 @@ if (!is_active_sidebar('sidebar-1')) {
                 </ul>
             </div>
         <?php endif; ?>
-        
+
         <?php
         // ユーザープロフィールページの場合、ユーザー関連のウィジェットを表示
         if (is_author()) :

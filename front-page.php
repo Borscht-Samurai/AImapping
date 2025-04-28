@@ -133,13 +133,13 @@
                     $term = get_term_by('slug', $slug, 'recruitment_category');
                     if ($term) :
                 ?>
-                    <a href="<?php echo esc_url(get_term_link($term)); ?>" class="category-card">
+                    <div class="category-card">
                         <div class="category-icon">
                             <i class="fas fa-<?php echo esc_attr(get_category_icon($slug)); ?>"></i>
                         </div>
                         <h3><?php echo esc_html($name); ?></h3>
                         <p><?php echo esc_html($term->description); ?></p>
-                    </a>
+                    </div>
                 <?php
                     endif;
                 endforeach;
