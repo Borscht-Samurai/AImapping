@@ -98,13 +98,39 @@ get_header();
                     <select id="post_category" name="post_category" required class="form-control">
                         <option value="">選択してください</option>
                         <?php
+                        // データベースから実際のカテゴリーを取得
                         $categories = get_recruitment_categories();
                         foreach ($categories as $slug => $name) :
                         ?>
-                            <option value="<?php echo esc_attr($slug); ?>" <?php selected($post_category, $slug); ?>><?php echo esc_html($name); ?></option>
+                            <option value="<?php echo esc_attr($slug); ?>" <?php selected($post_category, $slug); ?> data-name="<?php echo esc_attr($name); ?>"><?php echo esc_html($name); ?></option>
                         <?php endforeach; ?>
                     </select>
+                    <input type="hidden" id="post_category_name" name="post_category_name" value="">
                 </div>
+
+                <script>
+                    // カテゴリー選択時に名前も保存
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var categorySelect = document.getElementById('post_category');
+                        var categoryNameInput = document.getElementById('post_category_name');
+
+                        // 初期値の設定
+                        if (categorySelect.value) {
+                            var selectedOption = categorySelect.options[categorySelect.selectedIndex];
+                            categoryNameInput.value = selectedOption.getAttribute('data-name');
+                        }
+
+                        // 選択変更時の処理
+                        categorySelect.addEventListener('change', function() {
+                            if (this.value) {
+                                var selectedOption = this.options[this.selectedIndex];
+                                categoryNameInput.value = selectedOption.getAttribute('data-name');
+                            } else {
+                                categoryNameInput.value = '';
+                            }
+                        });
+                    });
+                </script>
 
                 <div class="form-group">
                     <label for="event_date">開催日時 <span class="required">*</span></label>
