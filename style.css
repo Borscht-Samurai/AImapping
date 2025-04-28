@@ -503,9 +503,10 @@ body {
 
 /* フッター */
 .site-footer {
-    background-color: #ffffff;
+    background-color: #000000;
     padding: 4rem 0 2rem;
     margin-top: 4rem;
+    color: #ffffff;
 }
 
 .footer-container {
@@ -525,6 +526,7 @@ body {
     margin: 0 0 1rem;
     font-size: 1.2rem;
     font-family: var(--font-family-base);
+    color: #ffffff;
 }
 
 .footer-widget ul {
@@ -538,13 +540,13 @@ body {
 }
 
 .footer-widget ul li a {
-    color: #000000;
+    color: #ffffff;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .footer-widget ul li a:hover {
-    color: var(--primary-color);
+    color: #A5FDF7;
 }
 
 .social-links {
@@ -558,23 +560,25 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--background-color);
+    background-color: #000000;
     border-radius: 50%;
-    color: var(--text-color);
+    color: #ffffff;
     text-decoration: none;
-    box-shadow: var(--shadow-light);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
 }
 
 .social-link:hover {
     transform: translateY(-3px);
-    box-shadow: 12px 12px 20px rgb(163,177,198,0.6), -12px -12px 20px rgba(255,255,255, 0.5);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    color: #A5FDF7;
 }
 
 .footer-bottom {
-    text-align: center;
+    text-align: right;
     padding-top: 2rem;
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
 }
 
 /* イベント詳細ページ */
