@@ -34,13 +34,13 @@ get_header();
 
                     <h3>第3条（個人情報の利用目的）</h3>
                     <p>収集した個人情報は、以下の目的のために利用します。</p>
-                    <ul>
+                    <ol>
                         <li>サービスの提供およびユーザーサポート</li>
                         <li>不正行為・迷惑行為の防止および対応</li>
                         <li>メンテナンス、重要なお知らせ等の連絡</li>
                         <li>サービス改善のための分析（アクセス解析含む）</li>
                         <li>法令・利用規約違反への対応</li>
-                    </ul>
+                    </ol>
 
                     <h3>第4条（個人情報の第三者提供）</h3>
                     <p>当サイトは、法令に定める場合を除き、事前にユーザーの同意を得ることなく第三者に個人情報を提供することはありません。ただし、以下の場合はこの限りではありません。</p>
@@ -75,8 +75,8 @@ get_header();
 </main>
 
 <style>
-    /* Poppinsフォントの読み込み (Medium) */
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+    /* フォントの読み込み */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap');
 
     .privacy-header {
         margin: 40px 0 0 20px;
@@ -97,7 +97,7 @@ get_header();
     }
 
     .privacy-policy-container {
-        max-width: 1000px;
+        max-width: 1100px;
         margin: 0 auto;
         padding: 0 20px;
     }
@@ -108,24 +108,37 @@ get_header();
         margin-bottom: 30px;
         text-align: left;
         padding-left: 30px; /* 本文のパディングに合わせる */
+        font-family: 'Noto Sans JP', sans-serif;
     }
 
     .privacy-content {
         background-color: #ffffff;
         padding: 30px;
         border-radius: 8px;
+        font-family: 'Noto Sans JP', sans-serif;
+        font-weight: 400;
+        font-size: 12.98px;
+        line-height: 150%;
+        letter-spacing: 0%;
     }
 
     .privacy-content h3 {
-        font-size: 18px;
+        font-size: 14px;
         font-weight: bold;
         margin: 25px 0 15px;
         color: #333;
+        font-family: 'Noto Sans JP', sans-serif;
+        line-height: 150%;
+        letter-spacing: 0%;
     }
 
     .privacy-content p {
         margin-bottom: 15px;
-        line-height: 1.6;
+        font-family: 'Noto Sans JP', sans-serif;
+        font-weight: 400;
+        font-size: 12.98px;
+        line-height: 150%;
+        letter-spacing: 0%;
     }
 
     .privacy-content ul {
@@ -135,14 +148,42 @@ get_header();
 
     .privacy-content ul li {
         margin-bottom: 5px;
-        line-height: 1.6;
+        font-family: 'Noto Sans JP', sans-serif;
+        font-weight: 400;
+        font-size: 12.98px;
+        line-height: 150%;
+        letter-spacing: 0%;
+    }
+
+    .privacy-content ol {
+        margin-bottom: 15px;
+        padding-left: 0; /* 左パディングを削除 */
+        list-style-position: inside; /* 数字を内側に配置 */
+        font-family: 'Noto Sans JP', sans-serif;
+        font-weight: 400;
+        font-size: 12.98px;
+        line-height: 150%;
+        letter-spacing: 0%;
+    }
+
+    .privacy-content ol li {
+        margin-bottom: 5px;
+        font-family: 'Noto Sans JP', sans-serif;
+        font-weight: 400;
+        font-size: 12.98px;
+        line-height: 150%;
+        letter-spacing: 0%;
     }
 
     .policy-dates {
         margin-top: 30px;
-        font-size: 14px;
         color: #666;
         text-align: right;
+        font-family: 'Noto Sans JP', sans-serif;
+        font-weight: 400;
+        font-size: 12.98px;
+        line-height: 150%;
+        letter-spacing: 0%;
     }
 
     /* レスポンシブ対応 */
