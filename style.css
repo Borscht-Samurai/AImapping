@@ -478,16 +478,22 @@ body {
     text-decoration: none;
     color: var(--text-color);
     /* 正面から光が当たるニューモーフィックデザインのシャドウ - 初期状態 */
-    box-shadow: 0px 4px 8px #d1d9e6, 0px -4px 8px rgba(255, 255, 255, 0.8);
+    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
     transition: all 0.3s ease;
     position: relative;
+    border: 1px solid var(--background-color);
+    cursor: pointer;
 }
 
 .category-card:hover {
-    /* ホバー時に押し出されるアニメーション */
-    transform: translateY(-5px);
     /* ホバー時のシャドウを強調 - 正面からの光源 */
-    box-shadow: 0px 8px 16px #d1d9e6, 0px -8px 16px rgba(255, 255, 255, 0.8);
+    box-shadow: 8px 8px 16px #c5c5c5, -8px -8px 16px #ffffff;
+}
+
+.category-card:active {
+    /* クリック時のシャドウ効果 - 内側に押し込まれる感じ */
+    box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+    color: #666;
 }
 
 .category-icon {
