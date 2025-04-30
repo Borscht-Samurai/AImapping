@@ -56,7 +56,7 @@ get_header();
     }
 
     .wpcf7-form {
-        background-color: #ffffff;
+        background-color: var(--background-color);
         padding: 30px;
         border-radius: 8px;
     }
@@ -81,7 +81,7 @@ get_header();
         margin-bottom: 20px;
         border: 1px solid #e0e0e0;
         border-radius: 4px;
-        background-color: #ffffff;
+        background-color: var(--background-color);
         font-size: 16px;
     }
 

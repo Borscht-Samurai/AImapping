@@ -114,7 +114,7 @@ get_header();
     }
 
     .terms-content {
-        background-color: #ffffff;
+        background-color: var(--white-color);
         padding: 30px;
         border-radius: 8px;
         font-family: 'Noto Sans JP', sans-serif;

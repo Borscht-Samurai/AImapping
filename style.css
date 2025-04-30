@@ -15,7 +15,8 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-com
 :root {
     --primary-color: #6C63FF;
     --secondary-color: #4CAF50;
-    --background-color: #ffffff;
+    --background-color: #F8F8F8;
+    --white-color: #FFFFFF;
     --text-color: #000000;
     --shadow-light: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
     --shadow-inset: inset 9px 9px 16px rgb(163,177,198,0.6), inset -9px -9px 16px rgba(255,255,255, 0.5);
@@ -44,7 +45,7 @@ h3 {
 }
 
 body {
-    background-color: #ffffff;
+    background-color: var(--background-color);
     color: var(--text-color);
     font-family: var(--font-family-base);
     line-height: 1.6;
@@ -61,7 +62,7 @@ body {
 
 /* ヘッダー */
 .site-header {
-    background-color: white;
+    background-color: var(--background-color);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     padding: 0;
     position: relative;
@@ -457,7 +458,7 @@ body {
 /* カテゴリー一覧 */
 .categories {
     padding: 4rem 0;
-    background-color: #ffffff;
+    background-color: var(--background-color);
 }
 
 .categories-grid {
@@ -470,7 +471,7 @@ body {
 }
 
 .category-card {
-    background-color: #ffffff;
+    background-color: var(--background-color);
     border-radius: 15px;
     padding: 2rem;
     text-align: center;
@@ -787,7 +788,7 @@ body {
     padding: 0.5rem;
     border: none;
     border-radius: 8px;
-    background-color: #ffffff;
+    background-color: var(--background-color);
     box-shadow: var(--shadow-inset);
 }
 
@@ -991,7 +992,7 @@ body {
 }
 
 .auth-box {
-    background-color: #ffffff;
+    background-color: var(--background-color);
     border-radius: 15px;
     padding: 2rem;
     width: 100%;
@@ -1031,7 +1032,7 @@ body {
     padding: 0.8rem;
     border: none;
     border-radius: 8px;
-    background-color: #ffffff;
+    background-color: var(--background-color);
     box-shadow: var(--shadow-inset);
     font-size: 1rem;
     font-family: var(--font-family-base);
@@ -1708,7 +1709,7 @@ body {
     width: 100%;
     height: 0;
     padding-bottom: 15%; /* 260px ÷ 1200px ≈ 21.67% (オリジナルの高さ/想定最大幅) */
-    background-color: #ffffff;
+    background-color: var(--background-color);
     margin: 0 auto;
     position: relative;
 }
@@ -1763,7 +1764,7 @@ body {
 .latest-events {
     margin-top: 20px;
     padding: 4rem 0;
-    background-color: #ffffff;
+    background-color: var(--background-color);
 }
 
 /* タイトルサイズ */
@@ -2210,7 +2211,7 @@ p {
     margin-bottom: 20px;
     border: 1px solid #e0e0e0;
     border-radius: 4px;
-    background-color: #ffffff;
+    background-color: var(--background-color);
     font-size: 16px;
     transition: border-color 0.3s ease;
 }
