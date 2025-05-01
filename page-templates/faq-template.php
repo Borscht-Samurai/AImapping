@@ -12,139 +12,87 @@ get_header();
         <h1 class="faq-title">FAQ</h1>
     </div>
 
-    <div class="container">
+    <div class="faq-container">
         <article class="faq-page">
-            <div class="faq-container">
-                <h2 class="faq-subtitle">よくあるご質問</h2>
-                <div class="faq-content">
-                    <!-- 利用方法カテゴリー -->
-                    <div class="faq-category">
-                        <h3 class="faq-category-title">サイトの利用方法について</h3>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>AI Mappingとは何ですか？</h4>
-                                <i class="fas fa-chevron-down faq-toggle"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>AI Mappingは、AIを活用するクリエイター同士が日本全国（またはオンライン）で自由に集まり交流できる募集掲示板型プラットフォームです。イベントや交流会の開催、参加者の募集などができます。</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>利用登録はどのように行いますか？</h4>
-                                <i class="fas fa-chevron-down faq-toggle"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>トップページ右上の「ログイン」ボタンから登録ページにアクセスできます。メールアドレスでの登録のほか、SNS連携（X、Meta、Google）でも簡単に登録できます。</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>募集の投稿はどのように行いますか？</h4>
-                                <i class="fas fa-chevron-down faq-toggle"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>ログイン後、ヘッダーメニューの「投稿する」をクリックすると投稿フォームが表示されます。タイトル、内容、カテゴリー、開催日時、場所などを入力して投稿できます。</p>
-                            </div>
-                        </div>
+            <h2 class="faq-subtitle">よくあるご質問</h2>
+            <div class="faq-content">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Q1. 登録しないと何も使えませんか？</h4>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
                     </div>
-                    
-                    <!-- アカウント関連カテゴリー -->
-                    <div class="faq-category">
-                        <h3 class="faq-category-title">アカウントについて</h3>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>パスワードを忘れてしまいました。どうすればいいですか？</h4>
-                                <i class="fas fa-chevron-down faq-toggle"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>ログインページの「パスワードをお忘れですか？」リンクをクリックし、登録したメールアドレスを入力してください。パスワードリセット用のリンクが記載されたメールが送信されます。</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>プロフィールはどのように編集できますか？</h4>
-                                <i class="fas fa-chevron-down faq-toggle"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>ログイン後、マイページにアクセスし「プロフィール編集」ボタンをクリックすると、プロフィール情報（名前、自己紹介、プロフィール画像、SNSリンクなど）を編集できます。</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>アカウントを削除することはできますか？</h4>
-                                <i class="fas fa-chevron-down faq-toggle"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>はい、可能です。マイページの設定から「アカウント削除」を選択してください。なお、削除すると投稿やコメントなどのデータも全て削除され、復元できませんのでご注意ください。</p>
-                            </div>
-                        </div>
+                    <div class="faq-answer">
+                        <p>登録なしでも一部コンテンツはご覧いただけますが、クリエイター検索や交流機能、掲示板投稿などは登録が必要です。ぜひ無料登録してご活用ください！</p>
                     </div>
-                    
-                    <!-- イベント関連カテゴリー -->
-                    <div class="faq-category">
-                        <h3 class="faq-category-title">イベント・募集について</h3>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>どのような募集が可能ですか？</h4>
-                                <i class="fas fa-chevron-down faq-toggle"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>AI関連の勉強会、交流会、ワークショップなどのイベント開催の告知や、プロジェクト協力者の募集、スキルシェアなど、AIクリエイターの活動に関連する様々な募集が可能です。</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>投稿した募集を編集・削除できますか？</h4>
-                                <i class="fas fa-chevron-down faq-toggle"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>はい、自分が投稿した募集は、募集詳細ページの下部にある「編集」または「削除」ボタンから編集・削除が可能です。ただし、すでに参加者がいる場合は、参加者への配慮をお願いします。</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>イベントへの参加方法を教えてください</h4>
-                                <i class="fas fa-chevron-down faq-toggle"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>興味のあるイベントの詳細ページにアクセスし、コメント欄で参加の意思を表明するか、主催者が指定した方法（外部フォームなど）で申し込みを行ってください。</p>
-                            </div>
-                        </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Q2. どんな人が登録していますか？</h4>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
                     </div>
-                    
-                    <!-- その他カテゴリー -->
-                    <div class="faq-category">
-                        <h3 class="faq-category-title">その他</h3>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>問題のある投稿を見つけた場合はどうすればいいですか？</h4>
-                                <i class="fas fa-chevron-down faq-toggle"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>問題のある投稿を発見した場合は、お問い合わせフォームから管理者に報告してください。内容を確認の上、適切な対応を取らせていただきます。</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h4>サイトに関する要望や提案はどこで行えますか？</h4>
-                                <i class="fas fa-chevron-down faq-toggle"></i>
-                            </div>
-                            <div class="faq-answer">
-                                <p>サイトの改善要望や新機能の提案は、お問い合わせフォームからお寄せください。ユーザーの皆様のフィードバックを参考に、より良いサービスを目指しています。</p>
-                            </div>
-                        </div>
+                    <div class="faq-answer">
+                        <p>AIを使ってアート、音楽、映像、文章、プログラムなどを制作しているクリエイターが中心です。初心者の方も大歓迎です！</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Q3. 登録したら、必ず誰かと交流しなきゃいけないですか？</h4>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>いいえ、自由にご利用いただけます。まずは他の人の作品を見たり、気になる情報をチェックするだけでもOKです。</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Q4. どうやって他のクリエイターと交流できますか？</h4>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>気になるクリエイターのプロフィールからSNSやポートフォリオにアクセスして、直接コンタクトを取ることができます。また、掲示板やイベント情報もぜひご活用ください。</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Q5. 企業や団体も利用できますか？</h4>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>はい、企業・団体の方も大歓迎です。クリエイター発掘やコラボレーション、採用目的でご利用いただけます。掲示板での情報発信も可能です。</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Q6. どの地域にどんなクリエイターがいるか知るには？</h4>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>地域ごとにクリエイターを検索できる機能があります。マップや一覧ページから、気になる地域のクリエイターを簡単に探せます。</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Q7. プロフィールはどこまで詳しく書くべき？</h4>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>使用しているAIツールや得意な分野、活動内容などを詳しく書くと、コラボや交流につながりやすくなります！無理のない範囲で、あなたらしくご記入ください。</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Q8. 料金はかかりますか？</h4>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>現在、基本利用は無料です。（※将来的に一部有料機能が追加される場合は、事前にお知らせいたします。）</p>
                     </div>
                 </div>
             </div>
@@ -170,13 +118,10 @@ get_header();
     }
 
     /* FAQのスタイル */
-    .container {
-        margin-top: 200px; /* タイトルから200px下に配置 */
-    }
-
     .faq-container {
+        width: 100%;
         max-width: 1100px;
-        margin: 0 auto;
+        margin: 200px auto 0;
         padding: 0 20px;
     }
 
@@ -185,7 +130,6 @@ get_header();
         font-weight: bold;
         margin-bottom: 30px;
         text-align: left;
-        padding-left: 30px; /* 本文のパディングに合わせる */
         font-family: 'Noto Sans JP', sans-serif;
     }
 
@@ -265,13 +209,15 @@ get_header();
         letter-spacing: 0%;
     }
 
+
+
     /* レスポンシブ対応 */
     @media (max-width: 768px) {
         .faq-title {
             font-size: 80px;
         }
 
-        .container {
+        .faq-container {
             margin-top: 100px;
         }
 
