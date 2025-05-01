@@ -117,7 +117,7 @@ get_header();
     display: flex; /* Flexbox を明示的に使用 */
     flex-wrap: wrap; /* カードが複数行になることを許可 */
     justify-content: flex-start; /* アイテムを左揃えに配置 */
-    gap: 20px; /* カード間の隙間 */
+    gap: 60px; /* カード間の隙間 */
     /* style.css などで grid が指定されている場合を上書き */
     display: flex !important;
     justify-content: flex-start !important;

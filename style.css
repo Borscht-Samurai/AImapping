@@ -273,15 +273,9 @@ body {
 
 /* イベントカード */
 .event-card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
     margin-bottom: 1.5rem;
     width: 100%; /* 幅を100%に変更 */
     height: 335px;
-}
-
-.event-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }
 
 .event-card-link {
@@ -302,8 +296,9 @@ body {
     height: 100%;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff;
-    background-color: #ffffff;
+    background: #ffffff;
+    box-shadow: 15px 15px 30px #bebebe,
+               -15px -15px 30px #ffffff;
     padding: 0;
 }
 
@@ -359,7 +354,8 @@ body {
 }
 
 .event-card-bottom {
-    padding: 1rem 10px;
+    padding: 1.5rem 20px;
+    background: #ffffff;
 }
 
 .event-info {
@@ -824,7 +820,7 @@ body {
 .events-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    gap: 60px;
     margin-top: 30px;
     max-width: 1200px; /* コンテンツの最大幅を設定 */
     width: 100%;
@@ -984,15 +980,25 @@ body {
         height: auto;
     }
 
+    .event-card-inner {
+        border-radius: 12px;
+    }
+
+    .event-box {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
     .event-card-bottom {
         height: auto;
         min-height: 120px;
+        padding: 1rem 15px;
     }
 
     .events-grid {
         grid-template-columns: 1fr;
         padding: 0 10px;
-        gap: 20px;
+        gap: 40px;
     }
 
     .footer-widgets {
