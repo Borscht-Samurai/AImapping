@@ -25,6 +25,12 @@
             </a>
         </div>
 
+        <button class="mobile-menu-toggle" aria-label="メニュー">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+
         <nav class="main-navigation">
             <ul class="nav-menu">
                 <li><a href="<?php echo esc_url(home_url('/about')); ?>">わたしたち</a></li>
