@@ -56,7 +56,7 @@ get_header();
     }
 
     .wpcf7-form {
-        background-color: #F8F8F8;
+        background-color: #F0F0F3;
         padding: 30px;
         border-radius: 8px;
     }
@@ -100,7 +100,7 @@ get_header();
         top: -0.5rem;
         left: 0.5rem;
         font-size: 0.8rem;
-        background-color: #F8F8F8;
+        background-color: #F0F0F3;
         padding: 0 0.5rem;
         border-radius: 4px;
         color: #000;
@@ -121,7 +121,7 @@ get_header();
         margin-bottom: 0;
         border: none;
         border-radius: 1rem;
-        background: #F8F8F8;
+        background: #F0F0F3;
         box-shadow: 20px 20px 60px #c5c5c5,
             -20px -20px 60px #ffffff;
         transition: 0.3s;
@@ -136,8 +136,8 @@ get_header();
     .wpcf7-form input[type="email"]:focus,
     .wpcf7-form input[type="tel"]:focus,
     .wpcf7-form textarea:focus {
-        outline-color: #F8F8F8;
-        background: #F8F8F8;
+        outline-color: #F0F0F3;
+        background: #F0F0F3;
         box-shadow: inset 20px 20px 60px #c5c5c5,
             inset -20px -20px 60px #ffffff;
         transition: 0.3s;
@@ -202,7 +202,7 @@ get_header();
     .wpcf7-form .wpcf7-submit {
         display: inline-block;
         padding: 15px 60px;
-        background-color: #F8F8F8;
+        background-color: #F0F0F3;
         color: #000000;
         border: none;
         border-radius: 1rem;
