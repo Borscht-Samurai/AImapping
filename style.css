@@ -832,16 +832,18 @@ body {
     background: #e8e8e8;
     box-shadow: 10px 10px 20px #c5c5c5,
         -10px -10px 20px #ffffff;
-    transition: 0.3s;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     margin-top: 0.5rem;
+    transform: scale(1);
 }
 
 .filter-group select:focus {
     outline: none;
-    background: #e8e8e8;
+    background: #e0e0e0;
     box-shadow: inset 10px 10px 20px #c5c5c5,
         inset -10px -10px 20px #ffffff;
-    transition: 0.3s;
+    transform: scale(0.98);
+    border: 2px solid #6C63FF;
 }
 
 .events-grid-container {
@@ -1171,18 +1173,20 @@ body {
     background: #e8e8e8;
     box-shadow: 10px 10px 20px #c5c5c5,
         -10px -10px 20px #ffffff;
-    transition: 0.3s;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     font-size: 1rem;
     font-family: var(--font-family-base);
     margin-top: 0.5rem;
+    transform: scale(1);
 }
 
 .form-control:focus {
     outline: none;
-    background: #e8e8e8;
+    background: #e0e0e0;
     box-shadow: inset 10px 10px 20px #c5c5c5,
         inset -10px -10px 20px #ffffff;
-    transition: 0.3s;
+    transform: scale(0.98);
+    border: 2px solid #6C63FF;
 }
 
 .checkbox-label {
@@ -2360,8 +2364,9 @@ p {
     box-shadow: 10px 10px 20px #c5c5c5,
         -10px -10px 20px #ffffff;
     font-size: 16px;
-    transition: 0.3s;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     margin-top: 0.5rem;
+    transform: scale(1);
 }
 
 .wpcf7-form input[type="text"]:focus,
@@ -2369,10 +2374,11 @@ p {
 .wpcf7-form input[type="tel"]:focus,
 .wpcf7-form textarea:focus {
     outline: none;
-    background: #e8e8e8;
+    background: #e0e0e0;
     box-shadow: inset 10px 10px 20px #c5c5c5,
         inset -10px -10px 20px #ffffff;
-    transition: 0.3s;
+    transform: scale(0.98);
+    border: 2px solid #6C63FF;
 }
 
 .wpcf7-form textarea {
@@ -2452,23 +2458,59 @@ p {
     background: #e8e8e8;
     box-shadow: 10px 10px 20px #c5c5c5,
         -10px -10px 20px #ffffff;
-    transition: 0.3s;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     font-size: 1rem;
     font-family: var(--font-family-base);
     margin-top: 0.5rem;
+    transform: scale(1);
 }
 
 #new-post-form select:focus {
     outline: none;
-    background: #e8e8e8;
+    background: #e0e0e0;
     box-shadow: inset 10px 10px 20px #c5c5c5,
         inset -10px -10px 20px #ffffff;
-    transition: 0.3s;
+    transform: scale(0.98);
+    border: 2px solid #6C63FF;
 }
 
 #new-post-form .form-group {
     margin-bottom: 2rem;
     position: relative;
+}
+
+/* フォーカス時のラベル強調 - 代替方法 */
+#new-post-form label {
+    transition: all 0.4s ease;
+}
+
+#new-post-form .form-control:focus,
+#new-post-form select:focus,
+.wpcf7-form input:focus,
+.wpcf7-form textarea:focus {
+    border: 2px solid #6C63FF;
+}
+
+/* フォーカス時のアニメーション強化 */
+.form-control:focus,
+select:focus,
+.wpcf7-form input:focus,
+.wpcf7-form textarea:focus {
+    animation: push-effect 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes push-effect {
+    0% {
+        transform: scale(1);
+        box-shadow: 10px 10px 20px #c5c5c5, -10px -10px 20px #ffffff;
+    }
+    40% {
+        transform: scale(0.96);
+    }
+    100% {
+        transform: scale(0.98);
+        box-shadow: inset 10px 10px 20px #c5c5c5, inset -10px -10px 20px #ffffff;
+    }
 }
 
 #new-post-form label {
