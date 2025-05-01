@@ -114,24 +114,67 @@ get_header();
 
 /* === 修正 === */
 .events-grid {
-    display: flex; /* Flexbox を明示的に使用 */
-    flex-wrap: wrap; /* カードが複数行になることを許可 */
-    justify-content: flex-start; /* アイテムを左揃えに配置 */
-    gap: 60px; /* カード間の隙間 */
-    /* style.css などで grid が指定されている場合を上書き */
-    display: flex !important;
-    justify-content: flex-start !important;
+    display: flex !important; /* Flexbox を明示的に使用 */
+    flex-wrap: wrap !important; /* カードが複数行になることを許可 */
+    justify-content: center !important; /* アイテムを中央揃えに配置 */
+    gap: 20px !important; /* カード間の隙間を狭めて3枚のカードが確実に表示されるように調整 */
+    grid-template-columns: none !important; /* gridレイアウトを無効化 */
+    max-width: 1200px !important; /* 最大幅を設定 */
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 10px !important; /* 両端に少し余白を追加 */
+}
+
+/* 1200px幅での表示調整 */
+@media (min-width: 1200px) {
+    .events-grid {
+        gap: 20px !important; /* 1200px幅で3枚のカードが表示されるように間隔を調整 */
+    }
 }
 
 /* content-card.php のルート要素（通常は article）を想定 */
 .events-grid > article {
-    max-width: 380px; /* カードの最大幅 */
-    width: 100%; /* 基本的にコンテナ幅に追従 */
-    flex-grow: 0; /* アイテムが余分なスペースを占有しないように */
-    flex-shrink: 0; /* アイテムが縮小しないように（max-width が効く） */
+    max-width: 370px !important; /* カードの最大幅を370pxに変更 */
+    width: 370px !important; /* カードの幅を370pxに固定 */
+    flex-grow: 0 !important; /* アイテムが余分なスペースを占有しないように */
+    flex-shrink: 0 !important; /* アイテムが縮小しないように（max-width が効く） */
     /* 不要なマージンをリセット（念のため）*/
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important; /* ボックスモデルを調整 */
+}
+
+/* 1200px幅での表示調整 - カードサイズを微調整 */
+@media (min-width: 1200px) and (max-width: 1250px) {
+    .events-grid > article {
+        width: 365px !important; /* 1200px幅で確実に3枚表示されるように微調整 */
+    }
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 1199px) and (min-width: 769px) {
+    .events-grid {
+        gap: 25px !important; /* タブレットサイズでの間隔調整 */
+    }
+
+    .events-grid > article {
+        width: 340px !important; /* タブレットサイズでのカード幅調整 */
+    }
+}
+
+@media (max-width: 768px) {
+    .events-grid > article {
+        width: 100% !important; /* モバイルでは1列表示 */
+        max-width: 370px !important; /* 最大幅は保持 */
+    }
+}
+
+/* events-grid-containerのスタイル調整 */
+.events-grid-container {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    padding: 0 !important;
 }
 /* === /修正 === */
 </style>
