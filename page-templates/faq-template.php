@@ -7,7 +7,7 @@
 get_header();
 ?>
 
-<main class="site-main">
+<main class="site-main" style="background-color: #F8F8F8;">
     <div class="faq-header">
         <h1 class="faq-title">FAQ</h1>
     </div>
@@ -134,7 +134,7 @@ get_header();
     }
 
     .faq-content {
-        background-color: var(--white-color);
+        background-color: #F8F8F8;
         padding: 30px;
         border-radius: 8px;
         font-family: 'Noto Sans JP', sans-serif;
@@ -159,10 +159,23 @@ get_header();
     }
 
     .faq-item {
-        margin-bottom: 15px;
+        margin-bottom: 30px;
         border-radius: 8px;
         overflow: hidden;
         background-color: #F8F8F8;
+        position: relative;
+        padding-bottom: 30px;
+    }
+
+    .faq-item:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, #FF966C 0%, #A5FDF7 100%);
+        margin-bottom: 10px;
     }
 
     .faq-question {
@@ -175,9 +188,10 @@ get_header();
 
     .faq-question h4 {
         margin: 0;
-        font-size: 14px;
-        font-weight: 500;
+        font-size: 16px;
+        font-weight: 600;
         font-family: 'Noto Sans JP', sans-serif;
+        color: #333;
     }
 
     .faq-toggle {
@@ -204,9 +218,11 @@ get_header();
         margin: 0;
         font-family: 'Noto Sans JP', sans-serif;
         font-weight: 400;
-        font-size: 12.98px;
-        line-height: 150%;
+        font-size: 14px;
+        line-height: 160%;
         letter-spacing: 0%;
+        color: #555;
+        padding: 0 10px;
     }
 
 
