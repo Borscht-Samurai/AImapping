@@ -56,7 +56,7 @@ get_header();
     }
 
     .wpcf7-form {
-        background-color: #F0F0F3;
+        background-color: #E7E7E7;
         padding: 30px;
         border-radius: 8px;
     }
@@ -100,7 +100,7 @@ get_header();
         top: -0.5rem;
         left: 0.5rem;
         font-size: 0.8rem;
-        background-color: #F0F0F3;
+        background-color: #E7E7E7;
         padding: 0 0.5rem;
         border-radius: 4px;
         color: #000;
@@ -121,8 +121,8 @@ get_header();
         margin-bottom: 0;
         border: none;
         border-radius: 1rem;
-        background: #F0F0F3;
-        box-shadow: 20px 20px 60px #c5c5c5,
+        background: #E7E7E7;
+        box-shadow: 20px 20px 60px #bebebe,
             -20px -20px 60px #ffffff;
         transition: 0.3s;
         font-size: 16px;
@@ -136,9 +136,9 @@ get_header();
     .wpcf7-form input[type="email"]:focus,
     .wpcf7-form input[type="tel"]:focus,
     .wpcf7-form textarea:focus {
-        outline-color: #F0F0F3;
-        background: #F0F0F3;
-        box-shadow: inset 20px 20px 60px #c5c5c5,
+        outline-color: #E7E7E7;
+        background: #E7E7E7;
+        box-shadow: inset 20px 20px 60px #bebebe,
             inset -20px -20px 60px #ffffff;
         transition: 0.3s;
     }
@@ -170,8 +170,8 @@ get_header();
         height: 18px;
         border-radius: 4px;
         border: none;
-        background-color: #F8F8F8;
-        box-shadow: inset 5px 5px 10px #c5c5c5,
+        background-color: #E7E7E7;
+        box-shadow: inset 5px 5px 10px #bebebe,
             inset -5px -5px 10px #ffffff;
         appearance: none;
         -webkit-appearance: none;
@@ -202,7 +202,7 @@ get_header();
     .wpcf7-form .wpcf7-submit {
         display: inline-block;
         padding: 15px 60px;
-        background-color: #F0F0F3;
+        background-color: #E7E7E7;
         color: #000000;
         border: none;
         border-radius: 1rem;
@@ -211,7 +211,7 @@ get_header();
         cursor: pointer;
         transition: all 0.3s ease;
         text-align: center;
-        box-shadow: 20px 20px 60px #c5c5c5,
+        box-shadow: 20px 20px 60px #bebebe,
             -20px -20px 60px #ffffff;
     }
 
@@ -220,7 +220,7 @@ get_header();
     }
 
     .wpcf7-form .wpcf7-submit:active {
-        box-shadow: inset 20px 20px 60px #c5c5c5,
+        box-shadow: inset 20px 20px 60px #bebebe,
             inset -20px -20px 60px #ffffff;
         transform: translateY(0);
     }
@@ -242,12 +242,12 @@ get_header();
         .wpcf7-form input[type="email"],
         .wpcf7-form input[type="tel"],
         .wpcf7-form textarea {
-            box-shadow: 10px 10px 30px #c5c5c5,
+            box-shadow: 10px 10px 30px #bebebe,
                 -10px -10px 30px #ffffff;
         }
 
         .wpcf7-form .wpcf7-submit {
-            box-shadow: 10px 10px 30px #c5c5c5,
+            box-shadow: 10px 10px 30px #bebebe,
                 -10px -10px 30px #ffffff;
             padding: 12px 40px;
         }
