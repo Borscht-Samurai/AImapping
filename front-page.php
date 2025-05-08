@@ -25,6 +25,32 @@
     margin-right: 0;
 }
 
+/* フロントページのメイン画像スタイル */
+.frontpage-image-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.frontpage-image-container {
+    max-width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.frontpage-main-image {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
 /* カテゴリーセクションのマージンを調整 */
 .categories {
     margin: 0 20px;
@@ -32,10 +58,10 @@
 </style>
 
 <main class="site-main">
-    <!-- 白い四角セクション -->
-    <section class="white-box-section">
-        <div class="white-box">
-            <div class="white-box-content">AI Mapping</div>
+    <!-- フロントページ画像セクション -->
+    <section class="frontpage-image-section">
+        <div class="frontpage-image-container">
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/images/frontpage-1.1.png'); ?>" alt="フロントページ画像" class="frontpage-main-image">
         </div>
     </section>
 
