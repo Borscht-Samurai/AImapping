@@ -64,22 +64,33 @@
 
 .left-box p {
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 160%; /* 行間を160%に変更 */
     color: #333;
     margin-bottom: 40px;
 }
 
 .start-free-button {
-    display: inline-block;
-    background: linear-gradient(90deg, #A5FDF7 0%, #FF966C 100%);
-    color: white;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: white; /* テキストの文字色を白に設定 */
+    width: 260px; /* ボタンの幅を260pxに設定 */
+    height: 60px; /* ボタンの高さを60pxに設定 */
+    font-size: 23px; /* 文字サイズを23pxに変更 */
+    border-radius: 50px; /* 両サイドを円弧に変更 */
+    background: linear-gradient(90deg, #A5FDF7 0%, #FF966C 100%); /* グラデーション背景 */
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+    margin-top: 0px;
     text-decoration: none;
-    padding: 15px 30px;
-    border-radius: 50px;
-    font-size: 18px;
     text-align: center;
-    width: 210px;
-    margin-top: auto;
+}
+
+.start-free-button:active {
+    color: white; /* アクティブ状態でもテキスト色を白に保持 */
+    box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
 }
 
 .right-box {
