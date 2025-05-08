@@ -97,6 +97,53 @@
     width: 705px;
     height: 865px;
     background-color: #E7E7E7;
+    display: flex;
+    align-items: center;
+    padding-left: 20px; /* 左側に20pxのパディングを追加 */
+}
+
+.exchange-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 左寄せに設定 */
+}
+
+.exchange-image {
+    margin: 50px 0 15px 0; /* 上に50px、下に15pxのマージンを追加 */
+    max-width: 100%;
+    height: auto;
+}
+
+.exchange-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 160%;
+    color: #333;
+    margin: 0 0 10px 0; /* 下に50pxのマージンを追加 */
+}
+
+/* ピクニック画像のスタイル */
+.picnic-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 左寄せに設定 */
+    margin-top: 30px; /* 無料ではじめるボタンとの間隔 */
+}
+
+.picnic-image {
+    margin: 50px 0 15px 0; /* 上に50px、下に15pxのマージンを追加 */
+    max-width: 100%;
+    height: auto;
+}
+
+.picnic-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 160%;
+    color: #333;
+    margin: 0 0 10px 0;
 }
 
 /* カテゴリーセクションのマージンを調整 */
@@ -125,8 +172,17 @@
                 <h2>Projects</h2>
                 <p>Our portfolio showcases a range of projects, from cozy living rooms to luxurious bedrooms, and everything in between. We have worked on residential projects, commercial spaces, and hospitality interiors, and have experience working with a variety of design styles.</p>
                 <a href="#" class="start-free-button">無料ではじめる</a>
+                <div class="picnic-container">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/images/picnic.png'); ?>" alt="Picnic" class="picnic-image">
+                    <p class="picnic-text">＠ピクニック</p>
+                </div>
             </div>
-            <div class="right-box"></div>
+            <div class="right-box">
+                <div class="exchange-container">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/images/exchange.png'); ?>" alt="Exchange" class="exchange-image">
+                    <p class="exchange-text">＠交流会</p>
+                </div>
+            </div>
         </div>
     </section>
 
