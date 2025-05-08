@@ -50,6 +50,36 @@
     width: 405px;
     height: 865px;
     background-color: #E7E7E7;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.left-box h2 {
+    font-size: 40px;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.left-box p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 40px;
+}
+
+.start-free-button {
+    display: inline-block;
+    background: linear-gradient(90deg, #A5FDF7 0%, #FF966C 100%);
+    color: white;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 18px;
+    text-align: center;
+    width: 210px;
+    margin-top: auto;
 }
 
 .right-box {
@@ -80,7 +110,11 @@
     <!-- 新しいdiv boxセクション -->
     <section class="new-box-section">
         <div class="new-box">
-            <div class="left-box"></div>
+            <div class="left-box">
+                <h2>Projects</h2>
+                <p>Our portfolio showcases a range of projects, from cozy living rooms to luxurious bedrooms, and everything in between. We have worked on residential projects, commercial spaces, and hospitality interiors, and have experience working with a variety of design styles.</p>
+                <a href="#" class="start-free-button">無料ではじめる</a>
+            </div>
             <div class="right-box"></div>
         </div>
     </section>
