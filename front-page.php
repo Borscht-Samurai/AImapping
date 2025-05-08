@@ -3,28 +3,6 @@
 <body <?php body_class('page-front-page'); ?>>
 
 <style>
-/* フロントページの募集カードスタイル - archive-recruitment.phpと合わせる */
-.events-grid {
-    display: flex; /* Flexbox を明示的に使用 */
-    flex-wrap: wrap; /* カードが複数行になることを許可 */
-    justify-content: flex-start; /* アイテムを左揃えに配置 */
-    gap: 20px; /* カード間の隙間 */
-    /* style.css などで grid が指定されている場合を上書き */
-    display: flex !important;
-    justify-content: flex-start !important;
-}
-
-/* content-card.php のルート要素（通常は article）を想定 */
-.events-grid > article {
-    max-width: 380px; /* カードの最大幅 */
-    width: 100%; /* 基本的にコンテナ幅に追従 */
-    flex-grow: 0; /* アイテムが余分なスペースを占有しないように */
-    flex-shrink: 0; /* アイテムが縮小しないように（max-width が効く） */
-    /* 不要なマージンをリセット（念のため）*/
-    margin-left: 0;
-    margin-right: 0;
-}
-
 /* フロントページのメイン画像スタイル */
 .frontpage-image-section {
     width: 100%;
@@ -51,6 +29,35 @@
     display: block;
 }
 
+/* 新しいdiv boxのスタイル */
+.new-box-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px auto;
+}
+
+.new-box {
+    width: 1110px;
+    height: 865px;
+    background-color: #E7E7E7;
+    display: flex;
+    flex-direction: row;
+}
+
+.left-box {
+    width: 405px;
+    height: 865px;
+    background-color: #E7E7E7;
+}
+
+.right-box {
+    width: 705px;
+    height: 865px;
+    background-color: #E7E7E7;
+}
+
 /* カテゴリーセクションのマージンを調整 */
 .categories {
     margin: 0 20px;
@@ -70,48 +77,11 @@
         <div class="gradient-box"></div>
     </section>
 
-    <!-- Events -->
-    <section class="latest-events" style="margin: 0 20px;"> <?php // TODO: インラインスタイルを削除し、CSSクラスに移行することを推奨します ?>
-        <div class="container">
-            <h2 style="font-size: 40px;">Events</h2> <?php // TODO: インラインスタイルを削除し、CSSクラスに移行することを推奨します ?>
-            <!-- events-grid-containerを追加してarchive-recruitment.phpと合わせる -->
-            <div class="events-grid-container">
-                <!-- style.cssで統一されたevents-gridクラスを使用 -->
-                <div class="events-grid">
-                <?php
-                $args = array(
-                    'post_type' => 'recruitment',
-                    'posts_per_page' => 6,
-                    'orderby' => 'date',
-                    'order' => 'DESC',
-                    'meta_query' => array(
-                        'relation' => 'OR',
-                        array(
-                            'key' => 'event_date',
-                            'value' => current_time('mysql'),
-                            'compare' => '>=',
-                            'type' => 'DATETIME'
-                        ),
-                        array(
-                            'key' => 'event_date',
-                            'compare' => 'NOT EXISTS'
-                        )
-                    )
-                );
-                $events_query = new WP_Query($args);
-
-                if ($events_query->have_posts()) :
-                    while ($events_query->have_posts()) : $events_query->the_post();
-                        get_template_part('template-parts/content', 'card');
-                    endwhile;
-                    wp_reset_postdata();
-                endif;
-                ?>
-                </div>
-            </div>
-            <div class="view-more" style="text-align: center; margin-top: 40px;"> <?php // TODO: インラインスタイルを削除し、CSSクラスに移行することを推奨します ?>
-                <a href="<?php echo esc_url(home_url('/recruitment')); ?>" class="btn btn-outline" style="background-color: white; border: 2px solid black; padding: 10px 30px; border-radius: 25px; color: black; text-decoration: none; display: inline-block;font-size: 18px;">もっと見る</a> <?php // TODO: インラインスタイルを削除し、CSSクラス (例: .btn-view-more) に移行することを推奨します ?>
-            </div>
+    <!-- 新しいdiv boxセクション -->
+    <section class="new-box-section">
+        <div class="new-box">
+            <div class="left-box"></div>
+            <div class="right-box"></div>
         </div>
     </section>
 
