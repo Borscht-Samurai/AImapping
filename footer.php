@@ -21,12 +21,10 @@
                         </ul>
                     </div>
                     <div class="footer-widget">
-                        <h3>フォローする</h3>
-                        <div class="social-links">
-                            <a href="#" class="social-link twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-link facebook"><i class="fab fa-facebook"></i></a>
-                            <a href="#" class="social-link instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
+                        <h3>お問い合わせ</h3>
+                        <ul>
+                            <li>aimapping21@gmail.com</li>
+                        </ul>
                     </div>
                 </div>
             </div>

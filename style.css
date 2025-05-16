@@ -520,15 +520,6 @@ body {
     text-align: left;
 }
 
-/* Follow Usセクションのみ中央揃え */
-.footer-widget:nth-child(3) {
-    text-align: center;
-}
-
-.footer-widget:nth-child(3) h3 {
-    text-align: center;
-}
-
 .footer-widget ul li {
     margin-bottom: 0.5rem;
 }
@@ -1043,11 +1034,6 @@ body {
 
     .footer-widgets {
         padding-left: 1rem;
-    }
-
-    /* モバイル表示でもFollow Usセクションは中央揃えを維持 */
-    .footer-widget:nth-child(3) {
-        align-self: center;
     }
 }
 
@@ -1939,14 +1925,14 @@ p {
 }
 
 .content-box {
-    background-color: white;
+    background-color: #E7E7E7;
     border-radius: 8px;
     padding: 0px;
     margin-bottom: 32px;
 }
 
 .event-info-box {
-    background-color: white;
+    background-color: #E7E7E7;
     border-radius: 8px;
     padding: 0px;
     margin-bottom: 32px;
@@ -2044,7 +2030,7 @@ p {
 
 .right-box {
     width: 30%;
-    background-color: #ffffff;
+    background-color: #E7E7E7;
     border-radius: 8px;
 }
 
