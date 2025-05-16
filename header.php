@@ -33,7 +33,6 @@
 
         <nav class="main-navigation">
             <ul class="nav-menu">
-                <li><a href="<?php echo esc_url(home_url('/about')); ?>">わたしたち</a></li>
                 <li><a href="<?php echo esc_url(home_url('/recruitment')); ?>">募集をみる</a></li>
                 <li><a href="<?php echo esc_url(home_url('/new-post')); ?>">投稿する</a></li>
                 <li><a href="<?php echo esc_url(home_url('/contact')); ?>">問い合わせ</a></li>
