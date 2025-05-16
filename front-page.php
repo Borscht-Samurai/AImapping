@@ -192,8 +192,12 @@
     </section>
 
     <!-- frontpage-2画像 左揃え配置 -->
-    <div class="frontpage-2-image-wrapper" style="width:100%; display:flex; justify-content:flex-start; margin: 0 0 40px 0;">
-        <img src="<?php echo esc_url(get_template_directory_uri() . '/images/frontpage-2.png'); ?>" alt="フロントページ画像2" style="max-width:100%; height:auto; display:block;">
+    <div class="frontpage-2-image-wrapper" style="width:1110px; margin: 0 auto 40px auto; display:flex; justify-content:flex-start;">
+        <img src="<?php echo esc_url(get_template_directory_uri() . '/images/frontpage-2.png'); ?>" alt="フロントページ画像2" style="max-width:100%; height:auto; display:block; margin-left:15px;">
+    </div>
+    <!-- frontpage-3画像 中央揃え配置 -->
+    <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-top:50px; margin-bottom:40px;">
+        <img src="<?php echo esc_url(get_template_directory_uri() . '/images/frontpage-3.png'); ?>" alt="フロントページ画像3" style="max-width:1110px; width:100%; height:auto; display:block;">
     </div>
 
 </main>
