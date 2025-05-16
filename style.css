@@ -1066,7 +1066,6 @@ body {
     padding: 2rem;
     width: 100%;
     max-width: 400px;
-    box-shadow: var(--shadow-light);
 }
 
 .auth-title {
