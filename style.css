@@ -49,7 +49,7 @@ body {
     color: var(--text-color);
     font-family: var(--font-family-base);
     line-height: 1.6;
-    margin: 0 8px;
+    margin: 0;
     padding: 0;
     overflow-x: hidden;
 }
@@ -472,8 +472,6 @@ body {
     gap: 1rem;
     justify-content: center;
 }
-
-
 
 /* フッター */
 .site-footer {
@@ -947,8 +945,6 @@ body {
         flex-direction: column;
     }
 
-
-
     .event-single {
         padding: 1rem;
     }
@@ -1019,8 +1015,6 @@ body {
         height: 2px;
         margin: 4px 0;
     }
-
-
 
     .event-card {
         height: auto;
@@ -2065,8 +2059,6 @@ p {
     border-radius: 8px;
 }
 
-
-
 /* SNSシェアセクション */
 .social-share-section {
     display: flex;
@@ -2320,8 +2312,6 @@ p {
 }
 
 @media (max-width: 768px) {
-
-
     .social-share-icons {
         gap: 15px;
         margin: 0 15px;
@@ -2407,4 +2397,24 @@ select:focus,
     font-weight: 500;
     font-size: 0.95rem;
     color: #333;
+}
+
+.new-box-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px auto;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.new-box {
+    width: 1110px;
+    height: 865px;
+    background-color: #E7E7E7;
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    overflow: hidden;
 }

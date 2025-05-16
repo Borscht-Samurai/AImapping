@@ -1,7 +1,5 @@
 <?php get_header(); ?>
 
-<body <?php body_class('page-front-page'); ?>>
-
 <style>
 /* フロントページのメイン画像スタイル */
 .frontpage-image-section {
@@ -146,6 +144,16 @@
     margin: 0 0 10px 0;
 }
 
+/* グラデーションセクション */
+.gradient-box-section {
+    width: calc(100% - 10px); /* マージン分を引く */
+    margin: 0 5px;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
 
 </style>
 
@@ -183,11 +191,11 @@
         </div>
     </section>
 
-
-
+    <!-- frontpage-2画像 左揃え配置 -->
+    <div class="frontpage-2-image-wrapper" style="width:100%; display:flex; justify-content:flex-start; margin: 0 0 40px 0;">
+        <img src="<?php echo esc_url(get_template_directory_uri() . '/images/frontpage-2.png'); ?>" alt="フロントページ画像2" style="max-width:100%; height:auto; display:block;">
+    </div>
 
 </main>
 
 <?php get_footer(); ?>
-</body>
-</rewritten_file>
