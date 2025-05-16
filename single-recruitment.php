@@ -117,7 +117,7 @@ while (have_posts()) :
         </div>
 
         <!-- カテゴリーセクション -->
-        <div class="categories-sidebar">
+        <div class="categories-sidebar" style="margin-top: 30px;">
             <h3 class="categories-title">Categories</h3>
             <ul class="categories-list">
                 <?php

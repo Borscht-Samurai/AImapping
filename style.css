@@ -2449,3 +2449,9 @@ select:focus,
     margin-bottom: 40px;
     list-style: none;
 }
+
+.categories-sidebar {
+    width: 312px;
+    margin-left: auto;
+    margin-right: auto;
+}
