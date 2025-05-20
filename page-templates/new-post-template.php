@@ -190,9 +190,9 @@ get_header();
                 // 開催形式の変更時の処理
                 $('#location_type').change(function() {
                     if ($(this).val() === 'offline') {
-                        $('#location_detail_group').show();
+                        $('#location_detail_group').removeClass('is-hidden');
                     } else {
-                        $('#location_detail_group').hide();
+                        $('#location_detail_group').addClass('is-hidden');
                     }
                 });
 
