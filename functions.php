@@ -1030,6 +1030,14 @@ function force_template_for_specific_pages($template) {
         }
     }
 
+    // Chipページ（スラッグ: chip）
+    if (is_page() && $post->post_name === 'chip') {
+        $chip_template = get_template_directory() . '/page-templates/page-chip.php';
+        if (file_exists($chip_template)) {
+            return $chip_template;
+        }
+    }
+
     return $template;
 }
 add_filter('template_include', 'force_template_for_specific_pages', 99);
