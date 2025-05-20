@@ -28,6 +28,17 @@ if ($post_id > 0) {
 get_header();
 ?>
 
+<style>
+.form-control {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+.input-wrapper {
+    width: 100%;
+}
+</style>
+
 <main class="site-main">
     <!-- グラデーションセクション -->
     <section class="gradient-box-section">
@@ -134,7 +145,9 @@ get_header();
 
                 <div class="form-group">
                     <label for="event_date">開催日時 <span class="required">*</span></label>
-                    <input type="datetime-local" id="event_date" name="event_date" required class="form-control" value="<?php echo esc_attr($event_date); ?>">
+                    <div class="input-wrapper" style="width: 100%;">
+                        <input type="datetime-local" id="event_date" name="event_date" required class="form-control" value="<?php echo esc_attr($event_date); ?>">
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -584,6 +597,18 @@ get_header();
 
                     // メディアアップローダーを開く
                     mediaUploader.open();
+                });
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    var wrapper = document.querySelector('.input-wrapper');
+                    var input = document.getElementById('event_date');
+                    if(wrapper && input) {
+                        wrapper.addEventListener('click', function(e) {
+                            input.focus();
+                            // 一部ブラウザでは focus だけでカレンダーが開かない場合があるので、clickも発火
+                            input.click();
+                        });
+                    }
                 });
             });
             </script>
