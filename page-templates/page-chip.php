@@ -20,19 +20,19 @@ get_header();
                 </div>
                 <div class="chip-options-grid">
                     <div class="chip-option-card">
-                        <div class="chip-icon">🥤</div>
+                        <img src="<?php echo get_template_directory_uri(); ?>/images/fluent_drink-bottle-20-regular.png" alt="ドリンク" class="chip-icon-img">
                         <div class="chip-amount">￥100</div>
                     </div>
                     <div class="chip-option-card">
-                        <div class="chip-icon">☕</div>
+                        <img src="<?php echo get_template_directory_uri(); ?>/images/coffee.png" alt="コーヒー" class="chip-icon-img">
                         <div class="chip-amount">￥500</div>
                     </div>
                     <div class="chip-option-card">
-                        <div class="chip-icon">🍔</div>
+                        <img src="<?php echo get_template_directory_uri(); ?>/images/setdrink.png" alt="ハンバーガーセット" class="chip-icon-img">
                         <div class="chip-amount">￥1000</div>
                     </div>
                     <div class="chip-option-card">
-                        <div class="chip-icon">♡</div>
+                        <img src="<?php echo get_template_directory_uri(); ?>/images/hurt.png" alt="ハート" class="chip-icon-img">
                         <div class="chip-amount">任意</div>
                     </div>
                 </div>

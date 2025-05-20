@@ -3687,3 +3687,10 @@ select:focus,
 /* End of User Profile Specific Styles */
 
 /* Add any other styles that should be at the end of the file, if necessary */
+.chip-icon-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 10px auto;
+}
