@@ -137,9 +137,9 @@ while (have_posts()) :
                         ), home_url('/recruitment'));
                 ?>
                     <li class="category-item">
-                        <span class="category-link">
+                        <a href="<?php echo esc_url($category_link); ?>" class="category-link">
                             <?php echo esc_html($category->name); ?>
-                        </span>
+                        </a>
                     </li>
                 <?php
                     endforeach;
@@ -159,6 +159,52 @@ while (have_posts()) :
         </div>
     </div>
 </section>
+
+<style>
+.categories-sidebar {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.categories-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.categories-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-item {
+    margin-bottom: 10px;
+}
+
+.category-link {
+    display: block;
+    padding: 8px 12px;
+    color: #666;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.category-link:hover {
+    background-color: #f5f5f5;
+    color: #333;
+    transform: translateX(5px);
+}
+
+.no-categories {
+    color: #999;
+    font-style: italic;
+}
+</style>
 
 <?php
 endwhile;
