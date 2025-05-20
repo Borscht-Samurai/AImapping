@@ -1,7 +1,7 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 ---
 description: 
@@ -88,7 +88,7 @@ A5FDF7
 front-page.phpのAI Mappingだけはフォントがpoppinsです。
 
 背景色は以下の通りです。他の指示が出されてもこの色を使用してください。
-E7E7E7
-;F8F8F8
+#E7E7E7
+
 
 

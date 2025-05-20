@@ -319,8 +319,7 @@ body {
     border-radius: 12px;
     overflow: hidden;
     background: #ffffff;
-    box-shadow: 15px 15px 30px #bebebe,
-               -15px -15px 30px #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 0;
 }
 
@@ -545,30 +544,21 @@ body {
     height: 40px;
     display: grid;
     place-items: center;
-    background: #e3edf7;
+    background: #f5f5f5;
     border-radius: 50%;
     color: #333333;
     text-decoration: none;
-    box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),
-          -6px -6px 10px -1px rgba(0, 0, 0, 0.7);
-    border: 1px solid rgba(0,0,0,0);
-    cursor: pointer;
-    transition: transform 0.5s;
+    transition: all 0.3s ease;
 }
 
 .social-link:hover {
-    box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
-          inset -4px -4px 6px -1px rgba(255,255,255,0.7),
-          -0.5px -0.5px 0px rgba(255,255,255,1),
-          0.5px 0.5px 0px rgba(0,0,0,0.15),
-          0px 12px 10px -10px rgba(0,0,0,0.05);
-    border: 1px solid rgba(0,0,0,0.1);
-    transform: translateY(0.5em);
+    background-color: #e5e5e5;
+    transform: translateY(-2px);
 }
 
 .social-link svg,
 .social-link i {
-    transition: transform 0.5s;
+    transition: transform 0.3s ease;
 }
 
 .social-link:hover svg,
@@ -1370,7 +1360,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: #f5f5f5;
+    background-color: var(--background-color);
     padding: 0.25rem 0.75rem;
     border-radius: 4px;
 }
@@ -2071,30 +2061,21 @@ p {
     place-items: center;
     width: 40px;
     height: 40px;
-    background: #e3edf7;
+    background: #f5f5f5;
     border-radius: 50%;
     color: #333333;
     text-decoration: none;
-    box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),
-          -6px -6px 10px -1px rgba(255,255,255,0.7);
-    border: 1px solid rgba(0,0,0,0);
-    cursor: pointer;
-    transition: transform 0.5s;
+    transition: all 0.3s ease;
 }
 
 .social-icon:hover {
-    box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
-          inset -4px -4px 6px -1px rgba(255,255,255,0.7),
-          -0.5px -0.5px 0px rgba(255,255,255,1),
-          0.5px 0.5px 0px rgba(0,0,0,0.15),
-          0px 12px 10px -10px rgba(0,0,0,0.05);
-    border: 1px solid rgba(0,0,0,0.1);
-    transform: translateY(0.5em);
+    background-color: #e5e5e5;
+    transform: translateY(-2px);
 }
 
 .social-icon svg,
 .social-icon i {
-    transition: transform 0.5s;
+    transition: transform 0.3s ease;
 }
 
 .social-icon:hover svg,

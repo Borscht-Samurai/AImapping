@@ -7,7 +7,7 @@
 get_header();
 ?>
 
-<main class="site-main" style="background-color: #F8F8F8;">
+<main class="site-main" style="background-color: #E7E7E7;">
     <div class="faq-header">
         <h1 class="faq-title">FAQ</h1>
     </div>
@@ -134,7 +134,7 @@ get_header();
     }
 
     .faq-content {
-        background-color: #F8F8F8;
+        background-color: #E7E7E7;
         padding: 30px;
         border-radius: 8px;
         font-family: 'Noto Sans JP', sans-serif;
@@ -162,7 +162,7 @@ get_header();
         margin-bottom: 30px;
         border-radius: 8px;
         overflow: hidden;
-        background-color: #F8F8F8;
+        background-color: #E7E7E7;
         position: relative;
         padding-bottom: 30px;
     }

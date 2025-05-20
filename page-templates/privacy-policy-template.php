@@ -78,6 +78,10 @@ get_header();
     /* フォントの読み込み */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap');
 
+    .site-main {
+        background-color: #E7E7E7;
+    }
+
     .privacy-header {
         margin: 40px 0 0 20px;
     }
@@ -112,7 +116,7 @@ get_header();
     }
 
     .privacy-content {
-        background-color: var(--white-color);
+        background-color: #E7E7E7;
         padding: 30px;
         border-radius: 8px;
         font-family: 'Noto Sans JP', sans-serif;
