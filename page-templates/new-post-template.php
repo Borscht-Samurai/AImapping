@@ -604,9 +604,14 @@ get_header();
                     var input = document.getElementById('event_date');
                     if(wrapper && input) {
                         wrapper.addEventListener('click', function(e) {
-                            input.focus();
-                            // 一部ブラウザでは focus だけでカレンダーが開かない場合があるので、clickも発火
-                            input.click();
+                            // すでにinputをクリックした場合は何もしない
+                            if (e.target === input) return;
+                            // showPickerが使える場合はそれを使う
+                            if (typeof input.showPicker === 'function') {
+                                input.showPicker();
+                            } else {
+                                input.focus();
+                            }
                         });
                     }
                 });

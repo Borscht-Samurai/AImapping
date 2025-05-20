@@ -2785,31 +2785,35 @@ select:focus,
 }
 
 .chip-option-card {
-    background: var(--white-color);
-    border-radius: 16px; 
-    box-shadow: var(--shadow-light); 
+    background: var(--background-color);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-light);
+    border: none;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 140px; 
-    font-size: 1.3rem; 
-    cursor: pointer;
-    transition: box-shadow 0.2s;
+    min-height: 120px;
 }
 
-.chip-option-card:hover {
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15); 
+.chip-option-card:active {
+    box-shadow: var(--shadow-inset);
+    transform: translateY(4px);
 }
 
 .chip-icon {
-    font-size: 2.5rem; 
-    margin-bottom: var(--space-small); 
+    font-size: 2rem;
+    margin-bottom: 10px;
 }
 
 .chip-amount {
-    font-size: 1.1rem; 
-    font-weight: 500;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
 }
 
 .chip-buttons {
