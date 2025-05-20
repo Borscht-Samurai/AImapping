@@ -1,7 +1,7 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 ---
 description: 
@@ -9,5 +9,9 @@ globs:
 alwaysApply: false
 ---
 テーマカラーは以下の通りです。
-FF966C
-A5FDF7
+#FF966C
+#A5FDF7
+
+ページの背景色は#E7E7E7です。
+背景には白を使用しない。
+

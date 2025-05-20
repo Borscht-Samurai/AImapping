@@ -8,80 +8,56 @@ get_header();
 ?>
 
 <section class="chip-page-section">
+    <div class="chip-header">
+        <h1 class="chip-title">Chip</h1>
+    </div>
     <div class="two-boxes-section">
         <div class="left-box">
             <div class="chip-container">
-                <h1 class="chip-title">応援する</h1>
-                
-                <div class="chip-content">
-                    <div class="chip-description">
-                        <p>このプロジェクトを応援する</p>
-                        <p class="chip-subtitle"><?php the_title(); ?></p>
+                <div class="chip-main-title">AI Mappingにチップをおくる</div>
+                <div class="chip-main-desc">
+                    AI Mappingを「いいね」と思ったあなたの気持ちを、<br>小さなご支援と共に。これからの利用の大きな力になります。
+                </div>
+                <div class="chip-options-grid">
+                    <div class="chip-option-card">
+                        <div class="chip-icon">🥤</div>
+                        <div class="chip-amount">￥100</div>
                     </div>
-
-                    <div class="chip-options">
-                        <div class="chip-option">
-                            <input type="radio" name="chip-amount" id="chip-100" value="100">
-                            <label for="chip-100">100円</label>
-                        </div>
-                        <div class="chip-option">
-                            <input type="radio" name="chip-amount" id="chip-300" value="300">
-                            <label for="chip-300">300円</label>
-                        </div>
-                        <div class="chip-option">
-                            <input type="radio" name="chip-amount" id="chip-500" value="500">
-                            <label for="chip-500">500円</label>
-                        </div>
-                        <div class="chip-option">
-                            <input type="radio" name="chip-amount" id="chip-1000" value="1000">
-                            <label for="chip-1000">1,000円</label>
-                        </div>
-                        <div class="chip-option custom">
-                            <input type="number" name="custom-amount" id="custom-amount" placeholder="その他の金額">
-                        </div>
+                    <div class="chip-option-card">
+                        <div class="chip-icon">☕</div>
+                        <div class="chip-amount">￥500</div>
                     </div>
-
-                    <div class="payment-methods">
-                        <h3>お支払い方法</h3>
-                        <div class="payment-options">
-                            <div class="payment-option">
-                                <input type="radio" name="payment-method" id="credit-card" value="credit-card">
-                                <label for="credit-card">クレジットカード</label>
-                            </div>
-                            <div class="payment-option">
-                                <input type="radio" name="payment-method" id="bank-transfer" value="bank-transfer">
-                                <label for="bank-transfer">銀行振込</label>
-                            </div>
-                        </div>
+                    <div class="chip-option-card">
+                        <div class="chip-icon">🍔</div>
+                        <div class="chip-amount">￥1000</div>
                     </div>
-
-                    <button class="support-submit-button">
-                        応援する <i class="fas fa-coffee"></i>
-                    </button>
+                    <div class="chip-option-card">
+                        <div class="chip-icon">♡</div>
+                        <div class="chip-amount">任意</div>
+                    </div>
+                </div>
+                <div class="chip-buttons">
+                    <button class="chip-btn confirm">確認</button>
+                    <button class="chip-btn cancel">キャンセル</button>
                 </div>
             </div>
         </div>
         <div class="right-box">
             <div class="google-adsense-box">
-                <!-- ここにコンテンツを追加 -->
+                <div class="adsense-dummy">Googleアドセンス入れます？</div>
             </div>
-
-            <!-- カテゴリーセクション -->
             <div class="categories-sidebar" style="margin-top: 30px;">
                 <h3 class="categories-title">Categories</h3>
                 <ul class="categories-list">
                     <?php
-                    // データベースから実際のカテゴリーを取得
                     $categories = get_terms(array(
                         'taxonomy' => 'recruitment_category',
-                        'hide_empty' => false, // 投稿がないカテゴリーも表示
-                        'orderby' => 'name', // 名前順で並び替え
+                        'hide_empty' => false,
+                        'orderby' => 'name',
                         'order' => 'ASC'
                     ));
-
                     if (!empty($categories) && !is_wp_error($categories)) :
                         foreach ($categories as $category) :
-                            // カテゴリーのリンクを生成
                             $category_link = add_query_arg(array(
                                 'category' => $category->term_id
                             ), home_url('/recruitment'));
@@ -94,7 +70,6 @@ get_header();
                     <?php
                         endforeach;
                     else :
-                        // カテゴリーが存在しない場合のメッセージ
                         echo '<li class="no-categories">カテゴリーがありません</li>';
                     endif;
                     ?>
@@ -105,12 +80,26 @@ get_header();
 </section>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+
 .chip-page-section {
-    padding: 40px 20px;
+    padding: 0;
     background-color: #E7E7E7;
     min-height: 100vh;
 }
-
+.chip-header {
+    margin: 0 0 0 20px;
+}
+.chip-title {
+    font-size: 160px;
+    line-height: 1;
+    margin: 0;
+    text-align: left;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -0.08em;
+}
 .two-boxes-section {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -118,188 +107,169 @@ get_header();
     max-width: 1200px;
     margin: 0 auto;
 }
-
 .left-box {
     background-color: #E7E7E7;
     border-radius: 10px;
+    padding: 0 0 0 40px;
+    display: flex;
+    align-items: flex-start;
 }
-
+.chip-container {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 40px;
+}
+.chip-main-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: left;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+.chip-main-desc {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 40px;
+    text-align: left;
+}
+.chip-options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+.chip-option-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 140px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+.chip-option-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+.chip-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+.chip-amount {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+.chip-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+}
+.chip-btn {
+    width: 100%;
+    padding: 18px 0;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: background 0.2s, color 0.2s;
+}
+.chip-btn.confirm {
+    background: #000;
+    color: #fff;
+}
+.chip-btn.cancel {
+    background: #fff;
+    color: #000;
+}
+.chip-btn.cancel:hover {
+    background: #f0f0f0;
+}
 .right-box {
     background-color: #E7E7E7;
     border-radius: 10px;
     padding: 20px;
-    width: fit-content;
+    width: 340px;
+    min-width: 260px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
-
-.chip-container {
-    padding: 30px;
-}
-
-.chip-title {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 30px;
-    color: #333;
-}
-
-.chip-description {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.chip-subtitle {
-    font-size: 1.2rem;
-    color: #666;
-    margin-top: 10px;
-}
-
-.chip-options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.chip-option {
-    position: relative;
-}
-
-.chip-option input[type="radio"] {
-    display: none;
-}
-
-.chip-option label {
-    display: block;
-    padding: 15px;
-    text-align: center;
-    background: #E7E7E7;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.chip-option input[type="radio"]:checked + label {
-    background: #4CAF50;
-    color: white;
-    border-color: #4CAF50;
-}
-
-.chip-option.custom {
-    grid-column: span 2;
-}
-
-.chip-option.custom input {
+.google-adsense-box {
     width: 100%;
-    padding: 15px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.payment-methods {
     margin-bottom: 30px;
 }
-
-.payment-methods h3 {
-    margin-bottom: 15px;
-    color: #333;
+.adsense-dummy {
+    background: #FF966C;
+    color: #fff;
+    border-radius: 8px;
+    padding: 24px 16px;
+    font-size: 1rem;
+    text-align: left;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
 }
-
-.payment-options {
-    display: grid;
-    gap: 10px;
-}
-
-.payment-option {
-    position: relative;
-}
-
-.payment-option input[type="radio"] {
-    display: none;
-}
-
-.payment-option label {
-    display: block;
-    padding: 12px;
-    background: #E7E7E7;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.payment-option input[type="radio"]:checked + label {
-    background: #4CAF50;
-    color: white;
-    border-color: #4CAF50;
-}
-
-.support-submit-button {
-    width: 100%;
-    padding: 15px;
-    background: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.support-submit-button:hover {
-    background: #45a049;
-}
-
-.support-submit-button i {
-    margin-left: 8px;
-}
-
 .categories-sidebar {
     background-color: #E7E7E7;
-    padding: 20px;
+    padding: 0;
     width: 100%;
 }
-
 .categories-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     color: #333;
 }
-
 .categories-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
-
 .category-item {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
-
 .category-link {
     display: block;
-    padding: 8px 12px;
-    color: #666;
+    padding: 6px 0;
+    color: #222;
     text-decoration: none;
-    transition: all 0.3s ease;
+    font-size: 1rem;
+    transition: color 0.2s;
 }
-
 .category-link:hover {
-    background-color: #ffffff;
-    color: #333;
-    transform: translateX(5px);
+    color: #FF966C;
 }
-
 .no-categories {
     color: #999;
     font-style: italic;
 }
-
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+    .chip-title {
+        font-size: 80px;
+    }
     .two-boxes-section {
         grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .right-box {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        margin-top: 40px;
+    }
+    .left-box {
+        padding-left: 0;
+        justify-content: center;
+    }
+    .chip-container {
+        margin: 0 auto;
     }
 }
 </style>
