@@ -162,10 +162,8 @@ while (have_posts()) :
 
 <style>
 .categories-sidebar {
-    background-color: #ffffff;
-    border-radius: 8px;
+    background-color: #E7E7E7;
     padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .categories-title {
@@ -190,12 +188,11 @@ while (have_posts()) :
     padding: 8px 12px;
     color: #666;
     text-decoration: none;
-    border-radius: 4px;
     transition: all 0.3s ease;
 }
 
 .category-link:hover {
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     color: #333;
     transform: translateX(5px);
 }
