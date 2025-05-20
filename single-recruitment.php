@@ -154,7 +154,7 @@ while (have_posts()) :
         <!-- 応援ボタンセクション -->
         <div class="support-button-section">
             <a href="<?php echo esc_url(home_url('/chip')); ?>" class="support-button">
-                応援する <i class="fas fa-coffee"></i>
+                運営にチップを送る <i class="fas fa-coffee"></i>
             </a>
         </div>
     </div>
