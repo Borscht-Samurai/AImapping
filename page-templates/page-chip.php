@@ -38,7 +38,7 @@ get_header();
                 </div>
                 <div class="chip-buttons">
                     <button class="chip-btn confirm">確認</button>
-                    <button class="chip-btn cancel">キャンセル</button>
+                    <button class="chip-btn cancel" onclick="window.history.back()">キャンセル</button>
                 </div>
             </div>
         </div>
