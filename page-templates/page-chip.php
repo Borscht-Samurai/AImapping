@@ -47,7 +47,7 @@ get_header();
                 <div class="adsense-dummy">Googleアドセンス入れます？</div>
             </div>
             <div class="categories-sidebar">
-                <h3 class="categories-title">Categories</h3>
+                <h1 class="categories-title">Categories</h1>
                 <ul class="categories-list">
                     <?php
                     $categories = get_terms(array(
