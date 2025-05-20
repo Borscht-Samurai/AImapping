@@ -2070,6 +2070,14 @@ p {
     width: 30%;
     background-color: #E7E7E7;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* single-recruitment.phpと同じにする */
+    padding: 0;
+    margin: 0;
+    min-width: 312px;
+    max-width: 400px;
 }
 
 .google-adsense-box {
@@ -2080,6 +2088,23 @@ p {
     margin-right: auto;
     background-color: #FF966C;
     border-radius: 8px;
+    margin-bottom: 32px;
+}
+
+.categories-sidebar {
+    width: 312px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 32px;
+    background-color: #E7E7E7;
+    padding: 32px;
+}
+
+.support-button-section {
+    margin-top: 30px;
+    width: 312px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* SNSシェアセクション */
@@ -2897,7 +2922,7 @@ select:focus,
 }
 
 .chip-page-section .right-box .category-item:not(:last-child)::after {
-    content: none; 
+    /* content: none; を削除して、デフォルトの線を有効にする */
 }
 
 .chip-page-section .right-box .category-link {

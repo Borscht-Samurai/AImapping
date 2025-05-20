@@ -75,6 +75,11 @@ get_header();
                     ?>
                 </ul>
             </div>
+            <div class="support-button-section">
+                <a href="<?php echo esc_url(home_url('/chip')); ?>" class="support-button">
+                    運営にチップを送る <i class="fas fa-coffee"></i>
+                </a>
+            </div>
         </div>
     </div>
 </section>
