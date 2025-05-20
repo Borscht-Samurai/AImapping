@@ -117,7 +117,7 @@ while (have_posts()) :
         </div>
 
         <!-- カテゴリーセクション -->
-        <div class="categories-sidebar" style="margin-top: 30px;">
+        <div class="categories-sidebar">
             <h3 class="categories-title">Categories</h3>
             <ul class="categories-list">
                 <?php
@@ -159,49 +159,6 @@ while (have_posts()) :
         </div>
     </div>
 </section>
-
-<style>
-.categories-sidebar {
-    background-color: #E7E7E7;
-    padding: 20px;
-}
-
-.categories-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #333;
-}
-
-.categories-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.category-item {
-    margin-bottom: 10px;
-}
-
-.category-link {
-    display: block;
-    padding: 8px 12px;
-    color: #666;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.category-link:hover {
-    background-color: #ffffff;
-    color: #333;
-    transform: translateX(5px);
-}
-
-.no-categories {
-    color: #999;
-    font-style: italic;
-}
-</style>
 
 <?php
 endwhile;

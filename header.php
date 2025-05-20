@@ -14,15 +14,17 @@
 <header class="site-header">
     <div class="header-container">
         <div class="site-branding">
-            <a href="<?php echo esc_url(home_url('/')); ?>" class="custom-logo-link">
-                <?php
-                if (has_custom_logo()) {
-                    the_custom_logo();
-                } else {
-                    echo '<img src="' . get_template_directory_uri() . '/images/Logo.png" alt="AI Mapping" class="custom-logo" style="height: auto;">';
-                }
-                ?>
-            </a>
+            <?php
+            if (has_custom_logo()) {
+                the_custom_logo();
+            } elseif (get_theme_mod('logo_image')) {
+                echo '<a href="' . esc_url(home_url('/')) . '" rel="home">';
+                echo '<img src="' . get_template_directory_uri() . '/images/Logo.png" alt="AI Mapping" class="custom-logo">';
+                echo '</a>';
+            } else {
+                echo '<a href="' . esc_url(home_url('/')) . '" rel="home" class="site-title">AI Mapping</a>';
+            }
+            ?>
         </div>
 
         <button class="mobile-menu-toggle" aria-label="メニュー">

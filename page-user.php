@@ -26,7 +26,7 @@ get_header();
             ));
             ?>
 
-            <div class="profile-tabs" style="max-width: 1100px; margin: 0 auto;">
+            <div class="profile-tabs content-max-width-centered">
                 <div class="tab-buttons">
                     <button class="tab-btn active" data-tab="upcoming-events">参加予定のイベント</button>
                     <button class="tab-btn" data-tab="past-events">過去の参加イベント</button>
@@ -63,7 +63,7 @@ get_header();
                         $upcoming_events = new WP_Query($args);
 
                         if ($upcoming_events->have_posts()) : ?>
-                            <div class="events-grid" style="max-width: 1100px; margin: 0 auto;">
+                            <div class="events-grid content-max-width-centered">
                                 <?php while ($upcoming_events->have_posts()) : $upcoming_events->the_post(); ?>
                                     <?php get_template_part('template-parts/content', 'card'); ?>
                                 <?php endwhile; ?>
@@ -115,7 +115,7 @@ get_header();
                         $past_events = new WP_Query($args);
 
                         if ($past_events->have_posts()) : ?>
-                            <div class="events-grid" style="max-width: 1100px; margin: 0 auto;">
+                            <div class="events-grid content-max-width-centered">
                                 <?php while ($past_events->have_posts()) : $past_events->the_post(); ?>
                                     <?php get_template_part('template-parts/content', 'card'); ?>
                                 <?php endwhile; ?>
@@ -151,7 +151,7 @@ get_header();
                     $user_events = new WP_Query($args);
 
                     if ($user_events->have_posts()) : ?>
-                        <div class="events-grid" style="max-width: 1100px; margin: 0 auto;">
+                        <div class="events-grid content-max-width-centered">
                             <?php while ($user_events->have_posts()) : $user_events->the_post(); ?>
                                 <?php get_template_part('template-parts/content', 'card'); ?>
                             <?php endwhile; ?>

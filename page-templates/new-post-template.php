@@ -33,14 +33,14 @@ get_header();
     <section class="gradient-box-section">
         <div class="gradient-box">
             <div class="gradient-box-content">
-                <h1 class="recruitment-title" style="color: white;"><?php echo $edit_mode ? '募集の編集' : '新規募集の投稿'; ?></h1>
+                <h1 class="recruitment-title new-post-page-title"><?php echo $edit_mode ? '募集の編集' : '新規募集の投稿'; ?></h1>
             </div>
         </div>
     </section>
 
-    <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+    <div class="new-post-main-container">
         <?php if (is_user_logged_in()) : ?>
-            <form id="new-post-form" method="post" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" enctype="multipart/form-data" style="max-width: 800px; margin: 0 auto; padding: 2rem 0;">
+            <form id="new-post-form" method="post" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" enctype="multipart/form-data">
                 <?php wp_nonce_field('new_post_action', 'new_post_nonce'); ?>
 
                 <?php
@@ -77,20 +77,20 @@ get_header();
                 <div class="form-group">
                     <label for="post_content">募集内容 <span class="required">*</span></label>
                     <textarea id="post_content" name="post_content" required class="form-control" rows="10"><?php echo esc_textarea($post_content); ?></textarea>
-                    <div class="media-buttons" style="margin-top: 10px; display: flex; gap: 10px;">
-                        <button type="button" id="insert-media-button" class="btn btn-secondary" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
-                            <i class="fas fa-image" style="margin-right: 5px;"></i>画像を挿入
+                    <div class="media-buttons">
+                        <button type="button" id="insert-media-button" class="btn btn-secondary btn-media-action">
+                            <i class="fas fa-image"></i>画像を挿入
                         </button>
-                        <button type="button" id="edit-image-button" class="btn btn-secondary" style="font-size: 0.9rem; padding: 0.5rem 1rem;" disabled>
-                            <i class="fas fa-edit" style="margin-right: 5px;"></i>画像を編集
+                        <button type="button" id="edit-image-button" class="btn btn-secondary btn-media-action" disabled>
+                            <i class="fas fa-edit"></i>画像を編集
                         </button>
                     </div>
-                    <p class="form-hint" style="margin-top: 5px; font-size: 0.85rem; color: #666;">イベント内容に画像を挿入できます。ボタンをクリックして画像をアップロードしてください。画像をドラッグ選択して「画像を編集」ボタンでサイズ変更が可能です。</p>
+                    <p class="form-hint">イベント内容に画像を挿入できます。ボタンをクリックして画像をアップロードしてください。画像をドラッグ選択して「画像を編集」ボタンでサイズ変更が可能です。</p>
                 </div>
 
                 <div class="form-group">
-                    <h4 style="font-size: 1.1rem; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">プレビュー</h4>
-                    <div id="preview-content" style="border: 1px solid #ddd; padding: 15px; border-radius: 4px; background-color: #f9f9f9; min-height: 200px; max-height: 400px; overflow: auto;"></div>
+                    <h4 class="preview-section-title">プレビュー</h4>
+                    <div id="preview-content"></div>
                 </div>
 
                 <div class="form-group">
@@ -148,9 +148,9 @@ get_header();
 
                 <?php
                 // 開催場所の初期表示設定
-                $location_display = ($edit_mode && $event_is_online === '0') ? 'block' : 'none';
+                $location_display_class = ($edit_mode && $event_is_online === '0') ? '' : 'is-hidden';
                 ?>
-                <div class="form-group" id="location_detail_group" style="display: <?php echo $location_display; ?>">
+                <div class="form-group <?php echo $location_display_class; ?>" id="location_detail_group">
                     <label for="location_detail">開催場所 (都道府県)</label>
                     <select id="location_detail" name="location_detail" class="form-control">
                         <option value="">選択してください</option>
@@ -172,10 +172,10 @@ get_header();
                     </select>
                 </div>
 
-                <div class="form-actions" style="text-align: center; margin-top: 2rem;">
+                <div class="form-actions">
                     <button type="submit" class="btn btn-primary"><?php echo $edit_mode ? '募集を更新する' : '募集を投稿する'; ?></button>
                     <?php if ($edit_mode) : ?>
-                    <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="btn btn-secondary" style="margin-left: 10px;">キャンセル</a>
+                    <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="btn btn-secondary">キャンセル</a>
                     <?php endif; ?>
                 </div>
 
@@ -588,8 +588,8 @@ get_header();
             });
             </script>
         <?php else : ?>
-            <div style="text-align: center; padding: 2rem 0;">
-                <p class="login-required" style="margin-bottom: 1.5rem; font-size: 1.1rem;">イベントを投稿するにはログインが必要です。</p>
+            <div class="login-prompt-container">
+                <p class="login-required">イベントを投稿するにはログインが必要です。</p>
                 <a href="<?php echo esc_url(home_url('/login')); ?>" class="btn btn-primary">ログインする</a>
             </div>
         <?php endif; ?>

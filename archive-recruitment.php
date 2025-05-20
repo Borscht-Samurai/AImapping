@@ -3,184 +3,8 @@
 get_header();
 ?>
 
-<style>
-.search-filters {
-    background-color: #000000;
-    border-radius: 8px;
-    padding: 24px;
-    margin-bottom: 32px;
-    font-size: 0.8rem;
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.search-filters label {
-    color: #ffffff;
-}
-
-/* ドロップダウンメニューの白色下線デザイン */
-.search-filters select,
-.search-filters .dropdown-select,
-.search-filters select.dropdown-select,
-#category,
-#orderby,
-#location,
-#event_location {
-    background-color: #000000 !important;
-    color: #ffffff !important;
-    border: none !important;
-    border-bottom: 1px solid #ffffff !important;
-    border-radius: 0 !important;
-    padding: 8px 16px 8px 0 !important;
-    width: 100% !important;
-    appearance: none !important;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" viewBox="0 0 12 6"><path fill="white" d="M0 0l6 6 6-6z"/></svg>') !important;
-    background-repeat: no-repeat !important;
-    background-position: right 0.5rem center !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    box-shadow: none !important;
-}
-
-.search-filters select:hover,
-.search-filters .dropdown-select:hover,
-#category:hover,
-#orderby:hover,
-#location:hover,
-#event_location:hover {
-    border-bottom: 2px solid #ffffff !important;
-    transform: translateY(-2px);
-    background-color: #000000 !important;
-}
-
-.search-filters select:focus,
-.search-filters .dropdown-select:focus,
-#category:focus,
-#orderby:focus,
-#location:focus,
-#event_location:focus {
-    outline: none !important;
-    border-bottom: 2px solid #ffffff !important;
-    background-color: #000000 !important;
-    box-shadow: none !important;
-}
-
-.search-filters select option,
-.search-filters .dropdown-select option,
-#category option,
-#orderby option,
-#location option,
-#event_location option {
-    background-color: #000000 !important;
-    color: #ffffff !important;
-}
-
-/* 白色下線のボタンデザイン */
-.search-underline-btn {
-    color: #ffffff !important;
-    background-color: #000000 !important;
-    background: none !important;
-    border: none !important;
-    padding: 8px 16px !important;
-    position: relative !important;
-    cursor: pointer !important;
-    font-size: 0.9rem !important;
-    transition: all 0.3s ease !important;
-    box-shadow: none !important;
-}
-
-.search-underline-btn::after {
-    content: '' !important;
-    position: absolute !important;
-    width: 100% !important;
-    height: 1px !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    background-color: #ffffff !important;
-    transition: all 0.3s ease !important;
-}
-
-.search-underline-btn:hover::after {
-    height: 2px !important;
-}
-
-.search-underline-btn:hover {
-    transform: translateY(-2px) !important;
-    background-color: #000000 !important;
-}
-
-/* === 修正 === */
-.events-grid {
-    display: flex !important; /* Flexbox を明示的に使用 */
-    flex-wrap: wrap !important; /* カードが複数行になることを許可 */
-    justify-content: center !important; /* アイテムを中央揃えに配置 */
-    gap: 20px !important; /* カード間の隙間を狭めて3枚のカードが確実に表示されるように調整 */
-    grid-template-columns: none !important; /* gridレイアウトを無効化 */
-    max-width: 1200px !important; /* 最大幅を設定 */
-    width: 100% !important;
-    margin: 0 auto !important;
-    padding: 0 10px !important; /* 両端に少し余白を追加 */
-}
-
-/* 1200px幅での表示調整 */
-@media (min-width: 1200px) {
-    .events-grid {
-        gap: 20px !important; /* 1200px幅で3枚のカードが表示されるように間隔を調整 */
-    }
-}
-
-/* content-card.php のルート要素（通常は article）を想定 */
-.events-grid > article {
-    max-width: 370px !important; /* カードの最大幅を370pxに変更 */
-    width: 370px !important; /* カードの幅を370pxに固定 */
-    flex-grow: 0 !important; /* アイテムが余分なスペースを占有しないように */
-    flex-shrink: 0 !important; /* アイテムが縮小しないように（max-width が効く） */
-    /* 不要なマージンをリセット（念のため）*/
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    box-sizing: border-box !important; /* ボックスモデルを調整 */
-}
-
-/* 1200px幅での表示調整 - カードサイズを微調整 */
-@media (min-width: 1200px) and (max-width: 1250px) {
-    .events-grid > article {
-        width: 365px !important; /* 1200px幅で確実に3枚表示されるように微調整 */
-    }
-}
-
-/* レスポンシブ対応 */
-@media (max-width: 1199px) and (min-width: 769px) {
-    .events-grid {
-        gap: 25px !important; /* タブレットサイズでの間隔調整 */
-    }
-
-    .events-grid > article {
-        width: 340px !important; /* タブレットサイズでのカード幅調整 */
-    }
-}
-
-@media (max-width: 768px) {
-    .events-grid > article {
-        width: 100% !important; /* モバイルでは1列表示 */
-        max-width: 370px !important; /* 最大幅は保持 */
-    }
-}
-
-/* events-grid-containerのスタイル調整 */
-.events-grid-container {
-    display: flex !important;
-    justify-content: center !important;
-    width: 100% !important;
-    padding: 0 !important;
-}
-/* === /修正 === */
-</style>
-
-<main class="site-main">
-    <div class="container mx-auto px-5 py-8" style="margin-left: 20px; margin-right: 20px;">
+<main class="site-main archive-recruitment-page">
+    <div class="container mx-auto archive-container-custom-padding">
         <div class="archive-header mb-8">
             <h1 class="text-3xl font-bold mb-4">Events</h1>
             <div class="archive-description">
@@ -195,7 +19,7 @@ get_header();
                     <label for="category">カテゴリー：</label>
                     <?php
                     // カテゴリードロップダウンのスタイルを上書きするスクリプトを追加
-                    add_action('wp_footer', function() {
+                    /* add_action('wp_footer', function() {
                         echo '<script>
                             document.addEventListener("DOMContentLoaded", function() {
                                 // ドロップダウンのスタイルを強制的に適用
@@ -210,7 +34,7 @@ get_header();
                                 });
                             });
                         </script>';
-                    });
+                    }); */
 
                     wp_dropdown_categories(array(
                         'taxonomy' => 'recruitment_category',
