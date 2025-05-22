@@ -3389,27 +3389,28 @@ select:focus,
 }
 
 .start-free-button { 
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--white-color); 
-    width: 260px; 
-    height: 60px; 
-    font-size: 1.4375rem; 
-    border-radius: 50px; 
-    background: linear-gradient(90deg, var(--theme-color-2) 0%, var(--theme-color-1) 100%); 
-    cursor: pointer;
-    border: none;
-    transition: all 0.3s;
-    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff; 
-    margin-top: 0; 
-    text-decoration: none;
+    display: inline-block;
+    width: 260px;
+    height: 60px;
+    line-height: 60px;
     text-align: center;
+    background-color: #090909;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-light);
+}
+
+.start-free-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
 }
 
 .start-free-button:active {
-    color: var(--white-color); 
-    box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff; 
+    transform: translateY(0);
 }
 
 .new-box-section .right-box { 
@@ -3487,6 +3488,22 @@ select:focus,
     z-index: 1; 
     margin-top: var(--space-small); 
     box-sizing: border-box;
+}
+
+.frontpage-image-container.frontpage-4-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+    margin-bottom: var(--space-xxlarge);
+}
+
+.frontpage-image.frontpage-4-image {
+    max-width: 1110px; 
+    width: 100%; 
+    height: auto;
+    display: block;
 }
 /* End of Front Page Styles */
 
@@ -3763,4 +3780,153 @@ select:focus,
     font-size: 1.125rem;
     line-height: 1.6;
     color: #333;
+}
+
+/* front-page.php new-box-section */
+.new-box-section {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #E7E7E7; /* 指示された背景色 */
+}
+
+.new-box-top {
+    display: flex;
+    flex-wrap: wrap; /* 折り返しを許可 */
+    justify-content: space-between;
+    align-items: flex-start; /* 上揃え */
+    width: 100%;
+    max-width: 1288px; /* 指示された最大幅 */
+}
+
+.left-box-top, .right-box-top {
+    margin: 10px;
+}
+
+.left-box-top {
+    flex: 1; /* 左側のボックスがスペースを占めるように */
+    min-width: 280px; /* 最小幅を設定 */
+    margin-right: 20px; /* 右側にマージンを追加 */
+}
+
+.right-box-top {
+    display: flex;
+    justify-content: center; /* 画像を中央に */
+    align-items: center; /* 画像を中央に */
+    flex: 2; /* 画像に合わせて調整 */
+    min-width: 280px; /* 最小幅を設定 */
+}
+
+.new-box-title {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 29.5667px;
+    line-height: 130%;
+    letter-spacing: -0.147834px;
+    color: #535353;
+    margin-bottom: 15px;
+}
+
+.new-box-description {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14.7834px;
+    line-height: 160%;
+    color: #535353;
+    margin-bottom: 20px;
+}
+
+
+
+
+.picnic-container, .exchange-container {
+    position: relative;
+    display: block; /* テキストが画像の下に来るように変更 */
+    margin-top: 20px; /* 上の要素とのマージン */
+    text-align: left; /* テキストを左揃えに */
+}
+
+.picnic-image, .exchange-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 8px; /* 画像とテキストの間のマージン */
+}
+
+.picnic-text, .exchange-text {
+    position: static; /* 通常の配置に戻す */
+    background-color: transparent; /* 背景を透明に */
+    color: #535353; /* テキストの色を通常に戻す */
+    padding: 0;
+    font-size: 14px; /* 画像のキャプションとして適切なフォントサイズ */
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .new-box-top {
+        flex-direction: column; /* 縦並びに変更 */
+        align-items: center; /* 中央揃えに */
+    }
+
+    .left-box-top, .right-box-top {
+        width: 90%; /* 幅を調整 */
+        margin-bottom: 20px;
+        text-align: center; /* テキストを中央揃え */
+        margin-right: 0; /* スマホ表示では不要 */
+    }
+
+    .new-box-title,
+    .new-box-description {
+        text-align: center;
+    }
+
+    .picnic-container,
+    .exchange-container {
+        display: block; /* 画像とテキストを縦に並べる */
+        margin-left: auto;
+        margin-right: auto;
+        width: fit-content; /* コンテンツに合わせる */
+        text-align: center; /* スマホでは中央揃え */
+    }
+
+    .picnic-image, .exchange-image {
+        margin-bottom: 5px; /* 画像とテキストの間にスペース */
+    }
+
+    .picnic-text, .exchange-text {
+        position: static; /* 通常の配置に戻す */
+        background-color: transparent;
+        color: #535353;
+        padding: 0;
+        text-align: center;
+        font-size: 14px;
+    }
+
+     .right-box-top {
+        margin-top: 0; /* new-box-topでflex-direction: column; にしているので不要 */
+    }
+
+    .exchange-container {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .new-box-title {
+        font-size: 24px;
+    }
+
+    .new-box-description {
+        font-size: 13px;
+    }
+
+    .start-free-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
 }
