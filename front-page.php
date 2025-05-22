@@ -44,6 +44,10 @@
     <div class="frontpage-image-container frontpage-3-container">
         <img src="<?php echo esc_url(get_template_directory_uri() . '/images/frontpage-3.png'); ?>" alt="フロントページ画像3" class="frontpage-image frontpage-3-image">
     </div>
+    <!-- frontpage-4画像 中央揃え配置 -->
+    <div class="frontpage-image-container frontpage-3-container">
+        <img src="<?php echo esc_url(get_template_directory_uri() . '/images/frontpage-4.png'); ?>" alt="フロントページ画像4" class="frontpage-image frontpage-3-image">
+    </div>
 
 </main>
 
