@@ -6,7 +6,7 @@ alwaysApply: true
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 ---
 description: 
@@ -90,5 +90,5 @@ front-page.phpのAI Mappingだけはフォントがpoppinsです。
 背景色は以下の通りです。他の指示が出されてもこの色を使用してください。
 #E7E7E7
 
-
+サイトのコンテンツは1288pxが最大幅とします。
 
