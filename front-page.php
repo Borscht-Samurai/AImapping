@@ -17,11 +17,13 @@
     <section class="new-box-section">
         <div class="new-box">
             <div class="left-box">
-                <h2>Projects</h2>
-                <p>Our portfolio showcases a range of projects, from cozy living rooms to luxurious bedrooms, and everything in between. We have worked on residential projects, commercial spaces, and hospitality interiors, and have experience working with a variety of design styles.</p>
+                <h2>AIクリエイターの<br>出会いの場を探す</h2>
+                <p>
+                    同じ地域のAIクリエイターと直接会って話せる。オンラインでは得られない、その場の空気感や熱量が新しいインスピレーションを生み出します。
+                </p>
                 <a href="#" class="start-free-button">無料ではじめる</a>
                 <div class="picnic-container">
-                    <img src="<?php echo esc_url(get_template_directory_uri() . '/images/picnic.png'); ?>" alt="Picnic" class="picnic-image">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/images/picnic1.png'); ?>" alt="Picnic" class="picnic-image">
                     <p class="picnic-text">＠ピクニック</p>
                 </div>
             </div>
