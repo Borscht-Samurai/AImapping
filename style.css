@@ -1810,11 +1810,9 @@ body {
 /* グラデーションセクション */
 .gradient-box-section {
     width: 100%;
-    padding: 0;
-    margin: 0;
-    position: relative;
-    z-index: 1;
-    margin-top: 10px;
+    max-width: 1288px;
+    margin: 0 auto;
+    padding: 0 var(--space-medium);
 }
 
 .gradient-box {
