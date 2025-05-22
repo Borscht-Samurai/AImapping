@@ -3726,3 +3726,17 @@ select:focus,
     display: block;
     margin: 0 auto 10px auto;
 }
+
+.new-box-top {
+    width: 1100px;
+    display: flex; /* left-box-topとright-box-topを横並びにするため */
+    margin: 0 auto; /* 中央揃え */
+}
+
+.left-box-top {
+    width: 405px;
+}
+
+.right-box-top {
+    width: 705px;
+}
