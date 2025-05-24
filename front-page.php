@@ -21,7 +21,7 @@
                 <p class="new-box-description">
                     同じ地域のAIクリエイターと直接会って<br>話せる。オンラインでは得られない、そ<br>の場の空気感や熱量が新しいインスピ<br>レーションを生み出します。
                 </p>
-                <a href="#" class="start-free-button">無料ではじめる</a>
+                <a href="<?php echo is_user_logged_in() ? home_url('/recruitment/') : home_url('/register/'); ?>" class="start-free-button"><?php echo is_user_logged_in() ? '募集をみる' : '無料ではじめる'; ?></a>
                 <div class="picnic-container">
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/images/picnic1.png'); ?>" alt="Picnic" class="picnic-image">
                     <p class="picnic-text">＠ピクニック</p>
