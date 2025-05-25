@@ -17,6 +17,10 @@ get_header();
 ?>
 
 <main class="site-main">
+    <div class="profile-header">
+        <h1 class="profile-title">My page</h1>
+    </div>
+
     <div class="container">
         <div class="profile-container">
             <?php

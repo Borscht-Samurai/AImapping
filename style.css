@@ -1289,9 +1289,24 @@ body {
     position: relative;
 }
 
-.user-profile-card {
-    position: relative;
-    margin-bottom: 2rem;
+.profile-header {
+    margin: var(--space-xxlarge) 0 0 var(--space-xlarge);
+}
+
+.profile-title {
+    font-size: 160px;
+    line-height: 1;
+    margin: 0;
+    text-align: left;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -0.08em;
+}
+
+@media (max-width: 768px) {
+    .profile-title {
+        font-size: 80px;
+    }
 }
 
 .profile-header-gradient {
