@@ -4056,7 +4056,7 @@ select:focus,
     margin-top: 80px;
 }
 
-.recent-events .view-all .btn-outline {
+.recent-events .view-all .btn.btn-outline {
     width: 182px;
     height: 60px;
     display: inline-flex;
@@ -4069,7 +4069,25 @@ select:focus,
     letter-spacing: 0;
     text-align: center;
     text-decoration: none;
-    border-radius: 50px;  /* 高さの半分の値で完全な丸みを実現 */
+    border-radius: 50px;
+    color: #535353;
+    background: #e8e8e8;
+    border: 1px solid #e8e8e8;
+    transition: all 0.3s;
+    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+    cursor: pointer;
+    transform: none !important;
+}
+
+.recent-events .view-all .btn.btn-outline:hover {
+    transform: none !important;
+    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+}
+
+.recent-events .view-all .btn.btn-outline:active {
+    color: #666;
+    box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+    transform: none !important;
 }
 
 /* View All Button Margin */
