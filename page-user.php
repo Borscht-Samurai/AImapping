@@ -3,20 +3,20 @@
  * Template Name: ユーザープロフィール
  */
 
-// ログインしていない場合はログインページにリダイレクト
-if (!is_user_logged_in()) {
-    wp_redirect(home_url('/login/'));
+// ユーザー情報を取得
+$user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : get_current_user_id();
+$user = get_userdata($user_id);
+
+// ユーザーが存在しない場合はホームページにリダイレクト
+if (!$user) {
+    wp_redirect(home_url());
     exit;
 }
 
 get_header();
 
-// 現在のユーザー情報を取得
-$current_user = wp_get_current_user();
-$user_id = $current_user->ID;
-$profile_data = get_user_profile_data($user_id);
-
 // プロフィール画像を取得
+$profile_data = get_user_profile_data($user_id);
 $custom_avatar_id = $profile_data['custom_avatar'];
 $profile_image = $custom_avatar_id ? wp_get_attachment_image_url($custom_avatar_id, 'thumbnail') : get_avatar_url($user_id, array('size' => 150));
 
@@ -31,7 +31,7 @@ $youtube_url = get_user_meta($user_id, 'youtube_url', true);
 <section class="gradient-box-section">
     <div class="gradient-box">
         <div class="gradient-box-content">
-            <h1 class="profile-title">マイプロフィール</h1>
+            <h1 class="profile-title"><?php echo ($user_id === get_current_user_id()) ? 'マイプロフィール' : sprintf('%sさんのプロフィール', esc_html($user->display_name)); ?></h1>
         </div>
     </div>
 </section>
@@ -46,7 +46,7 @@ $youtube_url = get_user_meta($user_id, 'youtube_url', true);
                 <div class="profile-content">
                     <div class="profile-top">
                         <div class="name-role-container">
-                            <h2 class="profile-name"><?php echo esc_html($current_user->display_name); ?></h2>
+                            <h2 class="profile-name"><?php echo esc_html($user->display_name); ?></h2>
                             <?php if (!empty($profile_data['role'])) : ?>
                             <div class="profile-role">
                                 <span class="role-value"><?php echo esc_html($profile_data['role']); ?></span>
@@ -54,6 +54,7 @@ $youtube_url = get_user_meta($user_id, 'youtube_url', true);
                             <?php endif; ?>
                         </div>
                         <!-- プロフィール編集ボタン -->
+                        <?php if (is_user_logged_in() && get_current_user_id() === $user_id) : ?>
                         <div class="profile-actions">
                             <a href="<?php echo wp_logout_url(home_url()); ?>" class="logout-button">
                                 <i class="fas fa-sign-out-alt"></i> LOGOUT
@@ -62,6 +63,7 @@ $youtube_url = get_user_meta($user_id, 'youtube_url', true);
                                 <i class="fas fa-edit"></i> EDIT PROFILE
                             </a>
                         </div>
+                        <?php endif; ?>
                     </div>
                     <?php if (!empty($profile_data['description'])) : ?>
                     <div class="profile-description">
@@ -70,29 +72,67 @@ $youtube_url = get_user_meta($user_id, 'youtube_url', true);
                     <?php endif; ?>
 
                     <!-- SNSリンク -->
-                    <?php if (!empty($profile_data['twitter_url']) || !empty($profile_data['facebook_url']) || !empty($profile_data['instagram_url']) || !empty($profile_data['youtube_url'])) : ?>
+                    <?php if (!empty($twitter_url) || !empty($facebook_url) || !empty($instagram_url) || !empty($youtube_url)) : ?>
                     <div class="profile-social-links">
-                        <?php if (!empty($profile_data['twitter_url'])) : ?>
-                            <a href="<?php echo esc_url($profile_data['twitter_url']); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
+                        <?php if (!empty($twitter_url)) : ?>
+                            <a href="<?php echo esc_url($twitter_url); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
                                 <i class="fab fa-twitter"></i>
                             </a>
                         <?php endif; ?>
-                        <?php if (!empty($profile_data['facebook_url'])) : ?>
-                            <a href="<?php echo esc_url($profile_data['facebook_url']); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
+                        <?php if (!empty($facebook_url)) : ?>
+                            <a href="<?php echo esc_url($facebook_url); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
                                 <i class="fab fa-facebook"></i>
                             </a>
                         <?php endif; ?>
-                        <?php if (!empty($profile_data['instagram_url'])) : ?>
-                            <a href="<?php echo esc_url($profile_data['instagram_url']); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
+                        <?php if (!empty($instagram_url)) : ?>
+                            <a href="<?php echo esc_url($instagram_url); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
                                 <i class="fab fa-instagram"></i>
                             </a>
                         <?php endif; ?>
-                        <?php if (!empty($profile_data['youtube_url'])) : ?>
-                            <a href="<?php echo esc_url($profile_data['youtube_url']); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
+                        <?php if (!empty($youtube_url)) : ?>
+                            <a href="<?php echo esc_url($youtube_url); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
                                 <i class="fab fa-youtube"></i>
                             </a>
                         <?php endif; ?>
                     </div>
+                    <?php endif; ?>
+
+                    <?php if (is_user_logged_in() && get_current_user_id() !== $user_id) : ?>
+                        <div class="profile-actions">
+                            <?php
+                            // フォロー機能（実装されている場合）
+                            if (function_exists('is_following_user')) :
+                                $is_following = is_following_user($user_id);
+                                $follow_url = add_query_arg(
+                                    array(
+                                        'action' => $is_following ? 'unfollow_user' : 'follow_user',
+                                        'user_id' => $user_id,
+                                        'nonce' => wp_create_nonce(($is_following ? 'unfollow_' : 'follow_') . $user_id)
+                                    ),
+                                    admin_url('admin-post.php')
+                                );
+                            ?>
+                                <a href="<?php echo esc_url($follow_url); ?>" class="follow-button <?php echo $is_following ? 'following' : ''; ?>">
+                                    <i class="fas fa-<?php echo $is_following ? 'user-minus' : 'user-plus'; ?>"></i>
+                                    <?php echo $is_following ? 'フォロー解除' : 'フォローする'; ?>
+                                </a>
+                            <?php endif; ?>
+
+                            <?php
+                            // メッセージ機能（実装されている場合）
+                            if (function_exists('send_message_to_user')) :
+                                $message_url = add_query_arg(
+                                    array(
+                                        'recipient' => $user_id
+                                    ),
+                                    home_url('/messages')
+                                );
+                            ?>
+                                <a href="<?php echo esc_url($message_url); ?>" class="message-button">
+                                    <i class="fas fa-envelope"></i> メッセージを送る
+                                </a>
+                            <?php endif; ?>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>
@@ -100,7 +140,7 @@ $youtube_url = get_user_meta($user_id, 'youtube_url', true);
 
         <!-- 投稿一覧 -->
         <div class="author-posts">
-            <h3 class="posts-title">あなたの投稿</h3>
+            <h3 class="posts-title"><?php echo esc_html($user->display_name); ?>さんの投稿</h3>
             
             <div class="recruitment-grid">
                 <?php

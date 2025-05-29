@@ -1229,3 +1229,76 @@ function handle_profile_edit() {
 add_action('admin_post_edit_profile', 'handle_profile_edit');
 add_action('admin_post_nopriv_edit_profile', 'handle_profile_edit');
 
+/**
+ * フォロー機能のスタブ関数
+ */
+function is_following_user($user_id) {
+    if (!is_user_logged_in()) {
+        return false;
+    }
+    
+    $current_user_id = get_current_user_id();
+    $following = get_user_meta($current_user_id, 'following', true);
+    
+    if (!is_array($following)) {
+        return false;
+    }
+    
+    return in_array($user_id, $following);
+}
+
+/**
+ * フォロー/フォロー解除のアクション処理
+ */
+function handle_follow_unfollow() {
+    if (!isset($_GET['action']) || !isset($_GET['user_id']) || !isset($_GET['nonce'])) {
+        wp_redirect(home_url());
+        exit;
+    }
+
+    $action = $_GET['action'];
+    $user_id = intval($_GET['user_id']);
+    $nonce = $_GET['nonce'];
+
+    if (!wp_verify_nonce($nonce, ($action === 'follow_user' ? 'follow_' : 'unfollow_') . $user_id)) {
+        wp_die('不正なアクセスです。');
+    }
+
+    if (!is_user_logged_in()) {
+        wp_redirect(home_url('/login/'));
+        exit;
+    }
+
+    $current_user_id = get_current_user_id();
+    $following = get_user_meta($current_user_id, 'following', true);
+    
+    if (!is_array($following)) {
+        $following = array();
+    }
+
+    if ($action === 'follow_user') {
+        if (!in_array($user_id, $following)) {
+            $following[] = $user_id;
+        }
+    } else {
+        $following = array_diff($following, array($user_id));
+    }
+
+    update_user_meta($current_user_id, 'following', $following);
+
+    // リダイレクト先のURLを生成
+    $redirect_url = add_query_arg('user_id', $user_id, home_url('/profile/'));
+    wp_redirect($redirect_url);
+    exit;
+}
+add_action('admin_post_follow_user', 'handle_follow_unfollow');
+add_action('admin_post_unfollow_user', 'handle_follow_unfollow');
+
+/**
+ * メッセージ機能のスタブ関数
+ */
+function send_message_to_user($recipient_id, $message) {
+    // この関数は将来的にメッセージ機能を実装する際に使用します
+    return true;
+}
+
