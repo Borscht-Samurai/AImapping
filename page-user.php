@@ -55,6 +55,9 @@ $youtube_url = get_user_meta($user_id, 'youtube_url', true);
                         </div>
                         <!-- プロフィール編集ボタン -->
                         <div class="profile-actions">
+                            <a href="<?php echo wp_logout_url(home_url()); ?>" class="logout-button">
+                                <i class="fas fa-sign-out-alt"></i> LOGOUT
+                            </a>
                             <a href="<?php echo esc_url(home_url('/edit-profile/')); ?>" class="edit-profile-button">
                                 <i class="fas fa-edit"></i> EDIT PROFILE
                             </a>
@@ -65,34 +68,34 @@ $youtube_url = get_user_meta($user_id, 'youtube_url', true);
                         <?php echo wp_kses_post($profile_data['description']); ?>
                     </div>
                     <?php endif; ?>
+
+                    <!-- SNSリンク -->
+                    <?php if (!empty($profile_data['twitter_url']) || !empty($profile_data['facebook_url']) || !empty($profile_data['instagram_url']) || !empty($profile_data['youtube_url'])) : ?>
+                    <div class="profile-social-links">
+                        <?php if (!empty($profile_data['twitter_url'])) : ?>
+                            <a href="<?php echo esc_url($profile_data['twitter_url']); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        <?php endif; ?>
+                        <?php if (!empty($profile_data['facebook_url'])) : ?>
+                            <a href="<?php echo esc_url($profile_data['facebook_url']); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                        <?php endif; ?>
+                        <?php if (!empty($profile_data['instagram_url'])) : ?>
+                            <a href="<?php echo esc_url($profile_data['instagram_url']); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        <?php endif; ?>
+                        <?php if (!empty($profile_data['youtube_url'])) : ?>
+                            <a href="<?php echo esc_url($profile_data['youtube_url']); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
-
-            <!-- SNSリンク -->
-            <?php if (!empty($profile_data['twitter_url']) || !empty($profile_data['facebook_url']) || !empty($profile_data['instagram_url']) || !empty($profile_data['youtube_url'])) : ?>
-            <div class="social-links">
-                <?php if (!empty($profile_data['twitter_url'])) : ?>
-                    <a href="<?php echo esc_url($profile_data['twitter_url']); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                <?php endif; ?>
-                <?php if (!empty($profile_data['facebook_url'])) : ?>
-                    <a href="<?php echo esc_url($profile_data['facebook_url']); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                <?php endif; ?>
-                <?php if (!empty($profile_data['instagram_url'])) : ?>
-                    <a href="<?php echo esc_url($profile_data['instagram_url']); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                <?php endif; ?>
-                <?php if (!empty($profile_data['youtube_url'])) : ?>
-                    <a href="<?php echo esc_url($profile_data['youtube_url']); ?>" target="_blank" rel="noopener noreferrer" class="social-link">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                <?php endif; ?>
-            </div>
-            <?php endif; ?>
         </div>
 
         <!-- 投稿一覧 -->
@@ -200,7 +203,14 @@ $youtube_url = get_user_meta($user_id, 'youtube_url', true);
     color: #333;
 }
 
-.edit-profile-button {
+.profile-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.edit-profile-button,
+.logout-button {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -221,26 +231,49 @@ $youtube_url = get_user_meta($user_id, 'youtube_url', true);
     text-decoration: none;
 }
 
+.logout-button {
+    background-color: #E7E7E7;
+    border: 1px solid #ccc;
+}
+
+.logout-button:hover {
+    background-color: #FF966C;
+    color: white;
+    border-color: #FF966C;
+    text-decoration: none;
+}
+
 .profile-description {
     margin-top: 1rem;
     line-height: 1.6;
     color: #333;
+    margin-bottom: 1rem;
 }
 
-.social-links {
+.profile-social-links {
     display: flex;
     gap: 1rem;
-    margin-top: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 0.5rem;
 }
 
 .social-link {
     color: #333;
     font-size: 1.5rem;
     transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
 }
 
 .social-link:hover {
     color: #FF966C;
+    background-color: #f5f5f5;
 }
 
 .author-posts {
