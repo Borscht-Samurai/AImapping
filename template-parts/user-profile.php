@@ -171,7 +171,7 @@ if (!$user) {
             <div class="recent-events">
                 <h3><?php echo esc_html($user->display_name); ?>さんの最近の募集</h3>
                 <div class="events-grid-container">
-                    <div class="events-grid profile-events-grid">
+                    <div class="events-grid profile-events-grid" id="profile-events-grid">
                         <?php while ($recent_events->have_posts()) : $recent_events->the_post(); ?>
                             <?php get_template_part('template-parts/content', 'card'); ?>
                         <?php endwhile; ?>
@@ -179,7 +179,7 @@ if (!$user) {
                 </div>
 
                 <div class="view-all">
-                    <a href="<?php echo esc_url(get_author_posts_url($user_id)); ?>" class="btn btn-outline">
+                    <a href="#" class="btn btn-outline load-more-posts" data-user="<?php echo esc_attr($user_id); ?>" data-page="1" data-loading="false">
                         もっと見る
                     </a>
                 </div>
@@ -190,3 +190,48 @@ if (!$user) {
     endif;
     ?>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loadMoreBtn = document.querySelector('.load-more-posts');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function() {
+            if (this.dataset.loading === 'true') return;
+            
+            const userId = this.dataset.user;
+            const nextPage = parseInt(this.dataset.page) + 1;
+            const container = document.getElementById('profile-events-grid');
+            
+            this.dataset.loading = 'true';
+            this.textContent = '読み込み中...';
+
+            // Ajax リクエスト
+            fetch(`${wpApiSettings.ajaxUrl}?action=load_more_posts&user_id=${userId}&page=${nextPage}`, {
+                method: 'GET',
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 新しい投稿を追加
+                    container.insertAdjacentHTML('beforeend', data.data.html);
+                    this.dataset.page = nextPage;
+                    
+                    // 全ての投稿を読み込んだ場合
+                    if (data.data.is_last_page) {
+                        this.style.display = 'none';
+                    }
+                }
+                
+                this.dataset.loading = 'false';
+                this.textContent = 'もっと見る';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                this.dataset.loading = 'false';
+                this.textContent = 'もっと見る';
+            });
+        });
+    }
+});
+</script>

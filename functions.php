@@ -1042,3 +1042,57 @@ function force_template_for_specific_pages($template) {
 }
 add_filter('template_include', 'force_template_for_specific_pages', 99);
 
+/**
+ * Ajax で追加の投稿を読み込む
+ */
+function load_more_posts() {
+    $user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
+    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+    
+    if (!$user_id) {
+        wp_send_json_error();
+        return;
+    }
+    
+    $args = array(
+        'post_type' => 'recruitment',
+        'posts_per_page' => 6,
+        'author' => $user_id,
+        'paged' => $page,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'offset' => 3 // 最初の3件は既に表示されているため
+    );
+    
+    $query = new WP_Query($args);
+    $html = '';
+    
+    if ($query->have_posts()) {
+        ob_start();
+        while ($query->have_posts()) {
+            $query->the_post();
+            get_template_part('template-parts/content', 'card');
+        }
+        $html = ob_get_clean();
+        wp_reset_postdata();
+    }
+    
+    wp_send_json_success(array(
+        'html' => $html,
+        'is_last_page' => $query->max_num_pages <= $page
+    ));
+}
+add_action('wp_ajax_load_more_posts', 'load_more_posts');
+add_action('wp_ajax_nopriv_load_more_posts', 'load_more_posts');
+
+/**
+ * Ajax URL を JavaScript に渡す
+ */
+function enqueue_ajax_url() {
+    wp_enqueue_script('wp-api');
+    wp_localize_script('wp-api', 'wpApiSettings', array(
+        'ajaxUrl' => admin_url('admin-ajax.php')
+    ));
+}
+add_action('wp_enqueue_scripts', 'enqueue_ajax_url');
+
