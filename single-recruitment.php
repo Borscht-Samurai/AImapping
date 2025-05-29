@@ -27,8 +27,19 @@ while (have_posts()) :
             <h1 class="recruitment-title"><?php the_title(); ?></h1>
 
             <!-- アカウント情報 -->
+            <style>
+                .author-info {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+                .author-name {
+                    font-size: 15px;
+                    font-weight: bold;
+                }
+            </style>
             <div class="author-info">
-                <?php echo get_avatar(get_the_author_meta('ID'), 15, '', '', array('class' => 'author-avatar')); ?>
+                <?php echo get_avatar(get_the_author_meta('ID'), 40, '', '', array('class' => 'author-avatar')); ?>
                 <span class="author-name"><?php the_author(); ?></span>
             </div>
 
