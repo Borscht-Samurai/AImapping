@@ -1318,19 +1318,21 @@ body {
 
 .profile-header {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
     text-align: left;
     margin-bottom: 2rem;
     position: relative;
     padding-top: 20px;
     padding-left: 20px;
+    gap: 2rem;
 }
 
 .avatar-container {
     position: relative;
     z-index: 10;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
+    flex-shrink: 0;
 }
 
 .avatar-container img {
@@ -1347,6 +1349,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.5rem;
 }
 
 .profile-name-container {
@@ -1354,7 +1357,7 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
 }
 
 .profile-name {
@@ -1362,6 +1365,13 @@ body {
     font-weight: 600;
     margin: 0;
     color: #000;
+}
+
+.profile-role {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 0;
 }
 
 .profile-buttons {
@@ -1384,32 +1394,6 @@ body {
 .btn-danger:hover {
     background-color: #ff6b81;
     border-color: #ff6b81;
-}
-
-.profile-role {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 1rem;
-}
-
-.current-role {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: var(--background-color);
-    padding: 0.25rem 0.75rem;
-    border-radius: 4px;
-}
-
-.role-label {
-    font-size: 0.8rem;
-    color: #666;
-}
-
-.role-value {
-    font-weight: 500;
-    color: #000;
 }
 
 .profile-location {
@@ -1636,8 +1620,17 @@ body {
 /* レスポンシブデザイン - プロフィールページ */
 @media (max-width: 768px) {
     .profile-header {
+        flex-direction: column;
         align-items: flex-start;
-        padding-left: 15px;
+        gap: 1rem;
+    }
+
+    .avatar-container {
+        margin-bottom: 1rem;
+    }
+
+    .profile-info {
+        width: 100%;
     }
 
     .profile-bio,
@@ -1656,39 +1649,6 @@ body {
         margin-top: 0.5rem;
         flex-direction: column;
         gap: 0.5rem;
-    }
-
-    .avatar-container {
-        margin-top: -40px;
-    }
-
-    .avatar-container img {
-        width: 120px;
-        height: 120px;
-    }
-
-    .profile-actions-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .profile-stats {
-        justify-content: center;
-    }
-
-    .profile-social {
-        justify-content: center;
-    }
-
-    .profile-actions {
-        flex-direction: column;
-    }
-
-    .tab-buttons {
-        flex-wrap: wrap;
-    }
-
-    .events-grid {
-        grid-template-columns: 1fr;
     }
 }
 
@@ -3921,5 +3881,68 @@ select:focus,
     .start-free-button {
         padding: 10px 20px;
         font-size: 14px;
+    }
+}
+
+.current-role {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--background-color);
+    border-radius: 4px;
+}
+
+.role-label {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.role-value {
+    font-weight: 500;
+    color: #000;
+}
+
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .avatar-container {
+        margin-bottom: 1rem;
+    }
+
+    .profile-info {
+        width: 100%;
+    }
+
+    .avatar-container img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile-actions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-stats {
+        justify-content: center;
+    }
+
+    .profile-social {
+        justify-content: center;
+    }
+
+    .profile-actions {
+        flex-direction: column;
+    }
+
+    .tab-buttons {
+        flex-wrap: wrap;
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr;
     }
 }
