@@ -27,14 +27,12 @@ $instagram_url = get_user_meta($user_id, 'instagram_url', true);
 $youtube_url = get_user_meta($user_id, 'youtube_url', true);
 ?>
 
-<!-- グラデーションセクション -->
-<section class="gradient-box-section">
-    <div class="gradient-box">
-        <div class="gradient-box-content">
-            <h1 class="profile-title"><?php echo ($user_id === get_current_user_id()) ? 'マイプロフィール' : sprintf('%sさんのプロフィール', esc_html($user->display_name)); ?></h1>
-        </div>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+
+<main class="site-main user-page-main">
+    <div class="faq-header">
+        <h1 class="faq-title"><?php echo ($user_id === get_current_user_id()) ? 'My Page' : sprintf('%s\'s Profile', esc_html($user->display_name)); ?></h1>
     </div>
-</section>
 
 <!-- プロフィールセクション -->
 <section class="profile-section">
@@ -140,6 +138,29 @@ $youtube_url = get_user_meta($user_id, 'youtube_url', true);
 
 <style>
 /* プロフィールページのスタイル */
+.user-page-main {
+    max-width: 1288px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.user-header {
+    text-align: left;
+    margin-bottom: 3rem;
+    margin-top: 2rem;
+    margin-left: 0;
+}
+
+.user-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 7rem;
+    font-weight: 700;
+    color: #222;
+    margin: 0 0 0.5em 0;
+    line-height: 1;
+    letter-spacing: -0.04em;
+}
+
 .profile-section {
     max-width: 1288px;
     margin: 0 auto;
