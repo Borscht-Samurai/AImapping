@@ -13,23 +13,6 @@ if (!$user) {
 ?>
 
 <div class="user-profile-card">
-    <?php
-    // プロフィール背景画像のIDを取得
-    $header_bg_id = get_user_meta($user_id, 'profile_header_bg', true);
-
-    if ($header_bg_id) :
-        // 背景画像が設定されている場合
-        $header_bg_url = wp_get_attachment_image_url($header_bg_id, 'large');
-    ?>
-    <div class="profile-header-image" style="background-image: url('<?php echo esc_url($header_bg_url); ?>')">
-        <!-- カスタム背景画像 -->
-    </div>
-    <?php else : ?>
-    <div class="profile-header-gradient">
-        <!-- デフォルトのグラデーション背景 -->
-    </div>
-    <?php endif; ?>
-
     <div class="profile-content">
         <div class="profile-header">
             <div class="avatar-container">
