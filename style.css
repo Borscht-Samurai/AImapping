@@ -583,7 +583,7 @@ body {
 }
 
 .social-link:hover svg,
-.social-link:hover i {
+.social-icon:hover i {
     transform: scale(0.9);
     color: #333333;
 }
@@ -791,6 +791,7 @@ body {
     display: flex;
     justify-content: center;
     width: 100%;
+    padding: 0;
 }
 
 .events-grid {
@@ -1283,7 +1284,7 @@ body {
 
 /* プロフィールページのスタイル */
 .profile-container {
-    max-width: 1100px;
+    max-width: var(--max-width);
     margin: 0 auto;
     padding: 0;
     position: relative;
@@ -1602,9 +1603,29 @@ body {
 
 .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 20px !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 10px !important;
+}
+
+.events-grid > .event-card {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+@media (max-width: 1024px) {
+    .events-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .events-grid {
+        grid-template-columns: 1fr !important;
+    }
 }
 
 .no-events {
@@ -3682,9 +3703,30 @@ select:focus,
 
 /* User Profile Specific Styles */
 .user-profile-events-grid {
-    max-width: 1100px;
-    margin: 0 auto; 
-    /* Additional styling for this specific grid can be added here if needed */
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 20px !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 10px !important;
+}
+
+.user-profile-events-grid > .event-card {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+@media (max-width: 1024px) {
+    .user-profile-events-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .user-profile-events-grid {
+        grid-template-columns: 1fr !important;
+    }
 }
 /* End of User Profile Specific Styles */
 
@@ -3945,4 +3987,62 @@ select:focus,
     .events-grid {
         grid-template-columns: 1fr;
     }
+}
+
+.profile-events-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.profile-events-grid .event-card {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+
+@media (max-width: 1024px) {
+    .profile-events-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-events-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.recent-events {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.recent-events .events-grid-container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0;
+}
+
+.recent-events .events-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0;
+}
+
+.recent-events .event-card {
+    width: 100%;
+    max-width: none;
+    margin: 0;
 }

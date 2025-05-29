@@ -16,7 +16,7 @@ $current_user = wp_get_current_user();
 get_header();
 ?>
 
-<main class="site-main">
+<main class="site-main archive-recruitment-page">
     <div class="profile-header">
         <h1 class="profile-title">My page</h1>
     </div>
@@ -71,10 +71,12 @@ get_header();
                                 $upcoming_events = new WP_Query($args);
 
                                 if ($upcoming_events->have_posts()) : ?>
-                                    <div class="events-grid content-max-width-centered">
-                                        <?php while ($upcoming_events->have_posts()) : $upcoming_events->the_post(); ?>
-                                            <?php get_template_part('template-parts/content', 'card'); ?>
-                                        <?php endwhile; ?>
+                                    <div class="events-grid-container">
+                                        <div class="events-grid profile-events-grid">
+                                            <?php while ($upcoming_events->have_posts()) : $upcoming_events->the_post(); ?>
+                                                <?php get_template_part('template-parts/content', 'card'); ?>
+                                            <?php endwhile; ?>
+                                        </div>
                                     </div>
 
                                     <?php
@@ -125,10 +127,12 @@ get_header();
                                 $past_events = new WP_Query($args);
 
                                 if ($past_events->have_posts()) : ?>
-                                    <div class="events-grid content-max-width-centered">
-                                        <?php while ($past_events->have_posts()) : $past_events->the_post(); ?>
-                                            <?php get_template_part('template-parts/content', 'card'); ?>
-                                        <?php endwhile; ?>
+                                    <div class="events-grid-container">
+                                        <div class="events-grid profile-events-grid">
+                                            <?php while ($past_events->have_posts()) : $past_events->the_post(); ?>
+                                                <?php get_template_part('template-parts/content', 'card'); ?>
+                                            <?php endwhile; ?>
+                                        </div>
                                     </div>
 
                                     <?php
@@ -163,10 +167,12 @@ get_header();
                             $user_events = new WP_Query($args);
 
                             if ($user_events->have_posts()) : ?>
-                                <div class="events-grid content-max-width-centered">
-                                    <?php while ($user_events->have_posts()) : $user_events->the_post(); ?>
-                                        <?php get_template_part('template-parts/content', 'card'); ?>
-                                    <?php endwhile; ?>
+                                <div class="events-grid-container">
+                                    <div class="events-grid profile-events-grid">
+                                        <?php while ($user_events->have_posts()) : $user_events->the_post(); ?>
+                                            <?php get_template_part('template-parts/content', 'card'); ?>
+                                        <?php endwhile; ?>
+                                    </div>
                                 </div>
 
                                 <?php
