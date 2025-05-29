@@ -31,8 +31,7 @@ aimapping-theme/
 │   ├── 📄 content-post.php        # 投稿詳細の表示
 │   ├── 📄 content-card.php        # 募集カードの表示
 │   ├── 📄 comment-template.php    # コメントテンプレート
-│   ├── 📄 user-profile.php        # ユーザープロフィール表示
-│   └── 📄 profile-template.php    # プロフィール編集テンプレート
+│   └── 📄 profile-template.php    # プロフィールページテンプレート（ユーザー表示・編集機能統合）
 │
 ├── 📂 page-templates/              # カスタムページテンプレート
 │   ├── 📄 contact-template.php    # お問い合わせページ
@@ -107,11 +106,13 @@ aimapping-theme/
 #### ユーザー関連
 - **`author.php`**: 他ユーザーのプロフィール表示
 - **`page-user.php`**: ログインユーザーのマイページ
-- **`page-templates/edit-profile.php`**: プロフィール編集機能
-  - 基本情報の編集
-  - プロフィール画像のアップロード
-  - SNSリンクの設定
-  - パスワード変更
+- **`template-parts/profile-template.php`**: ユーザープロフィール表示
+  - 自分のプロフィール表示
+  - 他ユーザーのプロフィール表示
+  - プロフィール情報の表示
+  - フォロー機能
+  - 最近の募集表示
+  - SNSリンク表示
 
 #### ページテンプレート
 - **`front-page.php`**: トップページ
