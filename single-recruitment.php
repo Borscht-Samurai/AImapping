@@ -37,10 +37,23 @@ while (have_posts()) :
                     font-size: 15px;
                     font-weight: bold;
                 }
+                .author-link {
+                    text-decoration: none;
+                    color: inherit;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    transition: opacity 0.3s;
+                }
+                .author-link:hover {
+                    opacity: 0.7;
+                }
             </style>
             <div class="author-info">
-                <?php echo get_avatar(get_the_author_meta('ID'), 40, '', '', array('class' => 'author-avatar')); ?>
-                <span class="author-name"><?php the_author(); ?></span>
+                <a href="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>" class="author-link">
+                    <?php echo get_avatar(get_the_author_meta('ID'), 40, '', '', array('class' => 'author-avatar')); ?>
+                    <span class="author-name"><?php the_author(); ?></span>
+                </a>
             </div>
 
             <!-- イベント詳細テキスト -->
