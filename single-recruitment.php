@@ -50,8 +50,20 @@ while (have_posts()) :
                 }
             </style>
             <div class="author-info">
-                <a href="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>" class="author-link">
-                    <?php echo get_avatar(get_the_author_meta('ID'), 40, '', '', array('class' => 'author-avatar')); ?>
+                <?php 
+                $post_author_id = get_the_author_meta('ID');
+                $current_user_id = get_current_user_id();
+                
+                // 投稿者のプロフィールページURLを取得
+                $profile_url = get_author_posts_url($post_author_id);
+                
+                // 投稿者が自分の投稿を見ている場合のみ /user/ にリダイレクト
+                if (is_user_logged_in() && $post_author_id == $current_user_id) {
+                    $profile_url = home_url('/user/');
+                }
+                ?>
+                <a href="<?php echo esc_url($profile_url); ?>" class="author-link">
+                    <?php echo get_avatar($post_author_id, 40, '', '', array('class' => 'author-avatar')); ?>
                     <span class="author-name"><?php the_author(); ?></span>
                 </a>
             </div>

@@ -1096,3 +1096,136 @@ function enqueue_ajax_url() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_ajax_url');
 
+/**
+ * 著者アーカイブページのテンプレートを強制的に指定
+ */
+function force_author_template($template) {
+    // 著者アーカイブページの場合
+    if (is_author()) {
+        // 現在のユーザーと表示中の著者が同じ場合は、userページにリダイレクト
+        $current_user_id = get_current_user_id();
+        $author = get_queried_object();
+        
+        if (is_user_logged_in() && $current_user_id === $author->ID) {
+            wp_redirect(home_url('/user/'));
+            exit;
+        }
+        
+        // それ以外の場合は author.php を使用
+        $author_template = get_template_directory() . '/author.php';
+        if (file_exists($author_template)) {
+            return $author_template;
+        }
+    }
+    
+    // ユーザーページの場合
+    if (is_page('user')) {
+        if (!is_user_logged_in()) {
+            wp_redirect(home_url('/login/'));
+            exit;
+        }
+        $user_template = get_template_directory() . '/page-user.php';
+        if (file_exists($user_template)) {
+            return $user_template;
+        }
+    }
+    
+    return $template;
+}
+add_filter('template_include', 'force_author_template', 99);
+
+/**
+ * ユーザーメタデータの保存
+ */
+function save_user_profile_data($user_id, $data) {
+    // プロフィール画像
+    if (isset($data['custom_avatar'])) {
+        update_user_meta($user_id, 'custom_avatar', $data['custom_avatar']);
+    }
+
+    // 基本情報
+    if (isset($data['description'])) {
+        update_user_meta($user_id, 'description', sanitize_textarea_field($data['description']));
+    }
+
+    // 役職
+    if (isset($data['role'])) {
+        update_user_meta($user_id, 'role', sanitize_text_field($data['role']));
+    }
+
+    // SNSリンク
+    $sns_fields = array('twitter_url', 'facebook_url', 'instagram_url', 'youtube_url');
+    foreach ($sns_fields as $field) {
+        if (isset($data[$field])) {
+            update_user_meta($user_id, $field, esc_url_raw($data[$field]));
+        }
+    }
+}
+
+/**
+ * ユーザーメタデータの取得
+ */
+function get_user_profile_data($user_id) {
+    $profile_data = array(
+        'custom_avatar' => get_user_meta($user_id, 'custom_avatar', true),
+        'description' => get_user_meta($user_id, 'description', true),
+        'role' => get_user_meta($user_id, 'role', true),
+        'twitter_url' => get_user_meta($user_id, 'twitter_url', true),
+        'facebook_url' => get_user_meta($user_id, 'facebook_url', true),
+        'instagram_url' => get_user_meta($user_id, 'instagram_url', true),
+        'youtube_url' => get_user_meta($user_id, 'youtube_url', true)
+    );
+
+    return $profile_data;
+}
+
+/**
+ * プロフィール編集フォームの処理
+ */
+function handle_profile_edit() {
+    if (!isset($_POST['profile_edit_nonce']) || !wp_verify_nonce($_POST['profile_edit_nonce'], 'profile_edit_action')) {
+        return;
+    }
+
+    $user_id = get_current_user_id();
+    if (!$user_id) {
+        return;
+    }
+
+    $profile_data = array();
+
+    // プロフィール画像の処理
+    if (isset($_FILES['custom_avatar']) && $_FILES['custom_avatar']['size'] > 0) {
+        require_once(ABSPATH . 'wp-admin/includes/image.php');
+        require_once(ABSPATH . 'wp-admin/includes/file.php');
+        require_once(ABSPATH . 'wp-admin/includes/media.php');
+
+        $attachment_id = media_handle_upload('custom_avatar', 0);
+        if (!is_wp_error($attachment_id)) {
+            $profile_data['custom_avatar'] = $attachment_id;
+        }
+    }
+
+    // 基本情報の処理
+    if (isset($_POST['description'])) {
+        $profile_data['description'] = $_POST['description'];
+    }
+
+    // SNSリンクの処理
+    $sns_fields = array('twitter_url', 'facebook_url', 'instagram_url', 'youtube_url');
+    foreach ($sns_fields as $field) {
+        if (isset($_POST[$field])) {
+            $profile_data[$field] = $_POST[$field];
+        }
+    }
+
+    // データを保存
+    save_user_profile_data($user_id, $profile_data);
+
+    // リダイレクト
+    wp_redirect(home_url('/user/'));
+    exit;
+}
+add_action('admin_post_edit_profile', 'handle_profile_edit');
+add_action('admin_post_nopriv_edit_profile', 'handle_profile_edit');
+
