@@ -527,9 +527,21 @@ function custom_avatar_filter($avatar, $id_or_email, $size, $default, $alt) {
     if ($user_id > 0) {
         $custom_avatar_id = get_user_meta($user_id, 'custom_avatar', true);
         if ($custom_avatar_id) {
-            $image = wp_get_attachment_image_src($custom_avatar_id, 'thumbnail');
+            $image_size = array($size, $size); // get_avatar に渡されたサイズを使用
+            $image = wp_get_attachment_image_src($custom_avatar_id, $image_size);
             if ($image) {
-                $avatar = "<img alt='{$alt}' src='{$image[0]}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' loading='lazy' />";
+                // キャッシュ対策としてタイムスタンプを追加
+                $timestamp = get_user_meta($user_id, 'avatar_updated', true);
+                $cache_buster = $timestamp ? "?v={$timestamp}" : '';
+                $avatar = sprintf(
+                    '<img alt="%s" src="%s%s" class="avatar avatar-%d photo" height="%d" width="%d" loading="lazy" />',
+                    esc_attr($alt),
+                    esc_url($image[0]),
+                    $cache_buster,
+                    (int) $size,
+                    (int) $size,
+                    (int) $size
+                );
             }
         }
     }
@@ -537,6 +549,13 @@ function custom_avatar_filter($avatar, $id_or_email, $size, $default, $alt) {
     return $avatar;
 }
 add_filter('get_avatar', 'custom_avatar_filter', 10, 5);
+
+// プロフィール画像が更新されたときにタイムスタンプを更新
+function update_avatar_timestamp($user_id) {
+    update_user_meta($user_id, 'avatar_updated', time());
+}
+add_action('profile_update', 'update_avatar_timestamp');
+add_action('user_register', 'update_avatar_timestamp');
 
 // 検索フィルターの処理
 function aimapping_filter_query($query) {
@@ -1211,6 +1230,11 @@ function handle_profile_edit() {
         $profile_data['description'] = $_POST['description'];
     }
 
+    // 役職の処理
+    if (isset($_POST['role'])) {
+        $profile_data['role'] = sanitize_text_field($_POST['role']);
+    }
+
     // SNSリンクの処理
     $sns_fields = array('twitter_url', 'facebook_url', 'instagram_url', 'youtube_url');
     foreach ($sns_fields as $field) {
@@ -1227,7 +1251,6 @@ function handle_profile_edit() {
     exit;
 }
 add_action('admin_post_edit_profile', 'handle_profile_edit');
-add_action('admin_post_nopriv_edit_profile', 'handle_profile_edit');
 
 /**
  * フォロー機能のスタブ関数

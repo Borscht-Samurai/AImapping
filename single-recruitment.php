@@ -63,7 +63,21 @@ while (have_posts()) :
                 }
                 ?>
                 <a href="<?php echo esc_url($profile_url); ?>" class="author-link">
-                    <?php echo get_avatar($post_author_id, 40, '', '', array('class' => 'author-avatar')); ?>
+                    <?php
+                    // <?php echo get_avatar($post_author_id, 40, '', '', array('class' => 'author-avatar')); ?>
+                    <?php
+                    $avatar_img = '';
+                    $custom_avatar_id = get_user_meta($post_author_id, 'custom_avatar', true);
+                    if ($custom_avatar_id) {
+                        // wp_get_attachment_image を使い、CSSでサイズを指定
+                        $avatar_img = wp_get_attachment_image($custom_avatar_id, 'thumbnail', false, array('class' => 'author-avatar', 'style' => 'width:40px;height:40px;border-radius:50%;object-fit:cover;'));
+                    }
+                    // カスタムアバターがない場合は、get_avatar() にフォールバック
+                    if (empty($avatar_img)) {
+                        $avatar_img = get_avatar($post_author_id, 40, '', '', array('class' => 'author-avatar'));
+                    }
+                    echo $avatar_img;
+                    ?>
                     <span class="author-name"><?php the_author(); ?></span>
                 </a>
             </div>
