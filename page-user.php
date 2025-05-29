@@ -29,7 +29,7 @@ $youtube_url = get_user_meta($user_id, 'youtube_url', true);
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
 
-<main class="site-main user-page-main">
+<main class="site-main faq-page-main">
     <div class="faq-header">
         <h1 class="faq-title"><?php echo ($user_id === get_current_user_id()) ? 'My Page' : sprintf('%s\'s Profile', esc_html($user->display_name)); ?></h1>
     </div>
