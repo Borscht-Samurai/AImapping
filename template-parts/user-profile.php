@@ -180,7 +180,7 @@ if (!$user) {
 
                 <div class="view-all">
                     <a href="<?php echo esc_url(get_author_posts_url($user_id)); ?>" class="btn btn-outline">
-                        すべての募集を見る
+                        もっと見る
                     </a>
                 </div>
             </div>
