@@ -96,44 +96,6 @@ $youtube_url = get_user_meta($user_id, 'youtube_url', true);
                         <?php endif; ?>
                     </div>
                     <?php endif; ?>
-
-                    <?php if (is_user_logged_in() && get_current_user_id() !== $user_id) : ?>
-                        <div class="profile-actions">
-                            <?php
-                            // フォロー機能（実装されている場合）
-                            if (function_exists('is_following_user')) :
-                                $is_following = is_following_user($user_id);
-                                $follow_url = add_query_arg(
-                                    array(
-                                        'action' => $is_following ? 'unfollow_user' : 'follow_user',
-                                        'user_id' => $user_id,
-                                        'nonce' => wp_create_nonce(($is_following ? 'unfollow_' : 'follow_') . $user_id)
-                                    ),
-                                    admin_url('admin-post.php')
-                                );
-                            ?>
-                                <a href="<?php echo esc_url($follow_url); ?>" class="follow-button <?php echo $is_following ? 'following' : ''; ?>">
-                                    <i class="fas fa-<?php echo $is_following ? 'user-minus' : 'user-plus'; ?>"></i>
-                                    <?php echo $is_following ? 'フォロー解除' : 'フォローする'; ?>
-                                </a>
-                            <?php endif; ?>
-
-                            <?php
-                            // メッセージ機能（実装されている場合）
-                            if (function_exists('send_message_to_user')) :
-                                $message_url = add_query_arg(
-                                    array(
-                                        'recipient' => $user_id
-                                    ),
-                                    home_url('/messages')
-                                );
-                            ?>
-                                <a href="<?php echo esc_url($message_url); ?>" class="message-button">
-                                    <i class="fas fa-envelope"></i> メッセージを送る
-                                </a>
-                            <?php endif; ?>
-                        </div>
-                    <?php endif; ?>
                 </div>
             </div>
         </div>

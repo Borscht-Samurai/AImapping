@@ -54,10 +54,10 @@ while (have_posts()) :
                 $post_author_id = get_the_author_meta('ID');
                 $current_user_id = get_current_user_id();
                 
-                // 投稿者のプロフィールページURLを取得
-                $profile_url = get_author_posts_url($post_author_id);
+                // 投稿者のプロフィールページURLを生成
+                $profile_url = add_query_arg('user_id', $post_author_id, home_url('/user/'));
                 
-                // 投稿者が自分の投稿を見ている場合のみ /user/ にリダイレクト
+                // 投稿者が自分の投稿を見ている場合は user_id パラメータを付けない
                 if (is_user_logged_in() && $post_author_id == $current_user_id) {
                     $profile_url = home_url('/user/');
                 }
