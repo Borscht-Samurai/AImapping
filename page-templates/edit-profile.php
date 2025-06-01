@@ -47,36 +47,36 @@ $profile_image = $custom_avatar_id ? wp_get_attachment_image_url($custom_avatar_
             </div>
 
             <!-- 役職 -->
-            <div class="form-group">
+            <div class="floating-label-container">
+                <input type="text" id="role" name="role" value="<?php echo esc_attr($profile_data['role']); ?>" placeholder=" ">
                 <label for="role">Current role</label>
-                <input type="text" id="role" name="role" value="<?php echo esc_attr($profile_data['role']); ?>" placeholder="例: Software Engineer">
             </div>
 
             <!-- 自己紹介 -->
-            <div class="form-group">
+            <div class="floating-label-container">
+                <textarea id="description" name="description" rows="5" placeholder=" "><?php echo esc_textarea($profile_data['description']); ?></textarea>
                 <label for="description">自己紹介</label>
-                <textarea id="description" name="description" rows="5"><?php echo esc_textarea($profile_data['description']); ?></textarea>
             </div>
 
             <!-- SNSリンク -->
-            <div class="form-group">
+            <div class="floating-label-container">
+                <input type="url" id="twitter_url" name="twitter_url" value="<?php echo esc_url($profile_data['twitter_url']); ?>" placeholder=" ">
                 <label for="twitter_url">Twitter URL</label>
-                <input type="url" id="twitter_url" name="twitter_url" value="<?php echo esc_url($profile_data['twitter_url']); ?>">
             </div>
 
-            <div class="form-group">
+            <div class="floating-label-container">
+                <input type="url" id="facebook_url" name="facebook_url" value="<?php echo esc_url($profile_data['facebook_url']); ?>" placeholder=" ">
                 <label for="facebook_url">Facebook URL</label>
-                <input type="url" id="facebook_url" name="facebook_url" value="<?php echo esc_url($profile_data['facebook_url']); ?>">
             </div>
 
-            <div class="form-group">
+            <div class="floating-label-container">
+                <input type="url" id="instagram_url" name="instagram_url" value="<?php echo esc_url($profile_data['instagram_url']); ?>" placeholder=" ">
                 <label for="instagram_url">Instagram URL</label>
-                <input type="url" id="instagram_url" name="instagram_url" value="<?php echo esc_url($profile_data['instagram_url']); ?>">
             </div>
 
-            <div class="form-group">
+            <div class="floating-label-container">
+                <input type="url" id="youtube_url" name="youtube_url" value="<?php echo esc_url($profile_data['youtube_url']); ?>" placeholder=" ">
                 <label for="youtube_url">YouTube URL</label>
-                <input type="url" id="youtube_url" name="youtube_url" value="<?php echo esc_url($profile_data['youtube_url']); ?>">
             </div>
 
             <!-- 送信ボタン -->
@@ -108,46 +108,84 @@ $profile_image = $custom_avatar_id ? wp_get_attachment_image_url($custom_avatar_
     margin: 0 auto;
 }
 
-.form-group {
+/* ニューモーフィズムデザインのための新しいスタイル */
+.floating-label-container {
+    position: relative;
     margin-bottom: 1.5rem;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-}
-
-.form-group input[type="url"],
-.form-group input[type="text"],
-.form-group textarea {
+.floating-label-container input[type="text"],
+.floating-label-container input[type="url"],
+.floating-label-container textarea {
     width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
+    padding: 15px;
+    border: none;
+    border-radius: 15px;
+    background: #E7E7E7;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
+                -5px -5px 10px rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    transition: all 0.3s ease;
 }
 
-.avatar-preview {
-    width: 150px;
-    height: 150px;
-    margin-bottom: 1rem;
-    border-radius: 50%;
-    overflow: hidden;
+.floating-label-container input[type="text"]:focus,
+.floating-label-container input[type="url"]:focus,
+.floating-label-container textarea:focus {
+    outline: none;
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
+                inset -5px -5px 10px rgba(255, 255, 255, 0.8);
 }
 
-.avatar-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.floating-label-container label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    padding: 0 5px;
+    color: #666;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    pointer-events: none;
 }
 
-.form-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
+.floating-label-container textarea ~ label {
+    top: 20px;
+    transform: none;
 }
 
+.floating-label-container input:focus ~ label,
+.floating-label-container textarea:focus ~ label,
+.floating-label-container input:not(:placeholder-shown) ~ label,
+.floating-label-container textarea:not(:placeholder-shown) ~ label {
+    top: -10px;
+    font-size: 14px;
+    color: #FF966C;
+    background-color: #E7E7E7;
+}
+
+/* ファイル入力のカスタマイズ */
+.form-group input[type="file"] {
+    display: none;
+}
+
+.form-group .file-upload-label {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 15px;
+    background: #E7E7E7;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
+                -5px -5px 10px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-group .file-upload-label:hover {
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
+                inset -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+
+/* ボタンのニューモーフィズムスタイル */
 .submit-button,
 .cancel-button {
     padding: 0.8rem 2rem;
@@ -156,7 +194,9 @@ $profile_image = $custom_avatar_id ? wp_get_attachment_image_url($custom_avatar_
     cursor: pointer;
     text-decoration: none;
     text-align: center;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
+                -5px -5px 10px rgba(255, 255, 255, 0.8);
 }
 
 .submit-button {
@@ -165,16 +205,18 @@ $profile_image = $custom_avatar_id ? wp_get_attachment_image_url($custom_avatar_
 }
 
 .submit-button:hover {
-    background-color: #ff8552;
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
+                inset -5px -5px 10px rgba(255, 255, 255, 0.1);
 }
 
 .cancel-button {
-    background-color: #ccc;
+    background-color: #E7E7E7;
     color: #333;
 }
 
 .cancel-button:hover {
-    background-color: #bbb;
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
+                inset -5px -5px 10px rgba(255, 255, 255, 0.8);
 }
 </style>
 
@@ -190,6 +232,29 @@ jQuery(document).ready(function($) {
             }
             reader.readAsDataURL(file);
         }
+    });
+
+    // 入力フィールドの初期状態を設定
+    const inputFields = $('.floating-label-container input, .floating-label-container textarea');
+    
+    inputFields.each(function() {
+        if ($(this).val().trim() !== '') {
+            $(this).addClass('has-value');
+        }
+    });
+
+    // 入力フィールドのフォーカス/ブラー時の処理
+    inputFields.on('focus blur', function() {
+        if ($(this).val().trim() !== '') {
+            $(this).addClass('has-value');
+        } else {
+            $(this).removeClass('has-value');
+        }
+    });
+
+    // フォーム送信時にフォーカスを外す
+    $('.profile-edit-form').on('submit', function() {
+        document.activeElement.blur();
     });
 });
 </script>
