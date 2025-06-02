@@ -1202,16 +1202,26 @@ function get_user_profile_data($user_id) {
  * プロフィール編集フォームの処理
  */
 function handle_profile_edit() {
+    // セキュリティチェック
     if (!isset($_POST['profile_edit_nonce']) || !wp_verify_nonce($_POST['profile_edit_nonce'], 'profile_edit_action')) {
-        return;
+        wp_die('セキュリティチェックに失敗しました。');
+    }
+
+    // ユーザーがログインしているか確認
+    if (!is_user_logged_in()) {
+        wp_redirect(home_url('/login/'));
+        exit;
     }
 
     $user_id = get_current_user_id();
-    if (!$user_id) {
-        return;
-    }
 
-    $profile_data = array();
+    // アカウント名（display_name）の更新
+    if (isset($_POST['display_name']) && !empty($_POST['display_name'])) {
+        wp_update_user(array(
+            'ID' => $user_id,
+            'display_name' => sanitize_text_field($_POST['display_name'])
+        ));
+    }
 
     // プロフィール画像の処理
     if (isset($_FILES['custom_avatar']) && $_FILES['custom_avatar']['size'] > 0) {
@@ -1221,30 +1231,38 @@ function handle_profile_edit() {
 
         $attachment_id = media_handle_upload('custom_avatar', 0);
         if (!is_wp_error($attachment_id)) {
-            $profile_data['custom_avatar'] = $attachment_id;
+            update_user_meta($user_id, 'custom_avatar', $attachment_id);
         }
     }
 
     // 基本情報の処理
     if (isset($_POST['description'])) {
-        $profile_data['description'] = $_POST['description'];
+        update_user_meta($user_id, 'description', $_POST['description']);
     }
 
     // 役職の処理
     if (isset($_POST['role'])) {
-        $profile_data['role'] = sanitize_text_field($_POST['role']);
+        update_user_meta($user_id, 'role', sanitize_text_field($_POST['role']));
     }
 
     // SNSリンクの処理
     $sns_fields = array('twitter_url', 'facebook_url', 'instagram_url', 'youtube_url');
     foreach ($sns_fields as $field) {
         if (isset($_POST[$field])) {
-            $profile_data[$field] = $_POST[$field];
+            update_user_meta($user_id, $field, esc_url_raw($_POST[$field]));
         }
     }
 
     // データを保存
-    save_user_profile_data($user_id, $profile_data);
+    save_user_profile_data($user_id, array(
+        'custom_avatar' => get_user_meta($user_id, 'custom_avatar', true),
+        'description' => get_user_meta($user_id, 'description', true),
+        'role' => get_user_meta($user_id, 'role', true),
+        'twitter_url' => get_user_meta($user_id, 'twitter_url', true),
+        'facebook_url' => get_user_meta($user_id, 'facebook_url', true),
+        'instagram_url' => get_user_meta($user_id, 'instagram_url', true),
+        'youtube_url' => get_user_meta($user_id, 'youtube_url', true)
+    ));
 
     // リダイレクト
     wp_redirect(home_url('/user/'));

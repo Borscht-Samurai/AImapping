@@ -50,6 +50,12 @@ wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-aw
                 </label>
             </div>
 
+            <!-- アカウント名 -->
+            <div class="floating-label-container">
+                <input type="text" id="display_name" name="display_name" value="<?php echo esc_attr($current_user->display_name); ?>" placeholder=" ">
+                <label for="display_name">アカウント名</label>
+            </div>
+
             <!-- 役職 -->
             <div class="floating-label-container">
                 <input type="text" id="role" name="role" value="<?php echo esc_attr($profile_data['role']); ?>" placeholder=" ">
