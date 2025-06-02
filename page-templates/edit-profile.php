@@ -19,6 +19,9 @@ $profile_data = get_user_profile_data($user_id);
 // プロフィール画像を取得
 $custom_avatar_id = $profile_data['custom_avatar'];
 $profile_image = $custom_avatar_id ? wp_get_attachment_image_url($custom_avatar_id, 'thumbnail') : get_avatar_url($user_id, array('size' => 150));
+
+// Font Awesome読み込み
+wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css', array(), '6.0.0');
 ?>
 
 <!-- グラデーションセクション -->
@@ -44,6 +47,9 @@ $profile_image = $custom_avatar_id ? wp_get_attachment_image_url($custom_avatar_
                     <img src="<?php echo esc_url($profile_image); ?>" alt="現在のプロフィール画像" id="avatar-preview">
                 </div>
                 <input type="file" id="custom_avatar" name="custom_avatar" accept="image/*">
+                <label for="custom_avatar" class="file-upload-label">
+                    <i class="fas fa-camera"></i> 画像を変更
+                </label>
             </div>
 
             <!-- 役職 -->
@@ -165,24 +171,44 @@ $profile_image = $custom_avatar_id ? wp_get_attachment_image_url($custom_avatar_
 }
 
 /* ファイル入力のカスタマイズ */
+.form-group {
+    text-align: center;
+}
+
+.form-group label:first-child {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    color: #666;
+}
+
 .form-group input[type="file"] {
     display: none;
 }
 
 .form-group .file-upload-label {
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
     background: #E7E7E7;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
                 -5px -5px 10px rgba(255, 255, 255, 0.8);
     cursor: pointer;
     transition: all 0.3s ease;
+    color: #666;
+    font-size: 16px;
 }
 
 .form-group .file-upload-label:hover {
     box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
                 inset -5px -5px 10px rgba(255, 255, 255, 0.8);
+    color: #FF966C;
+}
+
+.form-group .file-upload-label i {
+    font-size: 1.2em;
 }
 
 /* ボタンのニューモーフィズムスタイル */
@@ -217,6 +243,33 @@ $profile_image = $custom_avatar_id ? wp_get_attachment_image_url($custom_avatar_
 .cancel-button:hover {
     box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
                 inset -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+/* プロフィール画像セクションの下部マージンを追加 */
+.form-group:first-child {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.avatar-preview {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
+                -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+
+.avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 </style>
 
