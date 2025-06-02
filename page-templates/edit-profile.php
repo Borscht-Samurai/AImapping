@@ -95,6 +95,27 @@ wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-aw
                 <a href="<?php echo esc_url(home_url('/user/')); ?>" class="cancel-button">キャンセル</a>
             </div>
         </form>
+
+        <!-- アカウント削除リンク -->
+        <div class="delete-account-section">
+            <a href="#" class="delete-account-link" id="delete-account-trigger">アカウントを削除する</a>
+        </div>
+
+        <!-- 削除確認モーダル -->
+        <div id="delete-account-modal" class="modal">
+            <div class="modal-content">
+                <h3>アカウント削除の確認</h3>
+                <p>本当にアカウントを削除しますか？この操作は取り消すことができません。</p>
+                <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" id="delete-account-form">
+                    <input type="hidden" name="action" value="delete_account">
+                    <?php wp_nonce_field('delete_account_action', 'delete_account_nonce'); ?>
+                    <div class="modal-buttons">
+                        <button type="submit" class="delete-confirm-button">削除する</button>
+                        <button type="button" class="delete-cancel-button" id="delete-account-cancel">キャンセル</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -313,6 +334,92 @@ wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-aw
     border-radius: 15px;
     padding: 40px;
 }
+
+/* アカウント削除セクション */
+.delete-account-section {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.delete-account-link {
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.delete-account-link:hover {
+    color: #FF966C;
+}
+
+/* モーダルスタイル */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #E7E7E7;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
+                -5px -5px 10px rgba(255, 255, 255, 0.8);
+    max-width: 400px;
+    width: 90%;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.delete-confirm-button,
+.delete-cancel-button {
+    flex: 1;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.delete-confirm-button {
+    background-color: #ff4444;
+    color: white;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
+                -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+
+.delete-cancel-button {
+    background-color: #E7E7E7;
+    color: #333;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
+                -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+
+.delete-confirm-button:hover,
+.delete-cancel-button:hover {
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
+                inset -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
 </style>
 
 <script>
@@ -350,6 +457,26 @@ jQuery(document).ready(function($) {
     // フォーム送信時にフォーカスを外す
     $('.profile-edit-form').on('submit', function() {
         document.activeElement.blur();
+    });
+
+    // アカウント削除モーダルの制御
+    const modal = $('#delete-account-modal');
+    const trigger = $('#delete-account-trigger');
+    const cancelButton = $('#delete-account-cancel');
+
+    trigger.on('click', function(e) {
+        e.preventDefault();
+        modal.fadeIn(300);
+    });
+
+    cancelButton.on('click', function() {
+        modal.fadeOut(300);
+    });
+
+    $(window).on('click', function(e) {
+        if ($(e.target).is(modal)) {
+            modal.fadeOut(300);
+        }
     });
 });
 </script>

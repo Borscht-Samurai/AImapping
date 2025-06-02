@@ -1431,3 +1431,55 @@ function delete_recruitment_comment() {
 }
 add_action('wp_ajax_delete_recruitment_comment', 'delete_recruitment_comment');
 
+/**
+ * アカウント削除処理
+ */
+function handle_account_deletion() {
+    if (!isset($_POST['delete_account_nonce']) || !wp_verify_nonce($_POST['delete_account_nonce'], 'delete_account_action')) {
+        wp_die('不正なリクエストです。');
+    }
+
+    if (!is_user_logged_in()) {
+        wp_redirect(home_url('/login/'));
+        exit;
+    }
+
+    $user_id = get_current_user_id();
+    
+    // ユーザーに関連する投稿やコメントを削除
+    $user_posts = get_posts(array('author' => $user_id, 'post_type' => 'any', 'numberposts' => -1));
+    foreach ($user_posts as $post) {
+        wp_delete_post($post->ID, true);
+    }
+    
+    // ユーザーのコメントを削除
+    $user_comments = get_comments(array('user_id' => $user_id));
+    foreach ($user_comments as $comment) {
+        wp_delete_comment($comment->comment_ID, true);
+    }
+    
+    // カスタムアバター画像を削除
+    $custom_avatar_id = get_user_meta($user_id, 'custom_avatar', true);
+    if ($custom_avatar_id) {
+        wp_delete_attachment($custom_avatar_id, true);
+    }
+    
+    // ユーザーメタデータを削除
+    delete_user_meta($user_id, 'role');
+    delete_user_meta($user_id, 'description');
+    delete_user_meta($user_id, 'twitter_url');
+    delete_user_meta($user_id, 'facebook_url');
+    delete_user_meta($user_id, 'instagram_url');
+    delete_user_meta($user_id, 'youtube_url');
+    delete_user_meta($user_id, 'custom_avatar');
+    
+    // ユーザーを削除
+    wp_delete_user($user_id);
+    
+    // ログアウトしてホームページにリダイレクト
+    wp_logout();
+    wp_redirect(home_url('/'));
+    exit;
+}
+add_action('admin_post_delete_account', 'handle_account_deletion');
+
