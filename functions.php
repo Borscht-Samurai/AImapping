@@ -1325,3 +1325,91 @@ function send_message_to_user($recipient_id, $message) {
     return true;
 }
 
+// コメント関連の処理を追加
+function add_recruitment_comment() {
+    check_ajax_referer('add_recruitment_comment', 'nonce');
+
+    if (!is_user_logged_in()) {
+        wp_send_json_error('ログインが必要です。');
+        return;
+    }
+
+    $post_id = intval($_POST['post_id']);
+    $comment_content = sanitize_textarea_field($_POST['comment_content']);
+
+    $comment_data = array(
+        'comment_post_ID' => $post_id,
+        'comment_content' => $comment_content,
+        'user_id' => get_current_user_id(),
+        'comment_author' => wp_get_current_user()->display_name,
+        'comment_author_email' => wp_get_current_user()->user_email,
+        'comment_type' => 'recruitment_comment',
+        'comment_approved' => 1
+    );
+
+    $comment_id = wp_insert_comment($comment_data);
+
+    if ($comment_id) {
+        wp_send_json_success();
+    } else {
+        wp_send_json_error();
+    }
+}
+add_action('wp_ajax_add_recruitment_comment', 'add_recruitment_comment');
+
+function edit_recruitment_comment() {
+    check_ajax_referer('edit_recruitment_comment', 'nonce');
+
+    if (!is_user_logged_in()) {
+        wp_send_json_error('ログインが必要です。');
+        return;
+    }
+
+    $comment_id = intval($_POST['comment_id']);
+    $comment_content = sanitize_textarea_field($_POST['comment_content']);
+    $comment = get_comment($comment_id);
+
+    if (!$comment || $comment->user_id != get_current_user_id()) {
+        wp_send_json_error('権限がありません。');
+        return;
+    }
+
+    $updated = wp_update_comment(array(
+        'comment_ID' => $comment_id,
+        'comment_content' => $comment_content
+    ));
+
+    if ($updated) {
+        wp_send_json_success();
+    } else {
+        wp_send_json_error();
+    }
+}
+add_action('wp_ajax_edit_recruitment_comment', 'edit_recruitment_comment');
+
+function delete_recruitment_comment() {
+    check_ajax_referer('delete_recruitment_comment', 'nonce');
+
+    if (!is_user_logged_in()) {
+        wp_send_json_error('ログインが必要です。');
+        return;
+    }
+
+    $comment_id = intval($_POST['comment_id']);
+    $comment = get_comment($comment_id);
+
+    if (!$comment || $comment->user_id != get_current_user_id()) {
+        wp_send_json_error('権限がありません。');
+        return;
+    }
+
+    $deleted = wp_delete_comment($comment_id, true);
+
+    if ($deleted) {
+        wp_send_json_success();
+    } else {
+        wp_send_json_error();
+    }
+}
+add_action('wp_ajax_delete_recruitment_comment', 'delete_recruitment_comment');
+

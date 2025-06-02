@@ -48,6 +48,184 @@ while (have_posts()) :
                 .author-link:hover {
                     opacity: 0.7;
                 }
+
+                /* コメントセクションのスタイル */
+                .comments-section {
+                    margin-top: 30px;
+                    padding: 20px;
+                    background-color: #E7E7E7;
+                    border-radius: 10px;
+                }
+
+                .comments-title {
+                    font-size: 18px;
+                    margin-bottom: 20px;
+                    color: #333;
+                }
+
+                .comment-form-container {
+                    margin-bottom: 30px;
+                }
+
+                .comment-form textarea {
+                    width: 100%;
+                    min-height: 100px;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    margin-bottom: 10px;
+                    resize: vertical;
+                    background-color: white;
+                }
+
+                .submit-comment {
+                    background-color: #FF966C;
+                    color: white;
+                    border: none;
+                    padding: 8px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                }
+
+                .submit-comment:hover {
+                    background-color: #ff8552;
+                }
+
+                .login-to-comment {
+                    text-align: center;
+                    padding: 20px;
+                    background-color: white;
+                    border-radius: 5px;
+                }
+
+                .login-to-comment a {
+                    color: #FF966C;
+                    text-decoration: none;
+                }
+
+                .comments-list {
+                    margin-top: 20px;
+                }
+
+                .comment-item {
+                    background-color: white;
+                    padding: 15px;
+                    border-radius: 8px;
+                    margin-bottom: 15px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                }
+
+                .comment-author {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-bottom: 10px;
+                }
+
+                .comment-avatar {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                }
+
+                .comment-author-name {
+                    font-weight: bold;
+                    color: #333;
+                }
+
+                .comment-date {
+                    color: #666;
+                    font-size: 0.9em;
+                    margin-left: auto;
+                }
+
+                .comment-content {
+                    margin: 10px 0;
+                    color: #333;
+                }
+
+                .comment-actions {
+                    display: flex;
+                    gap: 10px;
+                    margin-top: 10px;
+                    justify-content: flex-end;
+                }
+
+                .edit-comment,
+                .delete-comment {
+                    background: none;
+                    border: 1px solid #ddd;
+                    padding: 5px 15px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+
+                .edit-comment {
+                    color: #666;
+                }
+
+                .delete-comment {
+                    color: #ff4444;
+                    border-color: #ff4444;
+                }
+
+                .edit-comment:hover {
+                    background-color: #f0f0f0;
+                }
+
+                .delete-comment:hover {
+                    background-color: #fff0f0;
+                }
+
+                .edit-textarea {
+                    width: 100%;
+                    min-height: 80px;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    margin: 10px 0;
+                    resize: vertical;
+                }
+
+                .edit-actions {
+                    display: flex;
+                    gap: 10px;
+                    justify-content: flex-end;
+                    margin-top: 10px;
+                }
+
+                .save-edit,
+                .cancel-edit {
+                    padding: 5px 15px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                }
+
+                .save-edit {
+                    background-color: #FF966C;
+                    color: white;
+                    border: none;
+                }
+
+                .cancel-edit {
+                    background-color: #f0f0f0;
+                    color: #666;
+                    border: 1px solid #ddd;
+                }
+
+                .save-edit:hover {
+                    background-color: #ff8552;
+                }
+
+                .cancel-edit:hover {
+                    background-color: #e5e5e5;
+                }
             </style>
             <div class="author-info">
                 <?php 
@@ -137,6 +315,73 @@ while (have_posts()) :
                     <div class="social-share-line"></div>
                 </div>
 
+                <!-- コメントセクション -->
+                <div class="comments-section">
+                    <h3 class="comments-title">コメント</h3>
+                    
+                    <!-- コメント投稿フォーム -->
+                    <?php if (is_user_logged_in()) : ?>
+                    <div class="comment-form-container">
+                        <form id="comment-form" class="comment-form">
+                            <input type="hidden" name="post_id" value="<?php echo get_the_ID(); ?>">
+                            <textarea name="comment_content" placeholder="コメントを入力してください" required></textarea>
+                            <button type="submit" class="submit-comment">コメントを投稿</button>
+                        </form>
+                    </div>
+                    <?php else : ?>
+                    <div class="login-to-comment">
+                        <p>コメントを投稿するには<a href="<?php echo wp_login_url(get_permalink()); ?>">ログイン</a>してください。</p>
+                    </div>
+                    <?php endif; ?>
+
+                    <!-- コメント一覧 -->
+                    <div id="comments-list" class="comments-list">
+                        <?php
+                        $comments = get_comments(array(
+                            'post_id' => get_the_ID(),
+                            'status' => 'approve',
+                            'order' => 'ASC'
+                        ));
+
+                        foreach ($comments as $comment) :
+                            $comment_user_id = $comment->user_id;
+                            $current_user_id = get_current_user_id();
+                            $can_edit = is_user_logged_in() && $current_user_id === intval($comment_user_id);
+                        ?>
+                        <div class="comment-item" data-comment-id="<?php echo $comment->comment_ID; ?>">
+                            <div class="comment-author">
+                                <?php
+                                $avatar_img = '';
+                                $custom_avatar_id = get_user_meta($comment_user_id, 'custom_avatar', true);
+                                if ($custom_avatar_id) {
+                                    $avatar_img = wp_get_attachment_image($custom_avatar_id, 'thumbnail', false, array('class' => 'comment-avatar', 'style' => 'width:30px;height:30px;border-radius:50%;object-fit:cover;'));
+                                }
+                                if (empty($avatar_img)) {
+                                    $avatar_img = get_avatar($comment_user_id, 30, '', '', array('class' => 'comment-avatar'));
+                                }
+                                echo $avatar_img;
+                                ?>
+                                <span class="comment-author-name"><?php echo get_comment_author($comment); ?></span>
+                                <span class="comment-date"><?php echo get_comment_date('Y年n月j日 H:i', $comment); ?></span>
+                            </div>
+                            <div class="comment-content">
+                                <p><?php echo esc_html($comment->comment_content); ?></p>
+                            </div>
+                            <?php if ($can_edit) : ?>
+                            <div class="comment-actions">
+                                <button class="edit-comment" data-comment-id="<?php echo $comment->comment_ID; ?>">
+                                    <i class="fas fa-edit"></i> 編集
+                                </button>
+                                <button class="delete-comment" data-comment-id="<?php echo $comment->comment_ID; ?>">
+                                    <i class="fas fa-trash"></i> 削除
+                                </button>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
                 <!-- 編集・削除ボタンセクション（投稿者本人のみ表示） -->
                 <?php if (is_user_logged_in() && get_current_user_id() === get_the_author_meta('ID')) : ?>
                 <div class="post-edit-delete-section">
@@ -214,3 +459,112 @@ while (have_posts()) :
 endwhile;
 get_footer();
 ?>
+
+<script>
+jQuery(document).ready(function($) {
+    // コメント投稿
+    $('#comment-form').on('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        
+        $.ajax({
+            url: '<?php echo admin_url('admin-ajax.php'); ?>',
+            type: 'POST',
+            data: {
+                action: 'add_recruitment_comment',
+                post_id: formData.get('post_id'),
+                comment_content: formData.get('comment_content'),
+                nonce: '<?php echo wp_create_nonce('add_recruitment_comment'); ?>'
+            },
+            success: function(response) {
+                if (response.success) {
+                    location.reload();
+                } else {
+                    alert('コメントの投稿に失敗しました。');
+                }
+            },
+            error: function() {
+                alert('エラーが発生しました。');
+            }
+        });
+    });
+
+    // コメント編集
+    $('.edit-comment').on('click', function() {
+        const commentId = $(this).data('comment-id');
+        const commentItem = $(this).closest('.comment-item');
+        const commentContent = commentItem.find('.comment-content p').text();
+        
+        // 編集フォームを表示
+        commentItem.find('.comment-content').html(`
+            <textarea class="edit-textarea">${commentContent}</textarea>
+            <div class="edit-actions">
+                <button class="save-edit">保存</button>
+                <button class="cancel-edit">キャンセル</button>
+            </div>
+        `);
+    });
+
+    // 編集の保存
+    $(document).on('click', '.save-edit', function() {
+        const commentItem = $(this).closest('.comment-item');
+        const commentId = commentItem.data('comment-id');
+        const newContent = commentItem.find('.edit-textarea').val();
+
+        $.ajax({
+            url: '<?php echo admin_url('admin-ajax.php'); ?>',
+            type: 'POST',
+            data: {
+                action: 'edit_recruitment_comment',
+                comment_id: commentId,
+                comment_content: newContent,
+                nonce: '<?php echo wp_create_nonce('edit_recruitment_comment'); ?>'
+            },
+            success: function(response) {
+                if (response.success) {
+                    location.reload();
+                } else {
+                    alert('コメントの編集に失敗しました。');
+                }
+            },
+            error: function() {
+                alert('エラーが発生しました。');
+            }
+        });
+    });
+
+    // 編集のキャンセル
+    $(document).on('click', '.cancel-edit', function() {
+        location.reload();
+    });
+
+    // コメント削除
+    $('.delete-comment').on('click', function() {
+        if (!confirm('このコメントを削除してもよろしいですか？')) {
+            return;
+        }
+
+        const commentId = $(this).data('comment-id');
+        
+        $.ajax({
+            url: '<?php echo admin_url('admin-ajax.php'); ?>',
+            type: 'POST',
+            data: {
+                action: 'delete_recruitment_comment',
+                comment_id: commentId,
+                nonce: '<?php echo wp_create_nonce('delete_recruitment_comment'); ?>'
+            },
+            success: function(response) {
+                if (response.success) {
+                    location.reload();
+                } else {
+                    alert('コメントの削除に失敗しました。');
+                }
+            },
+            error: function() {
+                alert('エラーが発生しました。');
+            }
+        });
+    });
+});
+</script>
