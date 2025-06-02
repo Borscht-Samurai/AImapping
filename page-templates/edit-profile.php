@@ -24,17 +24,15 @@ $profile_image = $custom_avatar_id ? wp_get_attachment_image_url($custom_avatar_
 wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css', array(), '6.0.0');
 ?>
 
-<!-- グラデーションセクション -->
-<section class="gradient-box-section">
-    <div class="gradient-box">
-        <div class="gradient-box-content">
-            <h1 class="profile-title">プロフィール編集</h1>
-        </div>
+<main class="site-main">
+    <div class="contact-header">
+        <h1 class="contact-title">Profile Edit</h1>
     </div>
-</section>
 
-<!-- プロフィール編集フォーム -->
-<section class="profile-edit-section">
+    <!-- プロフィール編集フォーム -->
+    <div class="container">
+        <article class="contact-page">
+            <div class="contact-form-container">
     <div class="profile-container">
         <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" enctype="multipart/form-data" class="profile-edit-form">
             <input type="hidden" name="action" value="edit_profile">
@@ -105,8 +103,7 @@ wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-aw
 .profile-container {
     background-color: #E7E7E7;
     border-radius: 15px;
-    padding: 2rem;
-    margin-top: 2rem;
+
 }
 
 .profile-edit-form {
@@ -270,6 +267,45 @@ wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-aw
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* ヘッダースタイル */
+.contact-header {
+    text-align: center;
+    padding: 60px 0;
+    margin-bottom: 40px;
+}
+
+.contact-title {
+    font-size: 160px;
+    line-height: 1;
+    margin: 0;
+    text-align: left;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -0.08em;
+}
+
+@media (max-width: 768px) {
+    .contact-title {
+        font-size: 80px;
+    }
+}
+
+.container {
+    max-width: 1288px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.contact-page {
+    margin-bottom: 60px;
+}
+
+.contact-form-container {
+    background-color: #E7E7E7;
+    border-radius: 15px;
+    padding: 40px;
 }
 </style>
 
