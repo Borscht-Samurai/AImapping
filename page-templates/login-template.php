@@ -41,17 +41,6 @@ get_header();
                     <button type="submit" class="btn btn-primary btn-block">ログイン</button>
                 </form>
 
-                <div class="auth-separator">
-                    <span>または</span>
-                </div>
-
-                <div class="social-login">
-                    <a href="<?php echo esc_url(home_url('/wp-login.php?loginSocial=google')); ?>" class="btn btn-social btn-google">
-                        <i class="fab fa-google"></i>
-                        Googleでログイン
-                    </a>
-                </div>
-
                 <div class="auth-footer">
                     <p>アカウントをお持ちでない方は<a href="<?php echo esc_url(home_url('/register1')); ?>">新規登録</a>へ</p>
                 </div>

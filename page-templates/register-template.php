@@ -50,17 +50,6 @@ get_header();
                     <button type="submit" class="btn btn-primary btn-block">登録する</button>
                 </form>
 
-                <div class="auth-separator">
-                    <span>または</span>
-                </div>
-
-                <div class="social-login">
-                    <a href="<?php echo esc_url(home_url('/wp-login.php?registerSocial=google')); ?>" class="btn btn-social btn-google">
-                        <i class="fab fa-google"></i>
-                        Googleで登録
-                    </a>
-                </div>
-
                 <div class="auth-footer">
                     <p>すでにアカウントをお持ちの方は<a href="<?php echo esc_url(home_url('/login')); ?>">ログイン</a>へ</p>
                 </div>
