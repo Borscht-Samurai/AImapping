@@ -24,4 +24,4 @@
 [recaptcha]
 <div class="submit-button-container">
     [submit "送信する"]
-</div>
+</div> 
