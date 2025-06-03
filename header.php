@@ -39,6 +39,8 @@
                 <li><a href="<?php echo esc_url(home_url('/recruitment')); ?>">募集をみる</a></li>
                 <li><a href="<?php echo esc_url(home_url('/new-post')); ?>">投稿する</a></li>
                 <li><a href="<?php echo esc_url(home_url('/contact')); ?>">問い合わせ</a></li>
+                <li><a href="<?php echo esc_url(home_url('/chip')); ?>">応援する</a></li>
+                <li><a href="<?php echo esc_url(home_url('/faq')); ?>">FAQ</a></li>
             </ul>
         </nav>
 
